@@ -12,6 +12,8 @@ package Levels
 		private var basket:BallBasket;
 		private var gravBall:GravBall;
 		private var gravityObjects:Vector.<GravBall>;
+		private var gravBallCount:int = 3;
+		private var spawnClear:Boolean;
 		
 		public function LevelOne()
 		{
@@ -32,7 +34,7 @@ package Levels
 				var dy:Number = gravityObjects[i].y -friendBall.y;
 				friendBall.updateVel(dt,dx,dy);	
 			}
-			friendBall.updatePos(dt);	
+			friendBall.updatePos(dt);
 		}
 		
 		public function mouseClick(stageX:Number, stageY:Number):void
@@ -50,10 +52,26 @@ package Levels
 				var distance:Number = Math.sqrt(dx*dx + dy*dy);
 				if(distance > gravityObjects[i].radius*3)
 				{
-					gravBall = new GravBall(stageX,stageY);
-					gravityObjects.push(gravBall);
-					addChild(gravBall);
+					spawnClear = true;
+					
 				}
+				else
+				{
+					spawnClear = false;
+					break;
+				}
+			}
+			if(spawnClear)
+			{
+				gravBall = new GravBall(stageX,stageY);
+				gravityObjects.push(gravBall);
+				addChild(gravBall);
+			}
+			if(gravityObjects.length == gravBallCount+1)
+			{
+				removeChild(gravityObjects[0]);
+				gravityObjects[0] = null;
+				gravityObjects.splice(0,1);
 			}
 			friendBall.accel = 0;
 		}
@@ -75,6 +93,20 @@ package Levels
 			}
 			return false;
 			
+		}
+		
+		public function reset():Boolean
+		{
+			for( var i:int=0;i<gravityObjects.length;i++)
+			{
+				removeChild(gravityObjects[i]);
+			}
+			gravityObjects = null;
+			gravityObjects = new Vector.<GravBall>;
+			removeChild(friendBall);
+			friendBall = new FriendBall(20,20);
+			addChild(friendBall);
+			return true;
 		}
 	}
 }

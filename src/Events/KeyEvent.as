@@ -1,0 +1,26 @@
+package Events
+{
+	import flash.events.Event;
+	
+	public class KeyEvent extends Event
+	{
+		public static const SPACE_PRESSED:String = "space_pressed";
+
+		public var params:Object;
+		public function KeyEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 
+		{
+			
+			super(type, bubbles, cancelable);
+			this.params = params;
+		}
+		public override function clone():Event
+		{
+			return new KeyEvent(type, this.params, bubbles, cancelable);
+		}
+		public override function toString():String
+		{
+			return formatToString("CustomEvent", "params", "type", "bubbles", "cancelable");
+		}
+		
+	}
+}
