@@ -27,5 +27,19 @@ package GameObjects
 			rectangleTop.useHandCursor = false;
 			addChild(rectangleTop);
 		}
+		
+		public function checkBounds(friendBall:FriendBall,dt:Number):void
+		{
+			var objX:int = friendBall.newX;
+			var objY:int = friendBall.newY;
+			var objRadius:int = friendBall.radius;
+			if((objX+objRadius>this.x) && (objY-objRadius<this.y+rectangle.height) && (objY+objRadius>this.y))
+			{
+				friendBall.velX = -friendBall.velX * .65;
+				friendBall.calcChange(dt);
+			}
+			//if collision checks out return false
+			
+		}
 	}
 }

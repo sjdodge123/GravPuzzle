@@ -9,7 +9,6 @@ package Events
 		public var params:Object;
 		public function ChildEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 
 		{
-			
 			super(type, bubbles, cancelable);
 			this.params = params;
 		}

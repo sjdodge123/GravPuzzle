@@ -51,7 +51,9 @@ package Levels
 				var dy:Number = gravityObjects[i].y -friendBall.y;
 				friendBall.updateVel(dt,dx,dy);	
 			}
-			friendBall.updatePos(dt);
+			friendBall.calcChange(dt);
+			basket.checkBounds(friendBall,dt);
+			friendBall.updatePos();
 		}
 		
 		public function spawnGravBall(stageX:Number, stageY:Number):void
