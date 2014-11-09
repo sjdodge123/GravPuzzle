@@ -1,6 +1,11 @@
 package Levels
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
+	
+	import Construct.ObjectBuilder;
+	
+	import Events.ChildEvent;
 	
 	import GameObjects.BallBasket;
 	import GameObjects.FriendBall;
@@ -14,9 +19,13 @@ package Levels
 		private var gravityObjects:Vector.<GravBall>;
 		private var gravBallCount:int = 3;
 		private var spawnClear:Boolean;
+		private var objectBuilder:ObjectBuilder;
 		
 		public function LevelOne()
 		{
+			objectBuilder = new ObjectBuilder();
+			objectBuilder.addEventListener(ChildEvent.ADD_CHILD,addElement);
+			objectBuilder.addEventListener(ChildEvent.REMOVE_CHILD,removeElement);
 			gravityObjects = new Vector.<GravBall>;
 			friendBall = new FriendBall(20,20);
 			basket = new BallBasket(400,300);
@@ -24,8 +33,16 @@ package Levels
 			addChild(friendBall);
 		}
 		
+		protected function addElement(event:ChildEvent):void
+		{
+			addChild(event.params as Sprite);
+		}	
 		
-		
+		protected function removeElement(event:ChildEvent):void
+		{
+			removeChild(event.params as Sprite);
+		}
+			
 		public function update(dt:Number):void
 		{
 			for(var i:int=0;i<gravityObjects.length;i++)
@@ -37,42 +54,9 @@ package Levels
 			friendBall.updatePos(dt);
 		}
 		
-		public function mouseClick(stageX:Number, stageY:Number):void
+		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
-			if(gravityObjects.length < 1)
-			{
-				gravBall = new GravBall(stageX,stageY);
-				gravityObjects.push(gravBall);
-				addChild(gravBall);
-			}
-			for(var i:int=0;i<gravityObjects.length;i++)
-			{
-				var dx:Number = gravityObjects[i].x - stageX;
-				var dy:Number = gravityObjects[i].y - stageY;
-				var distance:Number = Math.sqrt(dx*dx + dy*dy);
-				if(distance > gravityObjects[i].radius*3)
-				{
-					spawnClear = true;
-					
-				}
-				else
-				{
-					spawnClear = false;
-					break;
-				}
-			}
-			if(spawnClear)
-			{
-				gravBall = new GravBall(stageX,stageY);
-				gravityObjects.push(gravBall);
-				addChild(gravBall);
-			}
-			if(gravityObjects.length == gravBallCount+1)
-			{
-				removeChild(gravityObjects[0]);
-				gravityObjects[0] = null;
-				gravityObjects.splice(0,1);
-			}
+			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,gravBallCount);
 			friendBall.accel = 0;
 		}
 		
@@ -93,6 +77,16 @@ package Levels
 			}
 			return false;
 			
+		}
+		
+		public function endLevel():void
+		{
+			for( var i:int=0;i<gravityObjects.length;i++)
+			{
+				removeChild(gravityObjects[i]);
+			}
+			gravityObjects = null;
+			removeChild(friendBall);
 		}
 		
 		public function reset():Boolean

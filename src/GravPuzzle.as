@@ -25,8 +25,8 @@ package
 		private var resetTimer:Timer;
 		private var keyboardHandler:KeyboardHandler;
 		private var countDown:TextField;
-
 		private var dt:Number = 1;
+		
 		public function GravPuzzle()
 		{
 			stage.addEventListener(Event.ENTER_FRAME,update);
@@ -91,7 +91,7 @@ package
 			}
 			if(coolDownReady && !justDeleted)
 			{
-				levelOne.mouseClick(event.stageX,event.stageY);
+				levelOne.spawnGravBall(event.stageX,event.stageY);
 				coolDownReady = false;
 				clickCooldown.reset();
 				clickCooldown.start();
@@ -104,5 +104,6 @@ package
 		{
 			levelOne.update(dt);	
 		}
+		
 	}
 }
