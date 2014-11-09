@@ -33,9 +33,19 @@ package GameObjects.Mobile
 			var objX:int = object.newX;
 			var objY:int = object.newY;
 			var objRadius:int = object.radius;
-			if((objX+objRadius>this.x) && (objY-objRadius<this.y+rectangle.height) && (objY+objRadius>this.y))
+			if((objX+objRadius+2>this.x) && (object.x+objRadius<this.x) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) //2 padding necessary..
 			{
 				object.velX = -object.velX * .65;
+				object.calcChange(dt);
+			}
+			if((objX-objRadius-2<this.x+rectangle.width) && (object.x-objRadius>this.x+rectangle.width) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) //2 padding necessary
+			{
+				object.velX = -object.velX * .65;
+				object.calcChange(dt);
+			}
+			if((objY-objRadius<this.y+rectangle.height) && (object.x-objRadius<this.x+rectangle.width) && (object.x+objRadius>this.x))
+			{
+				object.velY = -object.velY * .65;
 				object.calcChange(dt);
 			}
 			
