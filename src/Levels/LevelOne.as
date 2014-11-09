@@ -7,9 +7,9 @@ package Levels
 	
 	import Events.ChildEvent;
 	
-	import GameObjects.BallBasket;
-	import GameObjects.FriendBall;
-	import GameObjects.GravBall;
+	import GameObjects.Mobile.BallBasket;
+	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Immobile.GravBall;
 
 	public class LevelOne extends Sprite
 	{
@@ -28,6 +28,7 @@ package Levels
 			objectBuilder.addEventListener(ChildEvent.REMOVE_CHILD,removeElement);
 			gravityObjects = new Vector.<GravBall>;
 			friendBall = new FriendBall(20,20);
+			friendBall.velX = 1.5;
 			basket = new BallBasket(400,300);
 			addChild(basket);
 			addChild(friendBall);

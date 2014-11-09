@@ -1,32 +1,23 @@
-package GameObjects
+package GameObjects.Mobile
 {
 	import flash.display.Sprite;
 
-	public class FriendBall extends Sprite
+	public class MobileObject extends Sprite
 	{
-		
 		public const radius:int = 10;
 		public var accel:Number=0;
-		public var velX:Number =1.5;
 		public var newX:Number = 0;
 		public var newY:Number = 0;
-		private var velocity:Number;
-		private var circle:Sprite;
-		private var velY:Number =0;
-		private var dirX:Number =0;
-		private var dirY:Number=0;
-		private var gravConstant:Number = 10;
-		public function FriendBall(x:int, y:int)
+		public var velX:Number = 0;
+		public var velY:Number =0;
+		public var shape:Sprite;
+		protected var velocity:Number;
+		protected var dirX:Number =0;
+		protected var dirY:Number=0;
+		protected const gravConstant:Number = 10;
+		public function MobileObject()
 		{
-			this.x = x;
-			this.y = y;
-			circle = new Sprite();
-			circle.graphics.clear();
-			circle.graphics.beginFill(0xBDFCC9);
-			circle.graphics.lineStyle(2, 0xC0C0C0, 100);
-			circle.graphics.drawCircle(0,0, radius);
-			circle.useHandCursor = false;
-			addChild(circle);
+			
 		}
 		public function calcChange(dt:Number):void
 		{

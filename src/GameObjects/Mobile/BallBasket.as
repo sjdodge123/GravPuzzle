@@ -1,8 +1,8 @@
-package GameObjects
+package GameObjects.Mobile
 {
 	import flash.display.Sprite;
 
-	public class BallBasket extends Sprite
+	public class BallBasket extends MobileObject
 	{
 		private var rectangle:Sprite;
 		private var rectangleTop:Sprite;
@@ -28,16 +28,17 @@ package GameObjects
 			addChild(rectangleTop);
 		}
 		
-		public function checkBounds(friendBall:FriendBall,dt:Number):void
+		public function checkBounds(object:MobileObject,dt:Number):void
 		{
-			var objX:int = friendBall.newX;
-			var objY:int = friendBall.newY;
-			var objRadius:int = friendBall.radius;
+			var objX:int = object.newX;
+			var objY:int = object.newY;
+			var objRadius:int = object.radius;
 			if((objX+objRadius>this.x) && (objY-objRadius<this.y+rectangle.height) && (objY+objRadius>this.y))
 			{
-				friendBall.velX = -friendBall.velX * .65;
-				friendBall.calcChange(dt);
+				object.velX = -object.velX * .65;
+				object.calcChange(dt);
 			}
+			
 			//if collision checks out return false
 			
 		}
