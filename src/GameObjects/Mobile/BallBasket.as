@@ -33,6 +33,9 @@ package GameObjects.Mobile
 			var objX:int = object.newX;
 			var objY:int = object.newY;
 			var objRadius:int = object.radius;
+			var dx:Number = this.x + (rectangle.width)/2 - object.x;
+			var dy:Number = this.y + (rectangle.height)/2 - object.y;
+			var dL:Number = Math.sqrt(dx*dx+dy*dy);
 			
 			/*fairly ghetto-rigged at the moment.  All the statements result in one of two options: (1) reverse velX (2) reverse velY.
 			This all can be cleaned up, which would result in more efficient code that need not check 6 if's each frame. Plus, there almost definitely exist some bugs that could 
@@ -62,6 +65,7 @@ package GameObjects.Mobile
 				object.velY = -object.velY * .65;
 				object.calcChange(dt);
 			}
+			
 			//inner left
 			if((objX-objRadius < this.x) && (object.x+objRadius > this.x) && (object.x-objRadius < this.x+rectangle.width) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) //2 padding necessary..
 			{
@@ -81,6 +85,12 @@ package GameObjects.Mobile
 			{
 				object.velY = -object.velY * .65;
 				object.calcChange(dt);
+			}
+			
+			//win condition
+			if (dL<10)
+			{
+				trace('victory, bitch');
 			}
 			//if collision checks out return false
 			
