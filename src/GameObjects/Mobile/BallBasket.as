@@ -33,22 +33,55 @@ package GameObjects.Mobile
 			var objX:int = object.newX;
 			var objY:int = object.newY;
 			var objRadius:int = object.radius;
-			if((objX+objRadius+2>this.x) && (object.x+objRadius<this.x) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) //2 padding necessary..
+			
+			/*fairly ghetto-rigged at the moment.  All the statements result in one of two options: (1) reverse velX (2) reverse velY.
+			This all can be cleaned up, which would result in more efficient code that need not check 6 if's each frame. Plus, there almost definitely exist some bugs that could 
+			arise from abnormal scenarios (edge collision, moving too slowly/quickly even). Primary change of the logic of our original statements: 
+			We were using exclusively objX and objY to determine conditions. This resulted in weird scenarious where the ball could change x and y velocity after collision with a 
+			single wall. Now, each condition has just one sub-condition with objX or objY, the latter sub-conditions are determined.
+			by the ball's actual position (i.e. object.x and object.y).
+			*/
+			
+			//outer left
+			if((objX+objRadius+1>this.x) && (object.x+objRadius<this.x) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) // padding necessary..
 			{
 				object.velX = -object.velX * .65;
 				object.calcChange(dt);
 			}
-			if((objX-objRadius-2<this.x+rectangle.width) && (object.x-objRadius>this.x+rectangle.width) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) //2 padding necessary
+			
+			//outer right
+			if((objX-objRadius-1<this.x+rectangle.width) && (object.x-objRadius>this.x+rectangle.width) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) // padding necessary
 			{
 				object.velX = -object.velX * .65;
 				object.calcChange(dt);
 			}
-			if((objY-objRadius<this.y+rectangle.height) && (object.x-objRadius<this.x+rectangle.width) && (object.x+objRadius>this.x))
+			
+			//outer bottom
+			if((objY-objRadius<this.y+rectangle.height) && (object.y-objRadius > this.y+rectangle.height) && (object.x-objRadius<this.x+rectangle.width) && (object.x+objRadius>this.x))
 			{
 				object.velY = -object.velY * .65;
 				object.calcChange(dt);
 			}
+			//inner left
+			if((objX-objRadius < this.x) && (object.x+objRadius > this.x) && (object.x-objRadius < this.x+rectangle.width) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) //2 padding necessary..
+			{
+				object.velX = -object.velX * .65;
+				object.calcChange(dt);
+			}
 			
+			//inner right
+			if((objX+objRadius + 1 > this.x+rectangle.width) && (object.x+objRadius > this.x) && (object.x-objRadius < this.x+rectangle.width) && (object.y-objRadius<this.y+rectangle.height) && (object.y+objRadius>this.y)) //2 padding necessary..
+			{
+				object.velX = -object.velX * .65;
+				object.calcChange(dt);
+			}
+			
+			//inner bottom
+			if((objY+objRadius + 1>this.y+rectangle.height) && (object.y+objRadius < this.y+rectangle.height) && (object.x-objRadius<this.x+rectangle.width) && (object.x+objRadius>this.x))
+			{
+				object.velY = -object.velY * .65;
+				object.calcChange(dt);
+			}
 			//if collision checks out return false
 			
 		}
