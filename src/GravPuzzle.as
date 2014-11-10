@@ -6,16 +6,12 @@ package
 	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.utils.Timer;
-	
+	import Construct.GameBoard;
 	import Events.KeyEvent;
-	
 	import InputHandler.KeyboardHandler;
-	
-	import Levels.LevelOne;
 	
 	public class GravPuzzle extends Sprite
 	{
-		private var levelOne:LevelOne;
 		private var gravity:Number = 100;
 		private var coolDownReady:Boolean = true;
 		private var justDeleted:Boolean = true;
@@ -26,25 +22,23 @@ package
 		private var keyboardHandler:KeyboardHandler;
 		private var countDown:TextField;
 		private var dt:Number = 1;
+		private var gameBoard:GameBoard;
 		
 		public function GravPuzzle()
 		{
 			stage.addEventListener(Event.ENTER_FRAME,update);
 			stage.addEventListener(MouseEvent.CLICK,mouseClick);
-			
 			keyboardHandler = new KeyboardHandler(stage);
-			
 			keyboardHandler.addEventListener(KeyEvent.SPACE_PRESSED,reset);
-		
 			clickCooldown = new Timer(500,1);
 			clickCooldown.addEventListener(TimerEvent.TIMER,resetCooldown);
 			deleteCooldown = new Timer(50,1);
 			deleteCooldown.addEventListener(TimerEvent.TIMER,resetDeleteCooldown);
 			resetTimer = new Timer(2000,1);
 			resetTimer.addEventListener(TimerEvent.TIMER,resetResetTimer); //love the naming scheme, sorry in advance
-			levelOne = new LevelOne();
-			addChild(levelOne);
 			
+			gameBoard = new GameBoard();
+			addChild(gameBoard);
 			countDown = new TextField();
 			countDown.x = 200;
 			countDown.y = 200;
@@ -61,7 +55,7 @@ package
 		
 		protected function reset(event:Event):void
 		{
-			startReset = levelOne.reset();
+			startReset = gameBoard.resetLevel();
 			resetTimer.reset();
 			resetTimer.start();
 			trace('restarting in 2 seconds');
@@ -83,7 +77,7 @@ package
 		protected function mouseClick(event:MouseEvent):void
 		{
 			
-			justDeleted = levelOne.checkDeletions(event.stageX,event.stageY);
+			justDeleted = gameBoard.checkDeletions(event.stageX,event.stageY);
 			if(justDeleted)
 			{	
 				deleteCooldown.reset();
@@ -91,18 +85,16 @@ package
 			}
 			if(coolDownReady && !justDeleted)
 			{
-				levelOne.spawnGravBall(event.stageX,event.stageY);
+				gameBoard.spawnGravBall(event.stageX,event.stageY);
 				coolDownReady = false;
 				clickCooldown.reset();
 				clickCooldown.start();
 			}
-		
-			
 		}
 		
 		protected function update(event:Event):void
 		{
-			levelOne.update(dt);	
+			gameBoard.update(dt);	
 		}
 		
 	}

@@ -1,0 +1,22 @@
+package Levels
+{
+	import flash.events.EventDispatcher;
+	import GameObjects.Mobile.BallBasket;
+	import GameObjects.Mobile.FriendBall;
+
+	public class Level extends EventDispatcher
+	{
+	
+		protected var gravBallCount:int = -1;
+		protected var friendBall:FriendBall;
+		protected var basket:BallBasket;
+		public function Level()
+		{
+		}
+		
+		public function getGravBallCount():int
+		{
+			return gravBallCount;
+		}
+	}
+}
