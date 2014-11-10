@@ -103,6 +103,7 @@ package Levels
 			removeChild(friendBall);
 			friendBall = new FriendBall(20,20);
 			addChild(friendBall);
+			friendBall.velX = 1.5;
 			return true;
 		}
 	}
