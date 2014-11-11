@@ -2,6 +2,8 @@ package Levels
 {
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.Obstacles.Obstacle;
+	import GameObjects.Mobile.Obstacles.Wall;
 
 	public class LevelOne extends Level
 	{
@@ -27,9 +29,10 @@ package Levels
 			return levelData;
 		}
 		
-		private function buildObstacles():Array
+		private function buildObstacles():Vector.<Obstacle>
 		{
-			obstacles = new Array();
+			obstacles = new Vector.<Obstacle>;
+			obstacles.push(new Wall(300,300));
 			return obstacles;
 		}
 	}

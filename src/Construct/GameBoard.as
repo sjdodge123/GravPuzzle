@@ -1,12 +1,14 @@
 package Construct
 {
 	import flash.display.Sprite;
+	import flash.net.ObjectEncoding;
 	
 	import Events.ChildEvent;
 	
 	import GameObjects.Immobile.GravBall;
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.Obstacles.Obstacle;
 	
 	import Levels.Level;
 	import Levels.LevelOne;
@@ -18,6 +20,7 @@ package Construct
 		private var basket:BallBasket;
 		private var gravBall:GravBall;
 		private var gravityObjects:Vector.<GravBall>;
+		private var obstacles:Vector.<Obstacle>;
 		private var currentLevel:Level;
 		public function GameBoard()
 		{
@@ -26,6 +29,7 @@ package Construct
 			objectBuilder.addEventListener(ChildEvent.ADD_CHILD,addElement);
 			objectBuilder.addEventListener(ChildEvent.REMOVE_CHILD,removeElement);
 			gravityObjects = new Vector.<GravBall>;
+			obstacles = new Vector.<Obstacle>;
 			buildNextLevel();
 		}
 		//-----------------------------------------------
@@ -57,10 +61,12 @@ package Construct
 			var levelData:Array = currentLevel.getLevelData();
 			friendBall = levelData[0];
 			basket = levelData[1];
-			var obstacles:Array = levelData[2];
-			for(var i:int=0;i<obstacles.length;i++)
+			var obstacleData:Vector.<Obstacle> = levelData[2];
+			this.obstacles = new Vector.<Obstacle>;
+			for(var i:int=0;i<obstacleData.length;i++)
 			{
-				addChild(obstacles[i]);
+				this.obstacles.push(obstacleData[i]);
+				addChild(obstacleData[i]);
 			}
 			addChild(friendBall);
 			addChild(basket);
@@ -120,6 +126,9 @@ package Construct
 				friendBall.updateVel(dt,dx,dy);	
 			}
 			friendBall.calcChange(dt);
+			// !TODO! needs to check for collision against the obstacle array !TODO!
+			
+			// !TODO! Line 132 should be reversed. The friendBall should be checking to see if it collides with anything, not the other way around! !TODO!
 			basket.checkBounds(friendBall,dt);
 			friendBall.updatePos();
 			
