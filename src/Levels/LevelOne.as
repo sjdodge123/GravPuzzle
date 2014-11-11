@@ -15,11 +15,22 @@ package Levels
 			friendBall = new FriendBall(20,20);
 			friendBall.velX = 1.5;
 			basket = new BallBasket(400,300);
-			
-			var levelData:Array = new Array();
+			return buildData();
+		}
+		
+		private function buildData():Array
+		{
+			levelData = new Array();
 			levelData.push(friendBall);
 			levelData.push(basket);
+			levelData.push(buildObstacles()); 
 			return levelData;
+		}
+		
+		private function buildObstacles():Array
+		{
+			obstacles = new Array();
+			return obstacles;
 		}
 	}
 }

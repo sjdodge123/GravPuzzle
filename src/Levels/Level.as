@@ -11,6 +11,8 @@ package Levels
 		protected var gravBallCount:int = -1;
 		protected var friendBall:FriendBall;
 		protected var basket:BallBasket;
+		protected var obstacles:Array
+		protected var levelData:Array 
 		public function Level()
 		{
 		}
@@ -22,7 +24,7 @@ package Levels
 		
 		public function getLevelData():Array
 		{
-			return null;	
+			return levelData;	
 		}
 	}
 }

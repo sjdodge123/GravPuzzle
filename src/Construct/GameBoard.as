@@ -57,6 +57,11 @@ package Construct
 			var levelData:Array = currentLevel.getLevelData();
 			friendBall = levelData[0];
 			basket = levelData[1];
+			var obstacles:Array = levelData[2];
+			for(var i:int=0;i<obstacles.length;i++)
+			{
+				addChild(obstacles[i]);
+			}
 			addChild(friendBall);
 			addChild(basket);
 		}
