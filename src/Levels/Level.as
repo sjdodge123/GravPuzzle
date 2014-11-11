@@ -1,6 +1,7 @@
 package Levels
 {
 	import flash.events.EventDispatcher;
+	
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
 
@@ -17,6 +18,11 @@ package Levels
 		public function getGravBallCount():int
 		{
 			return gravBallCount;
+		}
+		
+		public function getLevelData():Array
+		{
+			return null;	
 		}
 	}
 }

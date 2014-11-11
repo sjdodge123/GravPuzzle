@@ -19,7 +19,6 @@ package Construct
 		private var gravBall:GravBall;
 		private var gravityObjects:Vector.<GravBall>;
 		private var currentLevel:Level;
-		private var levelOne:LevelOne;
 		public function GameBoard()
 		{
 			//Setup Gameboard
@@ -35,28 +34,31 @@ package Construct
 		
 		private function buildNextLevel():void
 		{
-			levelOne = new LevelOne();
-			var levelData:Array = levelOne.getLevelData();
-			friendBall = levelData[0];
-			basket = levelData[1];
-			addChild(friendBall);
-			addChild(basket);
-			currentLevel = levelOne;
+			currentLevel = new LevelOne();
+			getAndBuildLevel();
 		}
 		
 		public function resetLevel():Boolean
 		{
-			for( var i:int=0;i<gravityObjects.length;i++)
+			var count:int = numChildren;        // Very Important or the count in the below loop will be off
+			while(numChildren)
 			{
-				removeChild(gravityObjects[i]);
+				count--;
+				removeChild(getChildAt(count));
 			}
 			gravityObjects = null;
 			gravityObjects = new Vector.<GravBall>;
-			removeChild(friendBall);
-			friendBall = new FriendBall(20,20);
-			addChild(friendBall);
-			friendBall.velX = 1.5;
+			getAndBuildLevel();
 			return true;
+		}
+		
+		private function getAndBuildLevel():void
+		{
+			var levelData:Array = currentLevel.getLevelData();
+			friendBall = levelData[0];
+			basket = levelData[1];
+			addChild(friendBall);
+			addChild(basket);
 		}
 		
 //		public function endLevel():void
