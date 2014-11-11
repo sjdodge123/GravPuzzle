@@ -8,7 +8,7 @@ package
 	import flash.utils.Timer;
 	import Construct.GameBoard;
 	import Events.KeyEvent;
-	import InputHandler.KeyboardHandler;
+	import Handlers.KeyboardHandler;
 	
 	public class GravPuzzle extends Sprite
 	{

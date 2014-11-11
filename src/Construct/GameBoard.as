@@ -11,7 +11,10 @@ package Construct
 	import GameObjects.Immobile.GravBall;
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.Obstacles.HitBox;
 	import GameObjects.Mobile.Obstacles.Obstacle;
+	
+	import Handlers.CollisionHandler;
 	
 	import Levels.Level;
 	import Levels.LevelOne;
@@ -27,6 +30,10 @@ package Construct
 		private var currentLevel:Level;
 		private var levelTimer:Timer;
 		private var timerDisplay:TextField;
+		private var collisionHandler:CollisionHandler;
+		
+		//temporary!!
+		public var hitBox:HitBox;
 		
 		public function GameBoard(gameStage:Stage)
 		{
@@ -43,6 +50,10 @@ package Construct
 			timerDisplay.y = 1;
 			addChild(timerDisplay);
 			buildNextLevel();
+			collisionHandler = new CollisionHandler();
+//			hitBox = new HitBox(200,150);
+//			addChild(hitBox);
+			
 		}
 		//-----------------------------------------------
 		//-----------------Level Control-----------------
@@ -80,6 +91,11 @@ package Construct
 			{
 				this.obstacles.push(obstacleData[i]);
 				addChild(obstacleData[i]);
+				
+				for(var j:int=0;j<obstacleData[i].hitBoxes.length;j++) //run through and add all hitboxes of each obstacle
+				{
+					addChild(obstacleData[i].hitBoxes[j]);
+				}
 			}
 			addChild(friendBall);
 			addChild(basket);
@@ -144,7 +160,8 @@ package Construct
 			// !TODO! needs to check for collision against the obstacle array !TODO!
 			
 			// !TODO! Line 132 should be reversed. The friendBall should be checking to see if it collides with anything, not the other way around! !TODO!
-			basket.checkBounds(friendBall,dt);
+//			basket.checkBounds(friendBall,dt);  
+			collisionHandler.checkBounds(friendBall,obstacles,basket,dt); 
 			friendBall.updatePos();
 			var time:Number = levelTimer.currentCount/100;
 			timerDisplay.text = time.toString();

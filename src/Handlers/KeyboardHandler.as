@@ -1,4 +1,4 @@
-package InputHandler
+package Handlers
 {
 	import flash.display.Stage;
 	import flash.events.EventDispatcher;

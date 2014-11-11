@@ -4,6 +4,7 @@ package Levels
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Wall;
+	import GameObjects.Mobile.Obstacles.Square;
 
 	public class LevelOne extends Level
 	{
@@ -40,7 +41,7 @@ package Levels
 		private function buildObstacles():Vector.<Obstacle>
 		{
 			obstacles = new Vector.<Obstacle>;
-			obstacles.push(new Wall(300,300));
+			obstacles.push(new Square(300,300,60));
 			return obstacles;
 		}
 	}
