@@ -13,7 +13,12 @@ package Levels
 		protected var friendBall:FriendBall;
 		protected var basket:BallBasket;
 		protected var obstacles:Vector.<Obstacle>;
-		protected var levelData:Array 
+		protected var levelData:Array;
+		
+		protected var bronzeTarget:int = 0;
+		protected var silverTarget:int = 0;
+		protected var goldTarget:int = 0;
+		
 		public function Level()
 		{
 			
@@ -26,6 +31,18 @@ package Levels
 		public function getLevelData():Array
 		{
 			return levelData;	
+		}
+		public function getBronzeTarget():int
+		{
+			return bronzeTarget;
+		}
+		public function getSilverTarget():int
+		{
+			return silverTarget;
+		}
+		public function getGoldTarget():int
+		{
+			return goldTarget;	
 		}
 	}
 }

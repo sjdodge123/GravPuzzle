@@ -1,7 +1,10 @@
 package Construct
 {
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.net.ObjectEncoding;
+	import flash.text.TextField;
+	import flash.utils.Timer;
 	
 	import Events.ChildEvent;
 	
@@ -22,7 +25,10 @@ package Construct
 		private var gravityObjects:Vector.<GravBall>;
 		private var obstacles:Vector.<Obstacle>;
 		private var currentLevel:Level;
-		public function GameBoard()
+		private var levelTimer:Timer;
+		private var timerDisplay:TextField;
+		
+		public function GameBoard(gameStage:Stage)
 		{
 			//Setup Gameboard
 			objectBuilder = new ObjectBuilder();
@@ -30,6 +36,12 @@ package Construct
 			objectBuilder.addEventListener(ChildEvent.REMOVE_CHILD,removeElement);
 			gravityObjects = new Vector.<GravBall>;
 			obstacles = new Vector.<Obstacle>;
+			levelTimer = new Timer(0,0);
+			timerDisplay = new TextField();
+			timerDisplay.textColor = 0xFF0000;
+			timerDisplay.x = gameStage.stageWidth/2;
+			timerDisplay.y = 1;
+			addChild(timerDisplay);
 			buildNextLevel();
 		}
 		//-----------------------------------------------
@@ -44,7 +56,7 @@ package Construct
 		
 		public function resetLevel():Boolean
 		{
-			var count:int = numChildren;        // Very Important or the count in the below loop will be off
+			var count:int = numChildren;
 			while(numChildren)
 			{
 				count--;
@@ -58,6 +70,7 @@ package Construct
 		
 		private function getAndBuildLevel():void
 		{
+			levelTimer.reset();
 			var levelData:Array = currentLevel.getLevelData();
 			friendBall = levelData[0];
 			basket = levelData[1];
@@ -70,6 +83,8 @@ package Construct
 			}
 			addChild(friendBall);
 			addChild(basket);
+			addChild(timerDisplay);
+			levelTimer.start();
 		}
 		
 //		public function endLevel():void
@@ -131,7 +146,8 @@ package Construct
 			// !TODO! Line 132 should be reversed. The friendBall should be checking to see if it collides with anything, not the other way around! !TODO!
 			basket.checkBounds(friendBall,dt);
 			friendBall.updatePos();
-			
+			var time:Number = levelTimer.currentCount/100;
+			timerDisplay.text = time.toString();
 		}
 		protected function addElement(event:ChildEvent):void
 		{

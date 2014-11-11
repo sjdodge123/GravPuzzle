@@ -17,7 +17,15 @@ package Levels
 			friendBall = new FriendBall(20,20);
 			friendBall.velX = 1.5;
 			basket = new BallBasket(400,300);
+			setTargets();
 			return buildData();
+		}
+		
+		private function setTargets():void
+		{
+			bronzeTarget = 200;
+			silverTarget = 400;
+			goldTarget   = 1000;
 		}
 		
 		private function buildData():Array
