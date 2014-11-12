@@ -1,7 +1,6 @@
 package Handlers
 {
 	import GameObjects.Mobile.BallBasket;
-	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.MobileObject;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 

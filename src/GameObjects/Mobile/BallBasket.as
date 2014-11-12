@@ -10,9 +10,11 @@ package GameObjects.Mobile
 		private var rectangleTop:Sprite;
 		private var radius:int = 10;
 		public var hitBoxes:Vector.<HitBox>;
+		
 		private var hitLeft:HitBox;
 		private var hitRight:HitBox;
 		private var hitBottom:HitBox;
+		
 		public function BallBasket(x:int, y:int)
 		{
 			this.x = x;

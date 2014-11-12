@@ -4,7 +4,7 @@ package GameObjects.Mobile.Obstacles
 
 	public class Obstacle extends MobileObject
 	{
-		private var hitBoxes:Vector.<HitBox>;
+		public var hitBoxes:Vector.<HitBox> = new Vector.<HitBox>;
 		
 		public function Obstacle()
 		{
@@ -19,6 +19,10 @@ package GameObjects.Mobile.Obstacles
 			{
 				hitBoxes[i].checkBounds(object,dt);
 			}
+		}
+		public function getHitBoxes():Vector.<HitBox>
+		{
+			return hitBoxes;
 		}
 	}
 }

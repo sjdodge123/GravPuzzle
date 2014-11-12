@@ -3,8 +3,8 @@ package Levels
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.Obstacles.Obstacle;
-	import GameObjects.Mobile.Obstacles.Wall;
 	import GameObjects.Mobile.Obstacles.Square;
+	import GameObjects.Mobile.Obstacles.Wall;
 
 	public class LevelOne extends Level
 	{
@@ -41,7 +41,7 @@ package Levels
 		private function buildObstacles():Vector.<Obstacle>
 		{
 			obstacles = new Vector.<Obstacle>;
-			obstacles.push(new Square(300,300,20,5));
+			obstacles.push(new Square(300,150,50,50), new Square(200,150,50,50));
 			return obstacles;
 		}
 	}

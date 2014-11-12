@@ -48,6 +48,7 @@ package Construct
 			timerDisplay.textColor = 0xFF0000;
 			timerDisplay.x = gameStage.stageWidth/2;
 			timerDisplay.y = 1;
+			timerDisplay.selectable = false;
 			addChild(timerDisplay);
 			buildNextLevel();
 			collisionHandler = new CollisionHandler();
@@ -92,7 +93,7 @@ package Construct
 				this.obstacles.push(obstacleData[i]);
 				addChild(obstacleData[i]);
 				
-				for(var j:int=0;j<obstacleData[i].hitBoxes.length;j++) //run through and add all hitboxes of each obstacle
+				for(var j:int=0;j<obstacleData[i].getHitBoxes().length;j++) //run through and add all hitboxes of each obstacle
 				{
 					addChild(obstacleData[i].hitBoxes[j]);
 				}
@@ -160,7 +161,6 @@ package Construct
 			// !TODO! needs to check for collision against the obstacle array !TODO!
 			
 			// !TODO! Line 132 should be reversed. The friendBall should be checking to see if it collides with anything, not the other way around! !TODO!
-//			basket.checkBounds(friendBall,dt);  
 			collisionHandler.checkBounds(friendBall,obstacles,basket,dt); 
 			friendBall.updatePos();
 			var time:Number = levelTimer.currentCount/100;
