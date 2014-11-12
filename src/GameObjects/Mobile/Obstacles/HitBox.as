@@ -2,46 +2,46 @@ package GameObjects.Mobile.Obstacles
 {
 	import flash.display.Sprite;
 	
-	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.MobileObject;
 
 	public class HitBox extends Sprite
 	{
 		private var box:Sprite;
-		public function HitBox(spawnX:int,spawnY:int,width:int)
+		public function HitBox(spawnX:int,spawnY:int,width:int, height)
 		{
 			
 			this.x = spawnX;
 			this.y = spawnY;
 			box = new Sprite();
 			box.graphics.clear();
-			box.graphics.drawRect(0,0,width,width);
+			box.graphics.drawRect(0,0,width,height);
 			box.useHandCursor = false;
 			useHandCursor = false;
 			addChild(box);
 		}
-		public function checkBounds(friendBall:FriendBall,dt:Number):void
+		public function checkBounds(object:MobileObject,dt:Number):void
 		{
 			
-			if((friendBall.newX+friendBall.radius>this.x) && (friendBall.x+friendBall.radius<this.x) && (friendBall.y - friendBall.radius<this.y+box.height) && (friendBall.y + friendBall.radius>this.y)) //outerLeft
+			if((object.newX+object.radius>this.x) && (object.x+object.radius<this.x) && (object.y - object.radius<this.y+box.height) && (object.y + object.radius>this.y)) //outerLeft
 			{
-				friendBall.velX = -friendBall.velX * .65;
-				friendBall.calcChange(dt);
+				object.velX = -object.velX * .65;
+				object.calcChange(dt);
 			}
-			if((friendBall.newX-friendBall.radius<this.x+box.width) && (friendBall.x-friendBall.radius>this.x+box.width) && (friendBall.y - friendBall.radius<this.y+box.height) && (friendBall.y + friendBall.radius>this.y)) //outerRight
+			if((object.newX-object.radius<this.x+box.width) && (object.x-object.radius>this.x+box.width) && (object.y - object.radius<this.y+box.height) && (object.y + object.radius>this.y)) //outerRight
 			{
-				friendBall.velX = -friendBall.velX * .65;
-				friendBall.calcChange(dt);
+				object.velX = -object.velX * .65;
+				object.calcChange(dt);
 			}
-			if((friendBall.newY+friendBall.radius > this.y) && (friendBall.y+friendBall.radius < this.y) && (friendBall.x + friendBall.radius> this.x) && (friendBall.x - friendBall.radius < this.x+box.width)) //outerTop
+			if((object.newY+object.radius > this.y) && (object.y+object.radius < this.y) && (object.x + object.radius> this.x) && (object.x - object.radius < this.x+box.width)) //outerTop
 			{
-				friendBall.velY = -friendBall.velY * .65;
-				friendBall.calcChange(dt);
+				object.velY = -object.velY * .65;
+				object.calcChange(dt);
 				
 			}
-			if((friendBall.newY-friendBall.radius < this.y+box.height) && (friendBall.y-friendBall.radius > this.y+box.height) && (friendBall.x + friendBall.radius> this.x) && (friendBall.x - friendBall.radius< this.x+box.width)) //outerBottom
+			if((object.newY-object.radius < this.y+box.height) && (object.y-object.radius > this.y+box.height) && (object.x + object.radius> this.x) && (object.x - object.radius< this.x+box.width)) //outerBottom
 			{
-				friendBall.velY = -friendBall.velY * .65;
-				friendBall.calcChange(dt);
+				object.velY = -object.velY * .65;
+				object.calcChange(dt);
 			}
 		}
 	}

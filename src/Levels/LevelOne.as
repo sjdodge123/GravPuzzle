@@ -41,7 +41,7 @@ package Levels
 		private function buildObstacles():Vector.<Obstacle>
 		{
 			obstacles = new Vector.<Obstacle>;
-			obstacles.push(new Square(300,300,60));
+			obstacles.push(new Square(300,300,20,5));
 			return obstacles;
 		}
 	}

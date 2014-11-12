@@ -2,6 +2,7 @@ package Handlers
 {
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.MobileObject;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 
 	public class CollisionHandler
@@ -11,13 +12,13 @@ package Handlers
 		}
 		
 		
-		public function checkBounds(friendBall:FriendBall, obstacles:Vector.<Obstacle>, basket:BallBasket, dt:Number):void
+		public function checkBounds(object:MobileObject, obstacles:Vector.<Obstacle>, basket:BallBasket, dt:Number):void
 		{
 			for(var i:int=0;i<obstacles.length; i++)
 			{
-				obstacles[i].checkBounds(friendBall,dt);
+				obstacles[i].checkBounds(object,dt);
 			}
-			basket.checkBounds(friendBall,dt);
+			basket.checkBounds(object,dt);
 			
 		}
 	}
