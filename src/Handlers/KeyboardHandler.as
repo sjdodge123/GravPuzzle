@@ -21,6 +21,11 @@ package Handlers
 					dispatchEvent(new KeyEvent(KeyEvent.SPACE_PRESSED,null));
 					break;
 				}
+				case Keyboard.F12:
+				{
+					dispatchEvent(new KeyEvent(KeyEvent.F12_PRESSED,null));
+					break;
+				}
 			}
 		}			
 	}

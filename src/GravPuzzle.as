@@ -4,11 +4,15 @@ package
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
-	import flash.text.TextField;
 	import flash.utils.Timer;
+	import flash.events.NativeWindowBoundsEvent;
 	import Construct.GameBoard;
+	
 	import Events.KeyEvent;
+	
 	import Handlers.KeyboardHandler;
+	
+	import MapEditor.ToolKitWindow;
 	
 	public class GravPuzzle extends Sprite
 	{
@@ -21,23 +25,66 @@ package
 		private var keyboardHandler:KeyboardHandler;
 		private var dt:Number = 1;
 		private var gameBoard:GameBoard;
+		private var toolKit:ToolKitWindow;
 		
 		public function GravPuzzle()
 		{
+			
 			stage.addEventListener(Event.ENTER_FRAME,update);
+			stage.nativeWindow.addEventListener(Event.CLOSING,onClose);
+			stage.nativeWindow.addEventListener(NativeWindowBoundsEvent.MOVE,windowMove);
 			stage.addEventListener(MouseEvent.CLICK,mouseClick);
 			keyboardHandler = new KeyboardHandler(stage);
 			keyboardHandler.addEventListener(KeyEvent.SPACE_PRESSED,reset);
+			keyboardHandler.addEventListener(KeyEvent.F12_PRESSED,levelEdit);
 			clickCooldown = new Timer(500,1);
 			clickCooldown.addEventListener(TimerEvent.TIMER,resetCooldown);
 			deleteCooldown = new Timer(50,1);
 			deleteCooldown.addEventListener(TimerEvent.TIMER,resetDeleteCooldown);
 			resetTimer = new Timer(2000,1);
 			resetTimer.addEventListener(TimerEvent.TIMER,resetResetTimer); //love the naming scheme, sorry in advance
-			
 			gameBoard = new GameBoard(stage);
+			toolKit = new ToolKitWindow();
 			addChild(gameBoard);
 
+			
+		}
+		
+		protected function windowMove(event:NativeWindowBoundsEvent):void
+		{
+			toolKit.move(event);
+		}
+		
+		protected function onClose(event:Event):void
+		{
+			if(event.currentTarget == toolKit)
+			{
+				toolKit.removeEventListener(Event.CLOSING,onClose);
+				stage.addEventListener(Event.ENTER_FRAME,update);
+				stage.addEventListener(MouseEvent.CLICK,mouseClick);
+			}
+			else
+			{
+				toolKit.close();
+			}
+		}
+		
+		protected function levelEdit(event:Event):void
+		{
+			if(toolKit.active == false)
+			{
+				stage.removeEventListener(Event.ENTER_FRAME,update);
+				stage.removeEventListener(MouseEvent.CLICK,mouseClick);
+				toolKit.addEventListener(Event.CLOSING,onClose);
+				toolKit.activate(stage);
+			}
+			else
+			{
+				toolKit.close();
+				toolKit.removeEventListener(Event.CLOSING,onClose);
+				stage.addEventListener(Event.ENTER_FRAME,update);
+				stage.addEventListener(MouseEvent.CLICK,mouseClick);
+			}
 			
 		}
 		

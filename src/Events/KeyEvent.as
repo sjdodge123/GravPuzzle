@@ -5,6 +5,7 @@ package Events
 	public class KeyEvent extends Event
 	{
 		public static const SPACE_PRESSED:String = "space_pressed";
+		public static const F12_PRESSED:String = "f12_pressed";
 
 		public var params:Object;
 		public function KeyEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 

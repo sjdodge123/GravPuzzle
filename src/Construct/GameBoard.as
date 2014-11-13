@@ -52,8 +52,6 @@ package Construct
 			addChild(timerDisplay);
 			buildNextLevel();
 			collisionHandler = new CollisionHandler();
-//			hitBox = new HitBox(200,150);
-//			addChild(hitBox);
 			
 		}
 		//-----------------------------------------------
