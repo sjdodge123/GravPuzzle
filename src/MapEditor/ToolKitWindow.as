@@ -33,14 +33,14 @@ package MapEditor
 			}		
 		}
 		
-		public function activate(game:Stage):void
+		public function activate(mainWindow:NativeWindow):void
 		{
 			window = new NativeWindow(options);
 			window.title = "ToolKit";
 			active = true;
-			window.x = game.nativeWindow.x + game.nativeWindow.width;
-			window.y = game.nativeWindow.y;
-			window.height = game.nativeWindow.height;
+			window.x = mainWindow.x + mainWindow.width;
+			window.y = mainWindow.y;
+			window.height = mainWindow.height;
 			window.width = 200;
 			window.addEventListener(Event.CLOSING,onClose);
 			window.visible = true;

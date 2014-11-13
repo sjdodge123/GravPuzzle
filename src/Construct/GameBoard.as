@@ -9,6 +9,7 @@ package Construct
 	import Events.ChildEvent;
 	
 	import GameObjects.Immobile.GravBall;
+	import GameObjects.Immobile.LevelTimer;
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.Obstacles.HitBox;
@@ -28,7 +29,7 @@ package Construct
 		private var gravityObjects:Vector.<GravBall>;
 		private var obstacles:Vector.<Obstacle>;
 		private var currentLevel:Level;
-		private var levelTimer:Timer;
+		private var levelTimer:LevelTimer;
 		private var timerDisplay:TextField;
 		private var collisionHandler:CollisionHandler;
 		
@@ -43,7 +44,7 @@ package Construct
 			objectBuilder.addEventListener(ChildEvent.REMOVE_CHILD,removeElement);
 			gravityObjects = new Vector.<GravBall>;
 			obstacles = new Vector.<Obstacle>;
-			levelTimer = new Timer(0,0);
+			levelTimer = new LevelTimer();
 			timerDisplay = new TextField();
 			timerDisplay.textColor = 0xFF0000;
 			timerDisplay.x = gameStage.stageWidth/2;
@@ -80,7 +81,6 @@ package Construct
 		
 		private function getAndBuildLevel():void
 		{
-			levelTimer.reset();
 			var levelData:Array = currentLevel.getLevelData();
 			friendBall = levelData[0];
 			basket = levelData[1];
@@ -96,10 +96,10 @@ package Construct
 					addChild(obstacleData[i].hitBoxes[j]);
 				}
 			}
+			levelTimer.reset();
 			addChild(friendBall);
 			addChild(basket);
 			addChild(timerDisplay);
-			levelTimer.start();
 		}
 		
 //		public function endLevel():void
@@ -161,8 +161,17 @@ package Construct
 			// !TODO! Line 132 should be reversed. The friendBall should be checking to see if it collides with anything, not the other way around! !TODO!
 			collisionHandler.checkBounds(friendBall,obstacles,basket,dt); 
 			friendBall.updatePos();
-			var time:Number = levelTimer.currentCount/100;
+			var time:Number = levelTimer.update(dt);
 			timerDisplay.text = time.toString();
+		}
+		
+		public function pause():void
+		{
+			levelTimer.stop();
+		}
+		public function resume():void
+		{
+			levelTimer.start();
 		}
 		protected function addElement(event:ChildEvent):void
 		{
