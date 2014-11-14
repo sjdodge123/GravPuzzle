@@ -17,8 +17,6 @@ package GameObjects.Mobile.Obstacles
 			image.graphics.drawRect(0,0,width,height);
 			image.useHandCursor = false;
 			addChild(image);
-			
-			
 			//adds hitboxes to square
 			hitBox = new HitBox(x,y,width,height);
 			hitBoxes = new Vector.<HitBox>;

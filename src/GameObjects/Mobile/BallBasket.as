@@ -2,6 +2,8 @@ package GameObjects.Mobile
 {
 	import flash.display.Sprite;
 	
+	import Events.LevelStateEvent;
+	
 	import GameObjects.Mobile.Obstacles.HitBox;
 
 	public class BallBasket extends MobileObject
@@ -60,7 +62,8 @@ package GameObjects.Mobile
 			//win condition
 			if (dL<10)
 			{
-				trace('victory, bitch');
+				trace("Victory! On to next level!");
+				dispatchEvent(new LevelStateEvent(LevelStateEvent.WIN_LEVEL,null));
 			}			
 		}
 	}

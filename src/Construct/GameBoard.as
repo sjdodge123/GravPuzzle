@@ -2,11 +2,13 @@ package Construct
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.net.ObjectEncoding;
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	
 	import Events.ChildEvent;
+	import Events.LevelStateEvent;
 	
 	import GameObjects.Immobile.GravBall;
 	import GameObjects.Immobile.LevelTimer;
@@ -19,6 +21,7 @@ package Construct
 	
 	import Levels.Level;
 	import Levels.LevelOne;
+	import Levels.LevelZero;
 
 	public class GameBoard extends Sprite
 	{
@@ -38,7 +41,6 @@ package Construct
 		
 		public function GameBoard(gameStage:Stage)
 		{
-			//Setup Gameboard
 			objectBuilder = new ObjectBuilder();
 			objectBuilder.addEventListener(ChildEvent.ADD_CHILD,addElement);
 			objectBuilder.addEventListener(ChildEvent.REMOVE_CHILD,removeElement);
@@ -51,6 +53,7 @@ package Construct
 			timerDisplay.y = 1;
 			timerDisplay.selectable = false;
 			addChild(timerDisplay);
+			currentLevel = new LevelZero();
 			buildNextLevel();
 			collisionHandler = new CollisionHandler();
 			
@@ -61,20 +64,13 @@ package Construct
 		
 		private function buildNextLevel():void
 		{
-			currentLevel = new LevelOne();
+			currentLevel = currentLevel.getNextLevel();
 			getAndBuildLevel();
 		}
 		
-		public function resetLevel():Boolean
+		public function resetLevel(event:Event):Boolean
 		{
-			var count:int = numChildren;
-			while(numChildren)
-			{
-				count--;
-				removeChild(getChildAt(count));
-			}
-			gravityObjects = null;
-			gravityObjects = new Vector.<GravBall>;
+			clearBoard();
 			getAndBuildLevel();
 			return true;
 		}
@@ -84,6 +80,8 @@ package Construct
 			var levelData:Array = currentLevel.getLevelData();
 			friendBall = levelData[0];
 			basket = levelData[1];
+			basket.addEventListener(LevelStateEvent.WIN_LEVEL,nextLevel);
+			basket.addEventListener(LevelStateEvent.LOSE_LEVEL,resetLevel);
 			var obstacleData:Vector.<Obstacle> = levelData[2];
 			this.obstacles = new Vector.<Obstacle>;
 			for(var i:int=0;i<obstacleData.length;i++)
@@ -102,16 +100,11 @@ package Construct
 			addChild(timerDisplay);
 		}
 		
-//		public function endLevel():void
-//		{
-//			for( var i:int=0;i<gravityObjects.length;i++)
-//			{
-//				removeChild(gravityObjects[i]);
-//			}
-//			gravityObjects = null;
-//			removeChild(friendBall);
-//		}
-		
+		protected function nextLevel(event:Event):void
+		{
+			clearBoard();
+			buildNextLevel();
+		}
 		
 		//-----------------------------------------------
 		//-----------------User Control------------------
@@ -163,6 +156,22 @@ package Construct
 			friendBall.updatePos();
 			var time:Number = levelTimer.update(dt);
 			timerDisplay.text = time.toString();
+		}
+		
+		private function clearBoard():void
+		{
+			var count:int = numChildren;
+			while(numChildren)
+			{
+				count--;
+				removeChild(getChildAt(count));
+			}
+			gravityObjects = null;
+			friendBall = null;
+			basket.removeEventListener(LevelStateEvent.WIN_LEVEL,nextLevel);
+			basket.removeEventListener(LevelStateEvent.LOSE_LEVEL,resetLevel);
+			basket = null;
+			gravityObjects = new Vector.<GravBall>;
 		}
 		
 		public function pause():void

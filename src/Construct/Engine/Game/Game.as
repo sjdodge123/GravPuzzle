@@ -13,8 +13,6 @@ package Construct.Engine.Game
 	
 	import Handlers.KeyboardHandler;
 	
-	import MapEditor.ToolKitWindow;
-
 	public class Game
 	{
 		private var mainWindow:WindowHandler;
@@ -69,8 +67,7 @@ package Construct.Engine.Game
 			mainStage.addEventListener(Event.ENTER_FRAME,update);
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClick);
 			keyboardHandler.addEventListener(KeyEvent.SPACE_PRESSED,reset);
-			gameBoard.resetLevel();
-			
+			gameBoard.resetLevel(null);
 		}
 		
 		protected function reset(event:Event):void
