@@ -3,7 +3,6 @@ package Construct.Engine.Game
 	import flash.display.NativeWindow;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.MouseEvent;
 	import flash.events.NativeWindowBoundsEvent;
 	
 	import Events.EngineControlEvent;
@@ -14,13 +13,28 @@ package Construct.Engine.Game
 	{
 		private var toolKit:ToolKitWindow;
 		private var mainWindow:NativeWindow;
+		private var width:int;
+		private var height:int;
 		public function WindowHandler(mainWindow:NativeWindow)
 		{
 			this.mainWindow = mainWindow;
 			toolKit = new ToolKitWindow();
 			mainWindow.addEventListener(Event.CLOSING,onClose);
 			mainWindow.addEventListener(NativeWindowBoundsEvent.MOVE,windowMove);
+			mainWindow.width = 1024;
+			mainWindow.height = 768;
 		}
+		
+		public function getWidth():int
+		{
+			return mainWindow.width;
+		}
+		
+		public function getHeight():int
+		{
+			return mainWindow.height;
+		}
+		
 		
 		protected function windowMove(event:NativeWindowBoundsEvent):void
 		{

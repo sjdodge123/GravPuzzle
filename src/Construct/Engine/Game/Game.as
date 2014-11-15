@@ -31,10 +31,11 @@ package Construct.Engine.Game
 		{
 			this.mainStage = mainStage;
 			mainWindow = new WindowHandler(mainStage.nativeWindow);
+			this.mainStage.stageHeight = mainWindow.getHeight();
 			mainWindow.addEventListener(EngineControlEvent.RESUME_ENGINE,resumeUpdates);
 			mainWindow.addEventListener(EngineControlEvent.PAUSE_ENGINE,pauseUpdates);
 			keyboardHandler = new KeyboardHandler(mainStage);
-			gameBoard = new GameBoard(mainStage);
+			gameBoard = new GameBoard(mainStage.stageWidth,mainStage.stageHeight);
 			mainStage.addEventListener(Event.ENTER_FRAME,update);
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClick);
 			keyboardHandler.addEventListener(KeyEvent.SPACE_PRESSED,reset);

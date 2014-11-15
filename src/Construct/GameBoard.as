@@ -1,5 +1,6 @@
 package Construct
 {
+	import flash.display.NativeWindow;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -39,7 +40,7 @@ package Construct
 		//temporary!!
 		public var hitBox:HitBox;
 		
-		public function GameBoard(gameStage:Stage)
+		public function GameBoard(stageWidth:int,stageHeight:int)
 		{
 			objectBuilder = new ObjectBuilder();
 			objectBuilder.addEventListener(ChildEvent.ADD_CHILD,addElement);
@@ -49,7 +50,7 @@ package Construct
 			levelTimer = new LevelTimer();
 			timerDisplay = new TextField();
 			timerDisplay.textColor = 0xFF0000;
-			timerDisplay.x = gameStage.stageWidth/2;
+			timerDisplay.x = stageWidth/2;
 			timerDisplay.y = 1;
 			timerDisplay.selectable = false;
 			addChild(timerDisplay);
