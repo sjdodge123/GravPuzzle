@@ -8,7 +8,7 @@ package Levels
 	{
 		public function LevelOne()
 		{
-			nextLevel = new LevelTwo();
+			
 		}
 		public override function getLevelData():Array
 		{

@@ -14,7 +14,6 @@ package Levels
 		protected var basket:BallBasket;
 		protected var obstacles:Vector.<Obstacle>;
 		protected var levelData:Array;
-		protected var nextLevel:Level;
 		protected var bronzeTarget:int = 0;
 		protected var silverTarget:int = 0;
 		protected var goldTarget:int = 0;
@@ -23,10 +22,7 @@ package Levels
 		{
 			
 		}
-		public function getNextLevel():Level
-		{
-			return nextLevel;
-		}
+		
 		public function getGravBallCount():int
 		{
 			return gravBallCount;

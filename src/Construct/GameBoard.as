@@ -3,9 +3,7 @@ package Construct
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.net.ObjectEncoding;
 	import flash.text.TextField;
-	import flash.utils.Timer;
 	
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
@@ -21,7 +19,7 @@ package Construct
 	
 	import Levels.Level;
 	import Levels.LevelOne;
-	import Levels.LevelZero;
+	import Levels.LevelTwo;
 
 	public class GameBoard extends Sprite
 	{
@@ -31,10 +29,12 @@ package Construct
 		private var gravBall:GravBall;
 		private var gravityObjects:Vector.<GravBall>;
 		private var obstacles:Vector.<Obstacle>;
-		private var currentLevel:Level;
+		private var currentLevelData:Level;
+		private var levelNum:int = 1;
 		private var levelTimer:LevelTimer;
 		private var timerDisplay:TextField;
 		private var collisionHandler:CollisionHandler;
+		private var levels:Vector.<Level>;
 		
 		//temporary!!
 		public var hitBox:HitBox;
@@ -53,18 +53,29 @@ package Construct
 			timerDisplay.y = 1;
 			timerDisplay.selectable = false;
 			addChild(timerDisplay);
-			currentLevel = new LevelZero();
+			
+			populateLevels();
 			buildNextLevel();
 			collisionHandler = new CollisionHandler();
 			
 		}
+		
+		private function populateLevels():void
+		{
+			levels = new Vector.<Level>;
+			levels.push(null);
+			levels.push(new LevelOne());
+			levels.push(new LevelTwo());
+			
+			levelNum = 1;
+		} 
 		//-----------------------------------------------
 		//-----------------Level Control-----------------
 		//-----------------------------------------------
 		
 		private function buildNextLevel():void
 		{
-			currentLevel = currentLevel.getNextLevel();
+			currentLevelData = levels[levelNum];
 			getAndBuildLevel();
 		}
 		
@@ -77,7 +88,7 @@ package Construct
 		
 		private function getAndBuildLevel():void
 		{
-			var levelData:Array = currentLevel.getLevelData();
+			var levelData:Array = currentLevelData.getLevelData();
 			friendBall = levelData[0];
 			basket = levelData[1];
 			basket.addEventListener(LevelStateEvent.WIN_LEVEL,nextLevel);
@@ -98,12 +109,21 @@ package Construct
 			addChild(friendBall);
 			addChild(basket);
 			addChild(timerDisplay);
+			friendBall.calcChange(1);
 		}
 		
 		protected function nextLevel(event:Event):void
 		{
 			clearBoard();
-			buildNextLevel();
+			levelNum++;
+			if(levels.length+1 > levelNum)
+			{
+				buildNextLevel();
+			}
+			else
+			{
+				trace("You Win!");	
+			}
 		}
 		
 		//-----------------------------------------------
@@ -130,7 +150,7 @@ package Construct
 		
 		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
-			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevel.getGravBallCount());
+			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
 			friendBall.accel = 0;
 		}
 		
@@ -142,6 +162,7 @@ package Construct
 		
 		public function update(dt:Number):void
 		{
+			
 			for(var i:int=0;i<gravityObjects.length;i++)
 			{
 				var dx:Number = gravityObjects[i].x -friendBall.x;

@@ -9,14 +9,14 @@ package Levels
 	{
 		public function LevelTwo()
 		{
-			nextLevel = null;
+			
 		}
 		public override function getLevelData():Array
 		{
-			gravBallCount = 1;
+			gravBallCount = 3;
 			friendBall = new FriendBall(20,175);
 			friendBall.velX = 1.5;
-			basket = new BallBasket(400,200);
+			basket = new BallBasket(400,175);
 			setTargets();
 			return buildData();
 		}
