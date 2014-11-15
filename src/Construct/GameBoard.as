@@ -19,8 +19,9 @@ package Construct
 	import Handlers.CollisionHandler;
 	
 	import Levels.Level;
-	import Levels.LevelOne;
-	import Levels.LevelTwo;
+	import Levels.Level1;
+	import Levels.Level2;
+	import Levels.Level3;
 
 	public class GameBoard extends Sprite
 	{
@@ -65,8 +66,9 @@ package Construct
 		{
 			levels = new Vector.<Level>;
 			levels.push(null);
-			levels.push(new LevelOne());
-			levels.push(new LevelTwo());
+			levels.push(new Level1());
+			levels.push(new Level2());
+			levels.push(new Level3());
 			
 			levelNum = 1;
 		} 
@@ -115,6 +117,8 @@ package Construct
 		
 		protected function nextLevel(event:Event):void
 		{
+			//Check for target medals
+			//Move to next level if bronze was met
 			clearBoard();
 			levelNum++;
 			if(levels.length > levelNum)
@@ -123,7 +127,8 @@ package Construct
 			}
 			else
 			{
-				trace("You Win!");
+				//Return to level selection or menu screen
+				trace("You Win! Game over");
 				levelNum = 1;
 				buildNextLevel();
 			}

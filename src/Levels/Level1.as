@@ -4,9 +4,9 @@ package Levels
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 
-	public class LevelOne extends Level
+	public class Level1 extends Level
 	{
-		public function LevelOne()
+		public function Level1()
 		{
 			
 		}
