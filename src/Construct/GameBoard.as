@@ -117,13 +117,15 @@ package Construct
 		{
 			clearBoard();
 			levelNum++;
-			if(levels.length+1 > levelNum)
+			if(levels.length > levelNum)
 			{
 				buildNextLevel();
 			}
 			else
 			{
-				trace("You Win!");	
+				trace("You Win!");
+				levelNum = 1;
+				buildNextLevel();
 			}
 		}
 		
@@ -163,7 +165,6 @@ package Construct
 		
 		public function update(dt:Number):void
 		{
-			
 			for(var i:int=0;i<gravityObjects.length;i++)
 			{
 				var dx:Number = gravityObjects[i].x -friendBall.x;
