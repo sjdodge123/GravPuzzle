@@ -15,7 +15,7 @@ package Levels
 		{
 			gravBallCount = 3;
 			friendBall = new FriendBall(265,50);
-			friendBall.velY = 1.1;
+			friendBall.velY = 1.22;
 			basket = new BallBasket(350,250);
 			setTargets();
 			return buildData();
@@ -24,8 +24,8 @@ package Levels
 		private function setTargets():void
 		{
 			bronzeTarget = 200;
-			silverTarget = 400;
-			goldTarget   = 1000;
+			silverTarget = 350;
+			goldTarget   = 600;
 		}
 		
 		private function buildData():Array

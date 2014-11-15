@@ -17,6 +17,7 @@ package Levels
 		protected var bronzeTarget:int = 0;
 		protected var silverTarget:int = 0;
 		protected var goldTarget:int = 0;
+		protected var scoreCap:int = 1000;
 		
 		public function Level()
 		{
@@ -31,6 +32,11 @@ package Levels
 		public function getLevelData():Array
 		{
 			return levelData;	
+		}
+		
+		public function getScoreCap():int
+		{
+			return scoreCap;
 		}
 		public function getBronzeTarget():int
 		{

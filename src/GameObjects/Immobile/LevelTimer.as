@@ -9,8 +9,7 @@ package GameObjects.Immobile
 		private var timer:Timer;
 		private var previousTime:Number;
 		private var newTime:Number;	
-
-		public var currentCount:Number;
+		
 		public function LevelTimer()
 		{
 			timer = new Timer(0,0);
@@ -36,6 +35,11 @@ package GameObjects.Immobile
 			dt =  newTime-previousTime;
 			previousTime = newTime;
 			elapsedTime += dt;
+			return elapsedTime/100;
+		}
+		
+		public function getElapsedTime():Number
+		{
 			return elapsedTime/100;
 		}
 		

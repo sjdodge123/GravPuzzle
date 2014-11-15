@@ -1,8 +1,6 @@
 package Construct
 {
-	import flash.display.NativeWindow;
 	import flash.display.Sprite;
-	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.text.TextField;
 	
@@ -22,6 +20,7 @@ package Construct
 	import Levels.Level1;
 	import Levels.Level2;
 	import Levels.Level3;
+	import Levels.Level4;
 
 	public class GameBoard extends Sprite
 	{
@@ -37,9 +36,11 @@ package Construct
 		private var timerDisplay:TextField;
 		private var collisionHandler:CollisionHandler;
 		private var levels:Vector.<Level>;
+		private var levelScore:Number;
 		
 		//temporary!!
 		public var hitBox:HitBox;
+		private var mouseClicks:int;
 		
 		public function GameBoard(stageWidth:int,stageHeight:int)
 		{
@@ -69,6 +70,7 @@ package Construct
 			levels.push(new Level1());
 			levels.push(new Level2());
 			levels.push(new Level3());
+			levels.push(new Level4());
 			
 			levelNum = 1;
 		} 
@@ -91,18 +93,24 @@ package Construct
 		
 		private function getAndBuildLevel():void
 		{
+			levelScore = currentLevelData.getScoreCap();
 			var levelData:Array = currentLevelData.getLevelData();
 			friendBall = levelData[0];
 			basket = levelData[1];
 			basket.addEventListener(LevelStateEvent.WIN_LEVEL,nextLevel);
 			basket.addEventListener(LevelStateEvent.LOSE_LEVEL,resetLevel);
+			var basketBoxes:Vector.<HitBox> = basket.getHitBoxes();
+			addChild(basket);
+			for(var i:int=0;i<basketBoxes.length;i++)
+			{
+				addChild(basketBoxes[i]);
+			}
 			var obstacleData:Vector.<Obstacle> = levelData[2];
 			this.obstacles = new Vector.<Obstacle>;
 			for(var i:int=0;i<obstacleData.length;i++)
 			{
 				this.obstacles.push(obstacleData[i]);
 				addChild(obstacleData[i]);
-				
 				for(var j:int=0;j<obstacleData[i].getHitBoxes().length;j++) //run through and add all hitboxes of each obstacle
 				{
 					addChild(obstacleData[i].hitBoxes[j]);
@@ -110,18 +118,18 @@ package Construct
 			}
 			levelTimer.reset();
 			addChild(friendBall);
-			addChild(basket);
 			addChild(timerDisplay);
 			friendBall.calcChange(1);
 		}
 		
 		protected function nextLevel(event:Event):void
 		{
-			//Check for target medals
-			//Move to next level if bronze was met
+			if(checkScore())
+			{
+				levelNum++;
+			}
 			clearBoard();
-			levelNum++;
-			if(levels.length > levelNum)
+			if(levelNum < levels.length)
 			{
 				buildNextLevel();
 			}
@@ -131,6 +139,40 @@ package Construct
 				trace("You Win! Game over");
 				levelNum = 1;
 				buildNextLevel();
+			}
+		}
+		
+		private function checkScore():Boolean
+		{
+			levelScore -= 50*levelTimer.getElapsedTime();
+			if(mouseClicks < 2)
+			{
+				trace("Mastery Achieved");
+			}
+			if(levelScore < 0)
+			{
+				levelScore = 0;
+			}
+			trace(levelScore);
+			if(levelScore > currentLevelData.getGoldTarget())
+			{
+				trace("You got Gold");
+				return true;
+			}
+			else if(levelScore > currentLevelData.getSilverTarget())
+			{
+				trace("You got Silver");
+				return true;
+			}
+			else if(levelScore > currentLevelData.getBronzeTarget())
+			{
+				trace("You got Bronze");
+				return true;
+			}
+			else
+			{
+				trace("You suckkkk, you can't go on");
+				return false;
 			}
 		}
 		
@@ -155,9 +197,9 @@ package Construct
 			}
 			return false;
 		}
-		
 		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
+			mouseClicks++;
 			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
 			friendBall.accel = 0;
 		}
@@ -188,6 +230,8 @@ package Construct
 		
 		private function clearBoard():void
 		{
+			mouseClicks = 0;
+			levelScore = 1000;
 			var count:int = numChildren;
 			while(numChildren)
 			{

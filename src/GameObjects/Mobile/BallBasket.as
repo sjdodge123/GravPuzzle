@@ -36,21 +36,23 @@ package GameObjects.Mobile
 			rectangleTop.graphics.drawRect(0,0,45,5);
 			rectangleTop.useHandCursor = false;
 			addChild(rectangleTop);
-			
-			hitLeft = new HitBox(x,y,1,20);
-			hitRight = new HitBox(x+44,y,1,20);
-			hitBottom = new HitBox(x,y+19,45,1);
-			
+
+			hitLeft = new HitBox(x,y,1,20,0);
+			hitRight = new HitBox(x+44,y,1,20,0);
+			hitBottom = new HitBox(x,y+19,45,1,0);
 			hitBoxes = new Vector.<HitBox>;
 			hitBoxes.push(hitLeft);
 			hitBoxes.push(hitRight);
-			hitBoxes.push(hitBottom);
-
+			hitBoxes.push(hitBottom);	
+		}
+		
+		public function getHitBoxes():Vector.<HitBox>
+		{
+			return hitBoxes;
 		}
 		
 		public function checkBounds(object:MobileObject,dt:Number):void
 		{
-			
 			var dx:Number = this.x + (rectangle.width)/2 - object.x;
 			var dy:Number = this.y + (rectangle.height)/2 - object.y;
 			var dL:Number = Math.sqrt(dx*dx+dy*dy);
@@ -60,7 +62,7 @@ package GameObjects.Mobile
 				hitBoxes[i].checkBounds(object,dt);
 			}
 			//win condition
-			if (dL<10)
+			if (dL<15)
 			{
 				trace("Victory! On to next level!");
 				dispatchEvent(new LevelStateEvent(LevelStateEvent.WIN_LEVEL,null));
