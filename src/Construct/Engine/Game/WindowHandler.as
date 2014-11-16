@@ -21,8 +21,8 @@ package Construct.Engine.Game
 			toolKit = new ToolKitWindow();
 			mainWindow.addEventListener(Event.CLOSING,onClose);
 			mainWindow.addEventListener(NativeWindowBoundsEvent.MOVE,windowMove);
-			mainWindow.width = 1024;
-			mainWindow.height = 768;
+			mainWindow.width = 800;
+			mainWindow.height = 600;
 		}
 		
 		public function getWidth():int

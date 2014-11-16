@@ -37,6 +37,7 @@ package Construct
 		private var collisionHandler:CollisionHandler;
 		private var levels:Vector.<Level>;
 		private var levelScore:Number;
+		private var goalDisplay:TextField;
 		
 		//temporary!!
 		public var hitBox:HitBox;
@@ -56,6 +57,14 @@ package Construct
 			timerDisplay.y = 1;
 			timerDisplay.selectable = false;
 			addChild(timerDisplay);
+			
+			goalDisplay = new TextField();
+			goalDisplay.textColor = 0xFF0000;
+			goalDisplay.x = stageWidth/2 + 50;
+			goalDisplay.y = 1;
+			goalDisplay.selectable = false;
+			addChild(goalDisplay);
+			goalDisplay.text = "test";
 			
 			populateLevels();
 			buildNextLevel();
@@ -101,9 +110,9 @@ package Construct
 			basket.addEventListener(LevelStateEvent.LOSE_LEVEL,resetLevel);
 			var basketBoxes:Vector.<HitBox> = basket.getHitBoxes();
 			addChild(basket);
-			for(var i:int=0;i<basketBoxes.length;i++)
+			for(var k:int=0;k<basketBoxes.length;k++)
 			{
-				addChild(basketBoxes[i]);
+				addChild(basketBoxes[k]);
 			}
 			var obstacleData:Vector.<Obstacle> = levelData[2];
 			this.obstacles = new Vector.<Obstacle>;
@@ -119,6 +128,7 @@ package Construct
 			levelTimer.reset();
 			addChild(friendBall);
 			addChild(timerDisplay);
+			addChild(goalDisplay);
 			friendBall.calcChange(1);
 		}
 		
@@ -147,7 +157,8 @@ package Construct
 			levelScore -= 50*levelTimer.getElapsedTime();
 			if(mouseClicks < 2)
 			{
-				trace("Mastery Achieved");
+				goalDisplay.text = ("You got Mastery");
+				return true;
 			}
 			if(levelScore < 0)
 			{
@@ -156,22 +167,22 @@ package Construct
 			trace(levelScore);
 			if(levelScore > currentLevelData.getGoldTarget())
 			{
-				trace("You got Gold");
+				goalDisplay.text = ("You got Gold");
 				return true;
 			}
 			else if(levelScore > currentLevelData.getSilverTarget())
 			{
-				trace("You got Silver");
+				goalDisplay.text = ("You got Silver");
 				return true;
 			}
 			else if(levelScore > currentLevelData.getBronzeTarget())
 			{
-				trace("You got Bronze");
+				goalDisplay.text = ("You got Bronze");
 				return true;
 			}
 			else
 			{
-				trace("You suckkkk, you can't go on");
+				goalDisplay.text = ("Failure");
 				return false;
 			}
 		}
@@ -238,6 +249,7 @@ package Construct
 				count--;
 				removeChild(getChildAt(count));
 			}
+			addChild(goalDisplay);
 			gravityObjects = null;
 			friendBall = null;
 			basket.removeEventListener(LevelStateEvent.WIN_LEVEL,nextLevel);
@@ -253,6 +265,18 @@ package Construct
 		public function resume():void
 		{
 			levelTimer.start();
+		}
+		
+		public function levelUp():void
+		{
+			levelNum--;
+			clearBoard();
+			getAndBuildLevel();
+			nextLevel(null);
+		}
+		public function levelDown():void
+		{
+			nextLevel(null);
 		}
 		protected function addElement(event:ChildEvent):void
 		{

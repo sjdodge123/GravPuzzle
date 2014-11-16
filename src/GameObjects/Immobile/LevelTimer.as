@@ -22,6 +22,7 @@ package GameObjects.Immobile
 			elapsedTime = 0;
 			newTime = 0;
 			previousTime = timer.currentCount;
+			start();
 		}
 		
 		public function stop():void

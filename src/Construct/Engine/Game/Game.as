@@ -40,6 +40,8 @@ package Construct.Engine.Game
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClick);
 			keyboardHandler.addEventListener(KeyEvent.SPACE_PRESSED,reset);
 			keyboardHandler.addEventListener(KeyEvent.F12_PRESSED,mainWindow.levelEdit);
+			keyboardHandler.addEventListener(KeyEvent.MOUSE_WHEEL_UP,levelUp);
+			keyboardHandler.addEventListener(KeyEvent.MOUSE_WHEEL_DOWN,levelDOWN);
 			clickCooldown = new Timer(500,1);
 			clickCooldown.addEventListener(TimerEvent.TIMER,resetCooldown);
 			deleteCooldown = new Timer(50,1);
@@ -47,6 +49,16 @@ package Construct.Engine.Game
 			resetTimer = new Timer(2000,1);
 			resetTimer.addEventListener(TimerEvent.TIMER,resetResetTimer); //love the naming scheme, sorry in advance
 			mainStage.addChild(gameBoard);
+		}
+		
+		protected function levelDOWN(event:Event):void
+		{
+			gameBoard.levelDown();			
+		}
+		
+		protected function levelUp(event:Event):void
+		{
+			gameBoard.levelUp();
 		}
 		
 		protected function pauseUpdates(event:Event):void
