@@ -38,6 +38,7 @@ package Construct
 		private var levels:Vector.<Level>;
 		private var levelScore:Number;
 		private var goalDisplay:TextField;
+		private var totalSpawns:int = 0;
 		
 		//temporary!!
 		public var hitBox:HitBox;
@@ -211,8 +212,13 @@ package Construct
 		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
 			mouseClicks++;
-			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
-			friendBall.accel = 0;
+			if(totalSpawns < currentLevelData.getGravBallCount())
+			{
+				totalSpawns += 1;
+				gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
+				friendBall.accel = 0;
+			}
+			
 		}
 		
 		
@@ -242,6 +248,7 @@ package Construct
 		private function clearBoard():void
 		{
 			mouseClicks = 0;
+			totalSpawns = 0;
 			levelScore = 1000;
 			var count:int = numChildren;
 			while(numChildren)
