@@ -7,11 +7,11 @@ package Construct
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
 	
-	import GameObjects.Mobile.GravBall;
 	import GameObjects.Immobile.LevelTimer;
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.Camera;
 	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.GravBall;
 	import GameObjects.Mobile.MobileObject;
 	import GameObjects.Mobile.Obstacles.HitBox;
 	import GameObjects.Mobile.Obstacles.Obstacle;
@@ -301,7 +301,7 @@ package Construct
 		{
 			var cameraObjects:Vector.<MobileObject> = new Vector.<MobileObject>;
 			cameraObjects.push(friendBall);
-			cameraObjects.push(basket);
+			//cameraObjects.push(basket);
 			//for each ( var object:MobileObject in gravityObjects){
 			//	cameraObjects.push(object);
 			//}
@@ -311,6 +311,25 @@ package Construct
 		public function getGoalText():String
 		{
 			return goalText;
+		}
+		public function getCurrentScore():int
+		{
+			return currentLevelData.getScoreCap() - levelTimer.getElapsedTime();
+		}
+		
+		public function getGoldTarget():String
+		{
+			return currentLevelData.getGoldTarget().toString();
+		}
+		
+		public function getSilverTarget():String
+		{
+			return currentLevelData.getSilverTarget().toString();
+		}
+		
+		public function getBronzeTarget():String
+		{
+			return currentLevelData.getBronzeTarget().toString();
 		}
 	}
 }

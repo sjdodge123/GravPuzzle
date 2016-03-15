@@ -62,9 +62,11 @@ package Construct.Engine.Game
 			
 			hud = new HUD(mainStage.stageWidth,mainStage.stageHeight,gameBoard);
 			
-			mainStage.addChild(hud);
-			mainStage.addChild(camera);
 			camera.addChild(gameBoard);
+			mainStage.addChild(camera);
+			mainStage.addChild(hud);
+			
+			
 		}
 		
 		protected function levelDOWN(event:Event):void

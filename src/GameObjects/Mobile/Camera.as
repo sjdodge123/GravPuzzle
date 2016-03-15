@@ -9,7 +9,7 @@ package GameObjects.Mobile
 	{
 		private var world:Sprite;
 		private var view:Rectangle;
-		private var padding:int = 20;
+		private var padding:int = 50;
 		
 		
 		public function Camera(xOffset:int,yOffset:int,gameWidth:int,gameheight:int)
