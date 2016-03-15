@@ -4,12 +4,16 @@ package Construct.Engine.Game
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.text.TextField;
 	import flash.utils.Timer;
 	
 	import Construct.GameBoard;
 	
 	import Events.EngineControlEvent;
 	import Events.KeyEvent;
+	
+	import GameObjects.Immobile.LevelTimer;
+	import GameObjects.Mobile.Camera;
 	
 	import Handlers.KeyboardHandler;
 	
@@ -26,12 +30,18 @@ package Construct.Engine.Game
 		private var resetTimer:Timer;
 		private var dt:Number = 1;
 		private var gameBoard:GameBoard;
+		private var camera:Camera;
+		private var levelTimer:LevelTimer;
+		
+		private var timerDisplay:TextField;
+		private var goalDisplay:TextField;
 	
 		public function Game(mainStage:Stage)
 		{
 			this.mainStage = mainStage;
 			mainWindow = new WindowHandler(mainStage.nativeWindow);
 			this.mainStage.stageHeight = mainWindow.getHeight();
+			camera = new Camera(0,0,mainStage.stageWidth,mainStage.stageHeight);
 			mainWindow.addEventListener(EngineControlEvent.RESUME_ENGINE,resumeUpdates);
 			mainWindow.addEventListener(EngineControlEvent.PAUSE_ENGINE,pauseUpdates);
 			keyboardHandler = new KeyboardHandler(mainStage);
@@ -48,7 +58,27 @@ package Construct.Engine.Game
 			deleteCooldown.addEventListener(TimerEvent.TIMER,resetDeleteCooldown);
 			resetTimer = new Timer(2000,1);
 			resetTimer.addEventListener(TimerEvent.TIMER,resetResetTimer); //love the naming scheme, sorry in advance
-			mainStage.addChild(gameBoard);
+			
+			
+			
+			timerDisplay = new TextField();
+			timerDisplay.textColor = 0xFF0000;
+			timerDisplay.x = mainStage.stageWidth/2;
+			timerDisplay.y = 1;
+			timerDisplay.selectable = false;
+			
+			goalDisplay = new TextField();
+			goalDisplay.textColor = 0xFF0000;
+			goalDisplay.width = mainStage.stageWidth;
+			goalDisplay.x = mainStage.stageWidth/2 + 50;
+			goalDisplay.y = 1;
+			goalDisplay.selectable = false;
+			
+			
+			mainStage.addChild(timerDisplay);
+			mainStage.addChild(camera);
+			mainStage.addChild(goalDisplay);
+			camera.addChild(gameBoard);
 		}
 		
 		protected function levelDOWN(event:Event):void
@@ -105,8 +135,9 @@ package Construct.Engine.Game
 		
 		protected function mouseClick(event:MouseEvent):void
 		{
-			
-			justDeleted = gameBoard.checkDeletions(event.stageX,event.stageY);
+			var xVal:Number = event.stageX-camera.getOffsetX();
+			var yVal:Number = event.stageY-camera.getOffsetY();
+			justDeleted = gameBoard.checkDeletions(xVal,yVal);
 			if(justDeleted)
 			{	
 				deleteCooldown.reset();
@@ -114,7 +145,7 @@ package Construct.Engine.Game
 			}
 			if(coolDownReady && !justDeleted)
 			{
-				gameBoard.spawnGravBall(event.stageX,event.stageY);
+				gameBoard.spawnGravBall(xVal,yVal);
 				coolDownReady = false;
 				clickCooldown.reset();
 				clickCooldown.start();
@@ -123,7 +154,13 @@ package Construct.Engine.Game
 		
 		protected function update(event:Event):void
 		{
-			gameBoard.update(dt);	
+			gameBoard.update(dt);
+			goalDisplay.text = gameBoard.getGoalText();
+			timerDisplay.text = gameBoard.getElapsedTime().toString();
+			camera.move(gameBoard.getCameraObjects());
+			//camera.adjust(gameBoard.getCameraObjects());	
 		}
+		
+		
 	}
 }

@@ -12,22 +12,26 @@ package GameObjects.Mobile
 		private var rectangleTop:Sprite;
 		private var radius:int = 10;
 		private var boxWidth:int = 45;
+		private var boxHeight:int = 20;
+		
+		private var goal:Sprite;
 		public var hitBoxes:Vector.<HitBox>;
 		
 		private var hitLeft:HitBox;
 		private var hitRight:HitBox;
 		private var hitBottom:HitBox;
 		
-		public function BallBasket(x:int, y:int,width:int=45)
+		public function BallBasket(x:int, y:int,width:int=45,height:int=20)
 		{
 			this.x = x;
 			this.y = y;
 			boxWidth = width;
+			boxHeight = height;
 			rectangle = new Sprite();
 			rectangle.graphics.clear();
 			rectangle.graphics.beginFill(0x8E2323);
 			rectangle.graphics.lineStyle(2,0xC0C0C0, 100);
-			rectangle.graphics.drawRect(0,0,boxWidth,20);
+			rectangle.graphics.drawRect(0,0,boxWidth,boxHeight);
 			rectangle.useHandCursor = false;
 			addChild(rectangle);
 			
@@ -35,13 +39,20 @@ package GameObjects.Mobile
 			rectangleTop = new Sprite();
 			rectangleTop.graphics.clear();
 			rectangleTop.graphics.beginFill(0xFFFF00);
-			rectangleTop.graphics.drawRect(0,0,boxWidth,5);
+			rectangleTop.graphics.drawRect(0,0,boxWidth,boxHeight-15);
 			rectangleTop.useHandCursor = false;
 			addChild(rectangleTop);
+			
+			goal = new Sprite();
+			goal.graphics.clear();
+			goal.graphics.beginFill(0xFFFF00,0);
+			goal.graphics.drawRect(0,0,boxWidth,boxHeight-5);
+			goal.useHandCursor = false;
+			addChild(goal);
 
-			hitLeft = new HitBox(x,y+5,1,15,1);
-			hitRight = new HitBox(x+boxWidth,y+5,1,15,1);
-			hitBottom = new HitBox(x,y+19,boxWidth,1,1);
+			hitLeft = new HitBox(x,y+5,1,boxHeight-5,1);
+			hitRight = new HitBox(x+boxWidth,y+5,1,boxHeight-5,1);
+			hitBottom = new HitBox(x,y+boxHeight-1,boxWidth,boxHeight-(boxHeight-1),1);
 			hitBoxes = new Vector.<HitBox>;
 			hitBoxes.push(hitLeft);
 			hitBoxes.push(hitRight);
@@ -55,17 +66,12 @@ package GameObjects.Mobile
 		
 		public function checkBounds(object:MobileObject,dt:Number):void
 		{
-			var dx:Number = this.x + (rectangle.width)/2 - object.x;
-			var dy:Number = this.y + (rectangle.height)/2 - object.y;
-			var dL:Number = Math.sqrt(dx*dx+dy*dy);
-			
-			
 			for(var i:int=0;i<hitBoxes.length;i++)
 			{
 				hitBoxes[i].checkBounds(object,dt);
 			}
 			//win condition
-			if (dL<15)
+			if (goal.hitTestPoint(object.x+object.radius,object.y+object.radius))
 			{
 				trace("Victory! On to next level!");
 				dispatchEvent(new LevelStateEvent(LevelStateEvent.WIN_LEVEL,null));

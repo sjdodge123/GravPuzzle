@@ -7,10 +7,12 @@ package Construct
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
 	
-	import GameObjects.Immobile.GravBall;
+	import GameObjects.Mobile.GravBall;
 	import GameObjects.Immobile.LevelTimer;
 	import GameObjects.Mobile.BallBasket;
+	import GameObjects.Mobile.Camera;
 	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.MobileObject;
 	import GameObjects.Mobile.Obstacles.HitBox;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	
@@ -22,6 +24,7 @@ package Construct
 	import Levels.Level3;
 	import Levels.Level4;
 	import Levels.Level5;
+	
 
 	public class GameBoard extends Sprite
 	{
@@ -32,21 +35,22 @@ package Construct
 		private var gravityObjects:Vector.<GravBall>;
 		private var obstacles:Vector.<Obstacle>;
 		private var currentLevelData:Level;
+		private var goalText:String = "";
 	
 		private var startingLevel:int = 1;
 		private var levelNum:int = 1;
 		
+		
+		private var camera:Camera;
 		private var levelTimer:LevelTimer;
-		private var timerDisplay:TextField;
+		
 		private var collisionHandler:CollisionHandler;
 		private var levels:Vector.<Level>;
 		private var levelScore:Number;
-		private var goalDisplay:TextField;
 		private var totalSpawns:int = 0;
-		
-		//temporary!!
-		public var hitBox:HitBox;
+		private var hitBox:HitBox;
 		private var gravityBallsSpawned:int;
+		private var time:Number;
 		
 		public function GameBoard(stageWidth:int,stageHeight:int)
 		{
@@ -56,19 +60,8 @@ package Construct
 			gravityObjects = new Vector.<GravBall>;
 			obstacles = new Vector.<Obstacle>;
 			levelTimer = new LevelTimer();
-			timerDisplay = new TextField();
-			timerDisplay.textColor = 0xFF0000;
-			timerDisplay.x = stageWidth/2;
-			timerDisplay.y = 1;
-			timerDisplay.selectable = false;
-			addChild(timerDisplay);
-			goalDisplay = new TextField();
-			goalDisplay.textColor = 0xFF0000;
-			goalDisplay.x = stageWidth/2 + 50;
-			goalDisplay.y = 1;
-			goalDisplay.selectable = false;
-			addChild(goalDisplay);
-			goalDisplay.text = "test";
+			
+			
 			
 			populateLevels();
 			buildNextLevel();
@@ -134,8 +127,6 @@ package Construct
 			}
 			levelTimer.reset();
 			addChild(friendBall);
-			addChild(timerDisplay);
-			addChild(goalDisplay);
 			friendBall.calcChange(1);
 		}
 		
@@ -165,7 +156,7 @@ package Construct
 			trace(levelScore);
 			if(gravityBallsSpawned < 2)
 			{
-				goalDisplay.text = ("You got Mastery");
+				goalText = ("You got Mastery");
 				return true;
 			}
 			if(levelScore < 0)
@@ -175,22 +166,22 @@ package Construct
 			
 			if(levelScore > currentLevelData.getGoldTarget())
 			{
-				goalDisplay.text = ("You got Gold");
+				goalText = ("You got Gold");
 				return true;
 			}
 			else if(levelScore > currentLevelData.getSilverTarget())
 			{
-				goalDisplay.text = ("You got Silver");
+				goalText = ("You got Silver");
 				return true;
 			}
 			else if(levelScore > currentLevelData.getBronzeTarget())
 			{
-				goalDisplay.text = ("You got Bronze");
+				goalText = ("You got Bronze");
 				return true;
 			}
 			else
 			{
-				goalDisplay.text = ("Failure");
+				goalText = ("Failure: You took too much time");
 				return false;
 			}
 		}
@@ -248,9 +239,9 @@ package Construct
 			// !TODO! Line 132 should be reversed. The friendBall should be checking to see if it collides with anything, not the other way around! !TODO!
 			collisionHandler.checkBounds(friendBall,obstacles,basket,dt); 
 			friendBall.updatePos();
-			var time:Number = levelTimer.update(dt);
-			timerDisplay.text = time.toString();
+			time = levelTimer.update(dt);
 		}
+		
 		
 		private function clearBoard():void
 		{
@@ -263,13 +254,17 @@ package Construct
 				count--;
 				removeChild(getChildAt(count));
 			}
-			addChild(goalDisplay);
 			gravityObjects = null;
 			friendBall = null;
 			basket.removeEventListener(LevelStateEvent.WIN_LEVEL,nextLevel);
 			basket.removeEventListener(LevelStateEvent.LOSE_LEVEL,resetLevel);
 			basket = null;
 			gravityObjects = new Vector.<GravBall>;
+		}
+		
+		public function getElapsedTime():Number
+		{
+			return time;
 		}
 		
 		public function pause():void
@@ -300,6 +295,23 @@ package Construct
 		protected function removeElement(event:ChildEvent):void
 		{
 			removeChild(event.params as Sprite);
+		}
+		
+		//The Camera will expand to fit these objects onto the screen
+		public function getCameraObjects():Vector.<MobileObject>
+		{
+			var cameraObjects:Vector.<MobileObject> = new Vector.<MobileObject>;
+			cameraObjects.push(friendBall);
+			cameraObjects.push(basket);
+			//for each ( var object:MobileObject in gravityObjects){
+			//	cameraObjects.push(object);
+			//}
+			return cameraObjects;
+		}
+		
+		public function getGoalText():String
+		{
+			return goalText;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 package Construct
 {
 	import flash.events.EventDispatcher;
-	import GameObjects.Immobile.GravBall;
+	import GameObjects.Mobile.GravBall;
 	import Events.ChildEvent;
 
 	public class ObjectBuilder extends EventDispatcher

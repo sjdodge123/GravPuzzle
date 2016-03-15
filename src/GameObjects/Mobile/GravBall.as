@@ -1,11 +1,11 @@
-package GameObjects.Immobile
+package GameObjects.Mobile
 {
 	import flash.display.Sprite;
+	import GameObjects.Mobile.MobileObject;
 
-	public class GravBall extends Sprite
+	public class GravBall extends MobileObject
 	{
 		private var shape:Sprite;
-		public var radius:int = 10;
 		public function GravBall(x:int,y:int)
 		{
 			this.x = x;

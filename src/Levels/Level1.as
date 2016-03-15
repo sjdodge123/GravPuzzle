@@ -15,7 +15,7 @@ package Levels
 			gravBallCount = 10;
 			friendBall = new FriendBall(20,20);
 			friendBall.velX = 1.5;
-			basket = new BallBasket(400,300,90);
+			basket = new BallBasket(400,300,90,20);
 			setTargets();
 			return buildData();
 		}
