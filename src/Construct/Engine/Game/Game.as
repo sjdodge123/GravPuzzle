@@ -33,6 +33,7 @@ package Construct.Engine.Game
 		private var camera:Camera;
 		private var levelTimer:LevelTimer;
 		
+		private var hud:HUD;
 		private var timerDisplay:TextField;
 		private var goalDisplay:TextField;
 	
@@ -59,25 +60,10 @@ package Construct.Engine.Game
 			resetTimer = new Timer(2000,1);
 			resetTimer.addEventListener(TimerEvent.TIMER,resetResetTimer); //love the naming scheme, sorry in advance
 			
+			hud = new HUD(mainStage.stageWidth,mainStage.stageHeight,gameBoard);
 			
-			
-			timerDisplay = new TextField();
-			timerDisplay.textColor = 0xFF0000;
-			timerDisplay.x = mainStage.stageWidth/2;
-			timerDisplay.y = 1;
-			timerDisplay.selectable = false;
-			
-			goalDisplay = new TextField();
-			goalDisplay.textColor = 0xFF0000;
-			goalDisplay.width = mainStage.stageWidth;
-			goalDisplay.x = mainStage.stageWidth/2 + 50;
-			goalDisplay.y = 1;
-			goalDisplay.selectable = false;
-			
-			
-			mainStage.addChild(timerDisplay);
+			mainStage.addChild(hud);
 			mainStage.addChild(camera);
-			mainStage.addChild(goalDisplay);
 			camera.addChild(gameBoard);
 		}
 		
@@ -155,10 +141,8 @@ package Construct.Engine.Game
 		protected function update(event:Event):void
 		{
 			gameBoard.update(dt);
-			goalDisplay.text = gameBoard.getGoalText();
-			timerDisplay.text = gameBoard.getElapsedTime().toString();
+			hud.update();
 			camera.move(gameBoard.getCameraObjects());
-			//camera.adjust(gameBoard.getCameraObjects());	
 		}
 		
 		

@@ -74,10 +74,10 @@ package Construct
 			levels = new Vector.<Level>;
 			levels.push(null);
 			levels.push(new Level1());
-			//levels.push(new Level2());
-			//levels.push(new Level3());
-			//levels.push(new Level4());
-			//levels.push(new Level5());
+			levels.push(new Level2());
+			levels.push(new Level3());
+			levels.push(new Level4());
+			levels.push(new Level5());
 			 
 			 levelNum = 1;
 		} 
@@ -93,10 +93,9 @@ package Construct
 		
 		public function resetLevel(event:Event):Boolean
 		{
-			checkScore();
 			clearBoard();
 			getAndBuildLevel();
-			
+			goalText = "";
 			return true;
 		}
 		
@@ -153,7 +152,7 @@ package Construct
 		private function checkScore():Boolean
 		{
 			levelScore -= levelTimer.getElapsedTime();
-			trace(levelScore);
+			trace("Achieved score: " + levelScore);
 			if(gravityBallsSpawned < 2)
 			{
 				goalText = ("You got Mastery");

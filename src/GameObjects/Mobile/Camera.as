@@ -50,6 +50,7 @@ package GameObjects.Mobile
 			this.y = view.y;
 		}
 		
+		
 		public function getOffsetX():Number
 		{
 			return this.x;
