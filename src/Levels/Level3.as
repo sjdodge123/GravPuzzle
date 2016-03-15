@@ -13,7 +13,7 @@ package Levels
 		}
 		public override function getLevelData():Array
 		{
-			gravBallCount = 1;
+			gravBallCount = 3;
 			friendBall = new FriendBall(265,50);
 			friendBall.velY = 1.22;
 			basket = new BallBasket(350,250);

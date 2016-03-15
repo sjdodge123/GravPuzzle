@@ -12,19 +12,20 @@ package Levels
 		}
 		public override function getLevelData():Array
 		{
-			gravBallCount = 1;
+			gravBallCount = 10;
 			friendBall = new FriendBall(20,20);
 			friendBall.velX = 1.5;
-			basket = new BallBasket(400,300);
+			basket = new BallBasket(400,300,90);
 			setTargets();
 			return buildData();
 		}
 		
 		private function setTargets():void
 		{
-			bronzeTarget = 550;
-			silverTarget = 730;
-			goldTarget   = 840;
+			goldTarget   = 94;
+			silverTarget = 88;
+			bronzeTarget = 75;
+			
 		}
 		
 		private function buildData():Array

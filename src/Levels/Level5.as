@@ -5,9 +5,9 @@ package Levels
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
 
-	public class Level4 extends Level
+	public class Level5 extends Level
 	{
-		public function Level4()
+		public function Level5()
 		{
 			
 		}
@@ -40,7 +40,7 @@ package Levels
 		private function buildObstacles():Vector.<Obstacle>
 		{
 			obstacles = new Vector.<Obstacle>;
-			obstacles.push(new Square(100,150,500,50),new Square(300,200,50,100));
+			obstacles.push(new Square(150,150,50,50),new Square(300,200,50,100));
 			return obstacles;
 		}
 	}

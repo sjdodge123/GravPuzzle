@@ -21,6 +21,7 @@ package Construct
 	import Levels.Level2;
 	import Levels.Level3;
 	import Levels.Level4;
+	import Levels.Level5;
 
 	public class GameBoard extends Sprite
 	{
@@ -31,7 +32,10 @@ package Construct
 		private var gravityObjects:Vector.<GravBall>;
 		private var obstacles:Vector.<Obstacle>;
 		private var currentLevelData:Level;
+	
+		private var startingLevel:int = 1;
 		private var levelNum:int = 1;
+		
 		private var levelTimer:LevelTimer;
 		private var timerDisplay:TextField;
 		private var collisionHandler:CollisionHandler;
@@ -42,7 +46,7 @@ package Construct
 		
 		//temporary!!
 		public var hitBox:HitBox;
-		private var mouseClicks:int;
+		private var gravityBallsSpawned:int;
 		
 		public function GameBoard(stageWidth:int,stageHeight:int)
 		{
@@ -58,7 +62,6 @@ package Construct
 			timerDisplay.y = 1;
 			timerDisplay.selectable = false;
 			addChild(timerDisplay);
-			
 			goalDisplay = new TextField();
 			goalDisplay.textColor = 0xFF0000;
 			goalDisplay.x = stageWidth/2 + 50;
@@ -78,11 +81,12 @@ package Construct
 			levels = new Vector.<Level>;
 			levels.push(null);
 			levels.push(new Level1());
-			levels.push(new Level2());
-			levels.push(new Level3());
-			levels.push(new Level4());
-			
-			levelNum = 1;
+			//levels.push(new Level2());
+			//levels.push(new Level3());
+			//levels.push(new Level4());
+			//levels.push(new Level5());
+			 
+			 levelNum = 1;
 		} 
 		//-----------------------------------------------
 		//-----------------Level Control-----------------
@@ -96,8 +100,10 @@ package Construct
 		
 		public function resetLevel(event:Event):Boolean
 		{
+			checkScore();
 			clearBoard();
 			getAndBuildLevel();
+			
 			return true;
 		}
 		
@@ -155,8 +161,9 @@ package Construct
 		
 		private function checkScore():Boolean
 		{
-			levelScore -= 50*levelTimer.getElapsedTime();
-			if(mouseClicks < 2)
+			levelScore -= levelTimer.getElapsedTime();
+			trace(levelScore);
+			if(gravityBallsSpawned < 2)
 			{
 				goalDisplay.text = ("You got Mastery");
 				return true;
@@ -165,7 +172,7 @@ package Construct
 			{
 				levelScore = 0;
 			}
-			trace(levelScore);
+			
 			if(levelScore > currentLevelData.getGoldTarget())
 			{
 				goalDisplay.text = ("You got Gold");
@@ -211,7 +218,7 @@ package Construct
 		}
 		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
-			mouseClicks++;
+			gravityBallsSpawned++;
 			if(totalSpawns < currentLevelData.getGravBallCount())
 			{
 				totalSpawns += 1;
@@ -247,7 +254,7 @@ package Construct
 		
 		private function clearBoard():void
 		{
-			mouseClicks = 0;
+			gravityBallsSpawned = 0;
 			totalSpawns = 0;
 			levelScore = 1000;
 			var count:int = numChildren;

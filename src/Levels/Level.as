@@ -17,7 +17,7 @@ package Levels
 		protected var bronzeTarget:int = 0;
 		protected var silverTarget:int = 0;
 		protected var goldTarget:int = 0;
-		protected var scoreCap:int = 1000;
+		protected var scoreCap:int = 100;
 		
 		public function Level()
 		{
