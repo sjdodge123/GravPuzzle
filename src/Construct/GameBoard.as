@@ -19,11 +19,6 @@ package Construct
 	import Handlers.CollisionHandler;
 	
 	import Levels.Level;
-	import Levels.Level1;
-	import Levels.Level2;
-	import Levels.Level3;
-	import Levels.Level4;
-	import Levels.Level5;
 	
 	import MapEditor.LevelCreation.LevelBuilder;
 	import MapEditor.LevelCreation.LevelData;
@@ -42,7 +37,7 @@ package Construct
 		private var goalText:String = "";
 	
 		private var startingLevel:int = 1;
-		private var levelNum:int = 1;
+		private var levelNum:int = 0;
 		
 		
 		private var camera:Camera;
@@ -77,16 +72,16 @@ package Construct
 		{
 			loaded = true;
 			levels = new Vector.<Level>;
-			//levelList = levelLoader.getLevelList();
+			levelList = levelLoader.getLevelList();
 			levels.push(null);
-			//for(var i:int=0;i<levelList.length;i++)
-			//{
-			//	levelBuilder = new LevelBuilder(levelList[i]);
-			//	levels.push(levelBuilder);
-			//}
-			levels.push(new Level1());
-			levels.push(new Level2());
-		 	levelNum = 2;
+			for(var i:int=0;i<levelList.length;i++)
+			{
+				levelBuilder = new LevelBuilder(levelList[i]);
+				levels.push(levelBuilder);
+			}
+			//levels.push(new Level1());
+			//levels.push(new Level2());
+		 	levelNum = startingLevel;
 			buildNextLevel();
 		} 
 		//-----------------------------------------------

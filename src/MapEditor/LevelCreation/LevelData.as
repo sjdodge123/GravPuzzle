@@ -1,19 +1,21 @@
 package MapEditor.LevelCreation
-{
-	import GameObjects.Mobile.BallBasket;
-	import GameObjects.Mobile.FriendBall;
-	import GameObjects.Mobile.Obstacles.Obstacle;
-	
+{	
 	public class LevelData
 	{
 		public var name:String;
 		public var gravBallCount:int;
-		public var friendBall:FriendBall;
-		public var basket:BallBasket;
 		public var goldTarget:int;
 		public var silverTarget:int;
 		public var bronzeTarget:int;
-		public var obstacles:Vector.<Obstacle>;
+		public var obstacles:Vector.<ObstacleData>;
+		public var ballX:int;
+		public var ballY:int;
+		public var ballVelX:Number;
+		public var ballVelY:Number;
+		public var basketX:int;
+		public var basketY:int;
+		public var basketWidth:int;
+		public var basketHeight:int;
 		
 		public function LevelData()
 		{

@@ -1,6 +1,8 @@
 package MapEditor.LevelCreation
 {
-	import GameObjects.Mobile.Obstacles.Obstacle;
+	import GameObjects.Mobile.BallBasket;
+	import GameObjects.Mobile.FriendBall;
+	import GameObjects.Mobile.Obstacles.*;
 	
 	import Levels.Level;
 	
@@ -15,8 +17,10 @@ package MapEditor.LevelCreation
 		public override function getLevelData():Array
 		{
 			gravBallCount = data.gravBallCount;
-			friendBall = data.friendBall;
-			basket = data.basket;
+			friendBall = new FriendBall(data.ballX,data.ballY);
+			friendBall.velX = data.ballVelX;
+			friendBall.velY = data.ballVelY;
+			basket = new BallBasket(data.basketX,data.basketY,data.basketWidth,data.basketHeight);
 			setTargets();
 			return buildData();
 		}
@@ -39,7 +43,13 @@ package MapEditor.LevelCreation
 		
 		private function buildObstacles():Vector.<Obstacle>
 		{
-			return data.obstacles;
+			obstacles = new Vector.<Obstacle>;
+			for(var i:int=0;i<data.obstacles.length;i++){
+				if(data.obstacles[i].type == "Square"){
+					obstacles.push(new Square(data.obstacles[i].x,data.obstacles[i].y,data.obstacles[i].width,data.obstacles[i].height))
+				}
+			}
+			return obstacles;
 		}
 	}
 }

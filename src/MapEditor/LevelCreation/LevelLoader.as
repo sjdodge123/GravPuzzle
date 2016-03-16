@@ -37,43 +37,39 @@ package MapEditor.LevelCreation
 			levelData.gravBallCount = level.child("gravBallCount");
 			
 			var ballData:XMLList = level.child("friendBall");
-			var ballX:int = ballData.child("x");
-			var ballY:int = ballData.child("y");
-			var ballVelX:Number = ballData.child("velX");
-			var ballVelY:Number = ballData.child("velY");
-			
-			var friendBall:FriendBall = new FriendBall(ballX,ballY);
-			friendBall.velX = ballVelX;
-			friendBall.velY = ballVelY;
-			levelData.friendBall = friendBall;
+			levelData.ballX = ballData.child("x");
+			levelData.ballY = ballData.child("y");
+			levelData.ballVelX = ballData.child("velX");
+			levelData.ballVelY = ballData.child("velY");
 			
 			var basketData:XMLList = level.child("basket");
-			var basketX:int = basketData.child("x");
-			var basketY:int = basketData.child("y");
-			var basketWidth:Number = basketData.child("width");
-			var basketHeight:Number = basketData.child("height");
-			levelData.basket = new BallBasket(basketX,basketY,basketWidth,basketHeight);
+			levelData.basketX = basketData.child("x");
+			levelData.basketY = basketData.child("y");
+			levelData.basketWidth = basketData.child("width");
+			levelData.basketHeight = basketData.child("height");
 			
 			var targets:XMLList = level.child("targets");
 			levelData.goldTarget = targets.child("gold");
 			levelData.silverTarget  = targets.child("silver");
 			levelData.bronzeTarget = targets.child("bronze");
 			
-			levelData.obstacles = new Vector.<Obstacle>;
-			var obstacleData:XMLList = level.child("obstacles");
-			for(var i:int=0;i<obstacleData.length();i++)
+			levelData.obstacles = new Vector.<ObstacleData>;
+			var obstacleDataList:XMLList = level.child("obstacles");
+			for(var i:int=0;i<obstacleDataList.length();i++)
 			{
-				var objectData:XMLList = obstacleData.child(i);
-				var type:String =objectData.child("type").toString();
+				var data:ObstacleData = new ObstacleData();
+				var objectData:XMLList = obstacleDataList.child(i);
+				var type:String = objectData.child("type").toString();
+				trace(type);
 				if(type == "Square")
 				{
-					var squareX:int = objectData.child("x");
-					var squareY:int = objectData.child("y");
-					var squareWidth:int = objectData.child("width");
-					var squareHeight:int = objectData.child("height");
-					levelData.obstacles.push(new Square(squareX,squareY,squareWidth,squareHeight));
+					data.type = type;
+					data.x = objectData.child("x");
+					data.y = objectData.child("y");
+					data.width = objectData.child("width");
+					data.height = objectData.child("height");
 				}
-				
+				levelData.obstacles.push(data);
 			}
 			return levelData;
 		}
