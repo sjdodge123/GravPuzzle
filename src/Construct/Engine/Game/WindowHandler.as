@@ -5,9 +5,11 @@ package Construct.Engine.Game
 	import flash.events.EventDispatcher;
 	import flash.events.NativeWindowBoundsEvent;
 	
+	import Construct.GameBoard;
+	
 	import Events.EngineControlEvent;
 	
-	import MapEditor.ToolKitWindow;
+	import MapEditor.ToolKit.ToolKitWindow;
 
 	public class WindowHandler extends EventDispatcher
 	{
@@ -15,10 +17,10 @@ package Construct.Engine.Game
 		private var mainWindow:NativeWindow;
 		private var width:int;
 		private var height:int;
-		public function WindowHandler(mainWindow:NativeWindow)
+		public function WindowHandler(mainWindow:NativeWindow,gameBoard:GameBoard)
 		{
 			this.mainWindow = mainWindow;
-			toolKit = new ToolKitWindow();
+			toolKit = new ToolKitWindow(gameBoard);
 			mainWindow.addEventListener(Event.CLOSING,onClose);
 			mainWindow.addEventListener(NativeWindowBoundsEvent.MOVE,windowMove);
 			mainWindow.width = 800;

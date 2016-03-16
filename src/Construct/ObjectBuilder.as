@@ -1,8 +1,14 @@
 package Construct
 {
 	import flash.events.EventDispatcher;
-	import GameObjects.Mobile.GravBall;
+	
 	import Events.ChildEvent;
+	
+	import GameObjects.Mobile.GravBall;
+	import GameObjects.Mobile.Obstacles.Obstacle;
+	import GameObjects.Mobile.Obstacles.Square;
+	
+	import MapEditor.LevelCreation.ObstacleData;
 
 	public class ObjectBuilder extends EventDispatcher
 	{
@@ -48,6 +54,19 @@ package Construct
 				gravityObjects = killGravBall(gravityObjects);
 			}
 			return gravityObjects;
+		}
+		
+		public function buildObstacle(data:ObstacleData):Obstacle
+		{
+			var obstacle:Obstacle;
+			if(data.type == "Square")
+			{
+				return new Square(data.x,data.y,data.width,data.height);
+			}
+			
+			
+			
+			return null;
 		}
 		
 		private function spawnGravBall(gravityObjects:Vector.<GravBall>):Vector.<GravBall>

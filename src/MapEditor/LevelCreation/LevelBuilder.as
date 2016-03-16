@@ -1,15 +1,20 @@
 package MapEditor.LevelCreation
 {
+	import Construct.ObjectBuilder;
+	
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
-	import GameObjects.Mobile.Obstacles.*;
+	import GameObjects.Mobile.Obstacles.Obstacle;
+	import GameObjects.Mobile.Obstacles.Square;
 	
 	
 	public class LevelBuilder extends Level
 	{
 		private var data:LevelData;
+		private var objectBuilder:ObjectBuilder;
 		public function LevelBuilder(data:LevelData)
 		{
+			objectBuilder = new ObjectBuilder();
 			this.data = data;
 		}
 		
@@ -43,10 +48,9 @@ package MapEditor.LevelCreation
 		private function buildObstacles():Vector.<Obstacle>
 		{
 			obstacles = new Vector.<Obstacle>;
-			for(var i:int=0;i<data.obstacles.length;i++){
-				if(data.obstacles[i].type == "Square"){
-					obstacles.push(new Square(data.obstacles[i].x,data.obstacles[i].y,data.obstacles[i].width,data.obstacles[i].height))
-				}
+			for(var i:int=0;i<data.obstacles.length;i++)
+			{
+				obstacles.push(objectBuilder.buildObstacle(data.obstacles[i]));
 			}
 			return obstacles;
 		}

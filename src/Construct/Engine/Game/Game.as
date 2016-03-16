@@ -40,13 +40,13 @@ package Construct.Engine.Game
 		public function Game(mainStage:Stage)
 		{
 			this.mainStage = mainStage;
-			mainWindow = new WindowHandler(mainStage.nativeWindow);
-			this.mainStage.stageHeight = mainWindow.getHeight();
 			camera = new Camera(0,0,mainStage.stageWidth,mainStage.stageHeight);
+			gameBoard = new GameBoard(mainStage.stageWidth,mainStage.stageHeight);
+			mainWindow = new WindowHandler(mainStage.nativeWindow,gameBoard);
+			this.mainStage.stageHeight = mainWindow.getHeight();
 			mainWindow.addEventListener(EngineControlEvent.RESUME_ENGINE,resumeUpdates);
 			mainWindow.addEventListener(EngineControlEvent.PAUSE_ENGINE,pauseUpdates);
 			keyboardHandler = new KeyboardHandler(mainStage);
-			gameBoard = new GameBoard(mainStage.stageWidth,mainStage.stageHeight);
 			mainStage.addEventListener(Event.ENTER_FRAME,update);
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClick);
 			keyboardHandler.addEventListener(KeyEvent.SPACE_PRESSED,reset);

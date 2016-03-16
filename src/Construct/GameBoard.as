@@ -14,6 +14,7 @@ package Construct
 	import GameObjects.Mobile.MobileObject;
 	import GameObjects.Mobile.Obstacles.HitBox;
 	import GameObjects.Mobile.Obstacles.Obstacle;
+	import GameObjects.Mobile.Obstacles.Square;
 	
 	import Handlers.CollisionHandler;
 	
@@ -21,6 +22,7 @@ package Construct
 	import MapEditor.LevelCreation.LevelBuilder;
 	import MapEditor.LevelCreation.LevelData;
 	import MapEditor.LevelCreation.LevelLoader;
+	import MapEditor.LevelCreation.ObstacleData;
 	
 
 	public class GameBoard extends Sprite
@@ -45,7 +47,6 @@ package Construct
 		private var bronzeValue:int = 5;
 		
 		
-		private var camera:Camera;
 		private var levelTimer:LevelTimer;
 		
 		private var collisionHandler:CollisionHandler;
@@ -151,6 +152,7 @@ package Construct
 			{
 				//Return to level selection or menu screen
 				trace("You Win! Game over");
+				gameScore = 0;
 				levelNum = 1;
 				buildNextLevel();
 			}
@@ -332,6 +334,17 @@ package Construct
 			//	cameraObjects.push(object);
 			//}
 			return cameraObjects;
+		}
+		
+		public function addObstacleToBoard(object:ObstacleData):void
+		{
+			if(object.type == "Square")
+			{
+				obstacles.push(objectBuilder.buildObstacle(object));
+				trace(object.x);
+				trace(object.y);
+			}
+			
 		}
 		
 		public function getGoalText():String

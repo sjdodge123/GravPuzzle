@@ -21,6 +21,8 @@ package GameObjects.Mobile
 		private var hitRight:HitBox;
 		private var hitBottom:HitBox;
 		
+		private var displayHidden:int = 0;
+		
 		public function BallBasket(x:int, y:int,width:int=45,height:int=20)
 		{
 			this.x = x;
@@ -45,14 +47,14 @@ package GameObjects.Mobile
 			
 			goal = new Sprite();
 			goal.graphics.clear();
-			goal.graphics.beginFill(0xFFFF00,0);
+			goal.graphics.beginFill(0xFFFF00,displayHidden);
 			goal.graphics.drawRect(0,0,boxWidth,boxHeight-5);
 			goal.useHandCursor = false;
 			addChild(goal);
 
-			hitLeft = new HitBox(x,y+5,1,boxHeight-5,1);
-			hitRight = new HitBox(x+boxWidth,y+5,1,boxHeight-5,1);
-			hitBottom = new HitBox(x,y+boxHeight-1,boxWidth,boxHeight-(boxHeight-1),1);
+			hitLeft = new HitBox(x,y+5,1,boxHeight-5,displayHidden);
+			hitRight = new HitBox(x+boxWidth,y+5,1,boxHeight-5,displayHidden);
+			hitBottom = new HitBox(x,y+boxHeight-1,boxWidth,boxHeight-(boxHeight-1),displayHidden);
 			hitBoxes = new Vector.<HitBox>;
 			hitBoxes.push(hitLeft);
 			hitBoxes.push(hitRight);

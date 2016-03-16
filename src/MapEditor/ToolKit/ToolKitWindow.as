@@ -1,20 +1,27 @@
-package MapEditor
+package MapEditor.ToolKit
 {
 	import flash.display.NativeWindow;
 	import flash.display.NativeWindowInitOptions;
-	import flash.display.Stage;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.NativeWindowBoundsEvent;
+	
+	import Construct.GameBoard;
 
 	public class ToolKitWindow extends EventDispatcher
 	{
 		private var window:NativeWindow;
 		private var options:NativeWindowInitOptions;
 		public var active:Boolean = false;
-		public function ToolKitWindow()
+		private var toolBelt:ToolBelt;
+		private var gameBoard:GameBoard;
+		
+		public function ToolKitWindow(gameBoard:GameBoard)
 		{
 			options = new NativeWindowInitOptions();
+			this.gameBoard = gameBoard;
 		}
 		
 		protected function onClose(event:Event):void
@@ -44,6 +51,9 @@ package MapEditor
 			window.width = 200;
 			window.addEventListener(Event.CLOSING,onClose);
 			window.visible = true;
+			window.stage.scaleMode = StageScaleMode.NO_SCALE;
+			window.stage.align = StageAlign.TOP_LEFT;
+			toolBelt = new ToolBelt(window.stage,mainWindow.stage,gameBoard);
 		}
 		public function close():void
 		{
