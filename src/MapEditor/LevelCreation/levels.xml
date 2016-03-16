@@ -2,7 +2,7 @@
 	<level1>
 		<name>Intro</name>
 		<!--First Level-->
-		<gravBallCount>10</gravBallCount>
+		<gravBallCount>3</gravBallCount>
 
 		<friendBall>
 			<x>20</x>
@@ -23,8 +23,6 @@
 			<bronze>75</bronze>
 		</targets>
 	</level1>
-
-
 
 
 	<level2>

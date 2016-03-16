@@ -4,7 +4,6 @@ package Construct.Engine.Game
 	import flash.text.TextField;
 	
 	import Construct.GameBoard;
-	import flash.display.DisplayObject;
 
 	public class HUD extends Sprite
 	{

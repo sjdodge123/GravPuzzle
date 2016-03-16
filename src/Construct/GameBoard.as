@@ -2,7 +2,6 @@ package Construct
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.text.TextField;
 	
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
@@ -19,7 +18,6 @@ package Construct
 	import Handlers.CollisionHandler;
 	
 	import MapEditor.LevelCreation.Level;
-	
 	import MapEditor.LevelCreation.LevelBuilder;
 	import MapEditor.LevelCreation.LevelData;
 	import MapEditor.LevelCreation.LevelLoader;
@@ -36,8 +34,15 @@ package Construct
 		private var currentLevelData:Level;
 		private var goalText:String = "";
 	
-		private var startingLevel:int = 4;
+		
+		//Game testing variables
+		private var startingLevel:int = 1;
 		private var levelNum:int = 0;
+		private var penaltyValue:int = 5;
+		private var masteryValue:int = 25;
+		private var goldValue:int = 25;
+		private var silverValue:int = 15;
+		private var bronzeValue:int = 5;
 		
 		
 		private var camera:Camera;
@@ -53,6 +58,7 @@ package Construct
 		private var gravityBallsSpawned:int;
 		private var time:Number;
 		private var levelLoader:LevelLoader;
+		private var gameScore:int = 0;
 		private var loaded:Boolean = false;
 		
 		public function GameBoard(stageWidth:int,stageHeight:int)
@@ -152,12 +158,14 @@ package Construct
 		
 		private function checkScore():Boolean
 		{
-			levelScore -= levelTimer.getElapsedTime();
+			var answer:Boolean = false;
+			levelScore = calculateScore();
 			trace("Achieved score: " + levelScore);
 			if(gravityBallsSpawned < 2)
 			{
 				goalText = ("You got Mastery");
-				return true;
+				gameScore += masteryValue; 
+				answer = true;
 			}
 			if(levelScore < 0)
 			{
@@ -167,23 +175,28 @@ package Construct
 			if(levelScore > currentLevelData.getGoldTarget())
 			{
 				goalText = ("You got Gold");
-				return true;
+				gameScore += goldValue;
+				answer = true;
 			}
 			else if(levelScore > currentLevelData.getSilverTarget())
 			{
 				goalText = ("You got Silver");
-				return true;
+				gameScore += silverValue;
+				answer = true;
 			}
 			else if(levelScore > currentLevelData.getBronzeTarget())
 			{
 				goalText = ("You got Bronze");
-				return true;
+				gameScore += bronzeValue;
+				answer = true;
 			}
 			else
 			{
-				goalText = ("Failure: You took too much time");
-				return false;
+				goalText = ("Passed");
+				answer = true;
 			}
+			trace("Game Score: " + gameScore);
+			return answer;
 		}
 		
 		//-----------------------------------------------
@@ -210,12 +223,12 @@ package Construct
 		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
 			gravityBallsSpawned++;
-			if(totalSpawns < currentLevelData.getGravBallCount())
-			{
-				totalSpawns += 1;
-				gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
-				friendBall.accel = 0;
-			}
+			//if(totalSpawns < currentLevelData.getGravBallCount())
+			//{
+			//	totalSpawns += 1;
+			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
+			friendBall.accel = 0;
+			//}
 			
 		}
 		
@@ -260,6 +273,18 @@ package Construct
 			basket.removeEventListener(LevelStateEvent.LOSE_LEVEL,resetLevel);
 			basket = null;
 			gravityObjects = new Vector.<GravBall>;
+		}
+		
+		public function calculateScore():Number
+		{
+			var penalty:int = 0;
+			var parBalls:int = currentLevelData.getGravBallCount()*penaltyValue;
+			if(gravityBallsSpawned > currentLevelData.getGravBallCount())
+			{
+				penalty = gravityBallsSpawned*penaltyValue-parBalls;
+			}
+			var score:int = currentLevelData.getScoreCap() - levelTimer.getElapsedTime() - penalty;
+			return score;
 		}
 		
 		public function getElapsedTime():Number
@@ -315,7 +340,7 @@ package Construct
 		}
 		public function getCurrentScore():int
 		{
-			return currentLevelData.getScoreCap() - levelTimer.getElapsedTime();
+			return calculateScore();
 		}
 		
 		public function getGoldTarget():String
