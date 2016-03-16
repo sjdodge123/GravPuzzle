@@ -62,6 +62,7 @@ package Construct.Engine.Game
 			
 			hud = new HUD(mainStage.stageWidth,mainStage.stageHeight,gameBoard);
 			
+			
 			camera.addChild(gameBoard);
 			mainStage.addChild(camera);
 			mainStage.addChild(hud);
@@ -142,9 +143,11 @@ package Construct.Engine.Game
 		
 		protected function update(event:Event):void
 		{
-			gameBoard.update(dt);
-			hud.update();
-			camera.move(gameBoard.getCameraObjects());
+			if(gameBoard.checkLoad()){
+				gameBoard.update(dt);
+				hud.update();
+				camera.move(gameBoard.getCameraObjects());
+			}	
 		}
 		
 		

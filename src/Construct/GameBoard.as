@@ -25,6 +25,10 @@ package Construct
 	import Levels.Level4;
 	import Levels.Level5;
 	
+	import MapEditor.LevelCreation.LevelBuilder;
+	import MapEditor.LevelCreation.LevelData;
+	import MapEditor.LevelCreation.LevelLoader;
+	
 
 	public class GameBoard extends Sprite
 	{
@@ -46,11 +50,15 @@ package Construct
 		
 		private var collisionHandler:CollisionHandler;
 		private var levels:Vector.<Level>;
+		private var levelList:Vector.<LevelData>;
 		private var levelScore:Number;
+		private var levelBuilder:LevelBuilder;
 		private var totalSpawns:int = 0;
 		private var hitBox:HitBox;
 		private var gravityBallsSpawned:int;
 		private var time:Number;
+		private var levelLoader:LevelLoader;
+		private var loaded:Boolean = false;
 		
 		public function GameBoard(stageWidth:int,stageHeight:int)
 		{
@@ -60,26 +68,26 @@ package Construct
 			gravityObjects = new Vector.<GravBall>;
 			obstacles = new Vector.<Obstacle>;
 			levelTimer = new LevelTimer();
-			
-			
-			
-			populateLevels();
-			buildNextLevel();
+			levelLoader = new LevelLoader();
+			levelLoader.addEventListener(Event.COMPLETE,populateLevels);
 			collisionHandler = new CollisionHandler();
-			
 		}
 		
-		private function populateLevels():void
+		private function populateLevels(evt:Event):void
 		{
+			loaded = true;
 			levels = new Vector.<Level>;
+			//levelList = levelLoader.getLevelList();
 			levels.push(null);
+			//for(var i:int=0;i<levelList.length;i++)
+			//{
+			//	levelBuilder = new LevelBuilder(levelList[i]);
+			//	levels.push(levelBuilder);
+			//}
 			levels.push(new Level1());
 			levels.push(new Level2());
-			levels.push(new Level3());
-			levels.push(new Level4());
-			levels.push(new Level5());
-			 
-			 levelNum = 1;
+		 	levelNum = 2;
+			buildNextLevel();
 		} 
 		//-----------------------------------------------
 		//-----------------Level Control-----------------
@@ -330,6 +338,10 @@ package Construct
 		public function getBronzeTarget():String
 		{
 			return currentLevelData.getBronzeTarget().toString();
+		}
+		public function checkLoad():Boolean
+		{
+			return loaded;
 		}
 	}
 }

@@ -9,7 +9,7 @@ package GameObjects.Mobile
 	{
 		private var world:Sprite;
 		private var view:Rectangle;
-		private var padding:int = 50;
+		private var padding:int = 30;
 		
 		
 		public function Camera(xOffset:int,yOffset:int,gameWidth:int,gameheight:int)
@@ -44,6 +44,9 @@ package GameObjects.Mobile
 				
 				view.x = xAmt;
 				view.y = yAmt;
+				//var mag:Number = Math.sqrt(xAmt*xAmt+yAmt*yAmt);
+				//object.scaleX = .5*mag;
+				//object.scaleY = .5*mag;
 			}
 			
 			this.x = view.x;

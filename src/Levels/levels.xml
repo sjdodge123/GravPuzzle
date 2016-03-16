@@ -1,0 +1,68 @@
+<levels>
+	<level1>
+		<name>Intro</name>
+		<!--First Level-->
+		<gravBallCount>10</gravBallCount>
+
+		<friendBall>
+			<x>20</x>
+			<y>20</y>
+			<velX>1.5</velX>
+			<velY>0</velY>
+		</friendBall>
+
+		<basket>
+			<x>400</x>
+			<y>300</y>
+			<width>90</width>
+			<height>20</height>
+		</basket>
+		<targets>
+			<gold>94</gold>
+			<silver>88</silver>
+			<bronze>75</bronze>
+		</targets>
+	</level1>
+
+
+
+
+	<level2>
+		<name>Center Mass</name>
+		<!--Second Level-->
+		<gravBallCount>3</gravBallCount>
+
+		<friendBall>
+			<x>50</x>
+			<y>350</y>
+			<velX>0</velX>
+			<velY>-2.5</velY>
+		</friendBall>
+
+		<basket>
+			<x>400</x>
+			<y>175</y>
+			<width>45</width>
+			<height>20</height>
+		</basket>
+
+		<targets>
+			<gold>670</gold>
+			<silver>550</silver>
+			<bronze>425</bronze>
+		</targets>
+
+		<obstacles>
+			<object>
+				<type>Square</type>
+				<x>200</x>
+				<y>150</y>
+				<width>50</width>
+				<height>50</height>
+			</object>
+		</obstacles>
+
+	</level2>
+
+
+</levels>

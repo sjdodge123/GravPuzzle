@@ -9,6 +9,7 @@ package Levels
 	public class Level extends EventDispatcher
 	{
 	
+		protected var name:String = '';
 		protected var gravBallCount:int = -1;
 		protected var friendBall:FriendBall;
 		protected var basket:BallBasket;
