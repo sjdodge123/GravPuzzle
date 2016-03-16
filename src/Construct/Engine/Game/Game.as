@@ -41,7 +41,7 @@ package Construct.Engine.Game
 		{
 			this.mainStage = mainStage;
 			camera = new Camera(0,0,mainStage.stageWidth,mainStage.stageHeight);
-			gameBoard = new GameBoard(mainStage.stageWidth,mainStage.stageHeight);
+			gameBoard = new GameBoard(mainStage.stageWidth,mainStage.stageHeight,camera);
 			mainWindow = new WindowHandler(mainStage.nativeWindow,gameBoard);
 			this.mainStage.stageHeight = mainWindow.getHeight();
 			mainWindow.addEventListener(EngineControlEvent.RESUME_ENGINE,resumeUpdates);
@@ -124,8 +124,8 @@ package Construct.Engine.Game
 		
 		protected function mouseClick(event:MouseEvent):void
 		{
-			var xVal:Number = event.stageX-camera.getOffsetX();
-			var yVal:Number = event.stageY-camera.getOffsetY();
+			var xVal:Number = event.stageX-camera.x;
+			var yVal:Number = event.stageY-camera.y;
 			justDeleted = gameBoard.checkDeletions(xVal,yVal);
 			if(justDeleted)
 			{	

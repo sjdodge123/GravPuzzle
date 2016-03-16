@@ -35,7 +35,7 @@ package Construct
 		private var obstacles:Vector.<Obstacle>;
 		private var currentLevelData:Level;
 		private var goalText:String = "";
-	
+		private var camera:Camera;
 		
 		//Game testing variables
 		private var startingLevel:int = 1;
@@ -62,7 +62,7 @@ package Construct
 		private var gameScore:int = 0;
 		private var loaded:Boolean = false;
 		
-		public function GameBoard(stageWidth:int,stageHeight:int)
+		public function GameBoard(stageWidth:int,stageHeight:int,camera:Camera)
 		{
 			objectBuilder = new ObjectBuilder();
 			objectBuilder.addEventListener(ChildEvent.ADD_CHILD,addElement);
@@ -73,6 +73,7 @@ package Construct
 			levelLoader = new LevelLoader();
 			levelLoader.addEventListener(Event.COMPLETE,populateLevels);
 			collisionHandler = new CollisionHandler();
+			this.camera = camera;
 		}
 		
 		private function populateLevels(evt:Event):void
@@ -377,6 +378,16 @@ package Construct
 		public function checkLoad():Boolean
 		{
 			return loaded;
+		}
+		
+		public function getCameraX():Number
+		{
+			return camera.x;
+		}
+		
+		public function getCameraY():Number
+		{
+			return camera.y;
 		}
 	}
 }

@@ -52,15 +52,5 @@ package GameObjects.Mobile
 			this.x = view.x;
 			this.y = view.y;
 		}
-		
-		
-		public function getOffsetX():Number
-		{
-			return this.x;
-		}
-		public function getOffsetY():Number
-		{
-			return this.y;
-		}
 	}
 }
