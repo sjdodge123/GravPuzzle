@@ -2,11 +2,6 @@ package MapEditor.LevelCreation
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	
-	import GameObjects.Mobile.BallBasket;
-	import GameObjects.Mobile.FriendBall;
-	import GameObjects.Mobile.Obstacles.Obstacle;
-	import GameObjects.Mobile.Obstacles.Square;
 
 	public class LevelLoader extends EventDispatcher
 	{
@@ -15,7 +10,7 @@ package MapEditor.LevelCreation
 		private var dataList:Vector.<LevelData>;
 		public function LevelLoader()
 		{
-			loader = new XMLLoader("Levels/levels.xml");
+			loader = new XMLLoader("MapEditor/LevelCreation/levels.xml");
 			loader.addEventListener(Event.COMPLETE,getLevelData);
 		}
 		
@@ -55,12 +50,12 @@ package MapEditor.LevelCreation
 			
 			levelData.obstacles = new Vector.<ObstacleData>;
 			var obstacleDataList:XMLList = level.child("obstacles");
-			for(var i:int=0;i<obstacleDataList.length();i++)
+			for(var i:int=0;i<obstacleDataList.children().length();i++)
 			{
+				var count:int = 0;
 				var data:ObstacleData = new ObstacleData();
 				var objectData:XMLList = obstacleDataList.child(i);
 				var type:String = objectData.child("type").toString();
-				trace(type);
 				if(type == "Square")
 				{
 					data.type = type;
@@ -69,6 +64,7 @@ package MapEditor.LevelCreation
 					data.width = objectData.child("width");
 					data.height = objectData.child("height");
 				}
+				count++;
 				levelData.obstacles.push(data);
 			}
 			return levelData;

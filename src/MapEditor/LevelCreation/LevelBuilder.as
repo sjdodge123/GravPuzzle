@@ -4,7 +4,6 @@ package MapEditor.LevelCreation
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.Obstacles.*;
 	
-	import Levels.Level;
 	
 	public class LevelBuilder extends Level
 	{

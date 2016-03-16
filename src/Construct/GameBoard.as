@@ -18,7 +18,7 @@ package Construct
 	
 	import Handlers.CollisionHandler;
 	
-	import Levels.Level;
+	import MapEditor.LevelCreation.Level;
 	
 	import MapEditor.LevelCreation.LevelBuilder;
 	import MapEditor.LevelCreation.LevelData;
@@ -36,7 +36,7 @@ package Construct
 		private var currentLevelData:Level;
 		private var goalText:String = "";
 	
-		private var startingLevel:int = 1;
+		private var startingLevel:int = 4;
 		private var levelNum:int = 0;
 		
 		
@@ -79,8 +79,6 @@ package Construct
 				levelBuilder = new LevelBuilder(levelList[i]);
 				levels.push(levelBuilder);
 			}
-			//levels.push(new Level1());
-			//levels.push(new Level2());
 		 	levelNum = startingLevel;
 			buildNextLevel();
 		} 
