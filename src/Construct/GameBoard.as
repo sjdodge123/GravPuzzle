@@ -126,12 +126,8 @@ package Construct
 			for(var i:int=0;i<obstacleData.length;i++)
 			{
 				this.obstacles.push(obstacleData[i]);
-				addChild(obstacleData[i]);
-				for(var j:int=0;j<obstacleData[i].getHitBoxes().length;j++) //run through and add all hitboxes of each obstacle
-				{
-					addChild(obstacleData[i].hitBoxes[j]);
-				}
 			}
+			displayObstacles();
 			levelTimer.reset();
 			addChild(friendBall);
 			friendBall.calcChange(1);
@@ -336,15 +332,23 @@ package Construct
 			return cameraObjects;
 		}
 		
-		public function addObstacleToBoard(object:ObstacleData):void
+		public function displayObstacles():void
 		{
-			if(object.type == "Square")
+			for(var i:int=0;i<obstacles.length;i++)
 			{
-				obstacles.push(objectBuilder.buildObstacle(object));
-				trace(object.x);
-				trace(object.y);
+				addChild(obstacles[i]);
+				for(var j:int=0;j<obstacles[i].getHitBoxes().length;j++) //run through and add all hitboxes of each obstacle
+				{
+					addChild(obstacles[i].hitBoxes[j]);
+				}
 			}
 			
+		}
+		
+		public function addObstacleToBoard(object:ObstacleData):void
+		{
+			obstacles.push(objectBuilder.buildObstacle(object));
+			displayObstacles();
 		}
 		
 		public function getGoalText():String

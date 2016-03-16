@@ -6,6 +6,7 @@ package MapEditor.ToolKit.Tools
 	
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
+	
 	import MapEditor.LevelCreation.ObstacleData;
 
 	public class Tool extends Sprite
@@ -34,7 +35,6 @@ package MapEditor.ToolKit.Tools
 			this.addEventListener(MouseEvent.MOUSE_OVER,mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT,mouseOut);
 			this.addEventListener(MouseEvent.CLICK,mouseClicked);
-			
 			this.addEventListener(MouseEvent.RIGHT_CLICK,rightClick);
 		}
 		
@@ -48,7 +48,7 @@ package MapEditor.ToolKit.Tools
 			}
 			if(toolInHand)
 			{
-				placeTool(event.stageX,event.stageY);
+				dropTool();
 			}
 			else
 			{
@@ -59,10 +59,8 @@ package MapEditor.ToolKit.Tools
 		
 		public function placeTool(x:int,y:int):ObstacleData
 		{
-			toolInHand = false;
-			removeChild(attachedTool);
-			var placedTool:ObstacleData = new ObstacleData();
-			return placedTool;
+			//Implemented in tool
+			return new ObstacleData();
 		}
 		
 		protected function mouseOver(evt:MouseEvent):void
@@ -87,21 +85,32 @@ package MapEditor.ToolKit.Tools
 		
 		protected function rightClick(evt:MouseEvent):void
 		{
-			if(!dropTool())
+			if(!dropTool(this.stage))
 			{
 				resizeTool();
 			}
 		}
 		
-		protected function dropTool():Boolean
+		public function dropTool(stage:Stage=null):Boolean
 		{
+			if(stage == null && toolInHand){
+				toolInHand = false;
+				if(contains(attachedTool))
+				{
+					removeChild(attachedTool);
+				}
+				if(this.contains(border))
+				{
+					this.removeChild(border);
+				}
+				return true;
+			}
 			if(toolInHand)
 			{
 				toolInHand = false;
-				removeChild(attachedTool);
-				if(contains(border))
+				if(stage.contains(attachedTool))
 				{
-					this.removeChild(border);
+					stage.removeChild(attachedTool);
 				}
 				return true;
 			}

@@ -64,8 +64,6 @@ package Construct
 				return new Square(data.x,data.y,data.width,data.height);
 			}
 			
-			
-			
 			return null;
 		}
 		

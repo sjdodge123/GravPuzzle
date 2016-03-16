@@ -1,10 +1,6 @@
 package MapEditor.ToolKit.Tools
 {
-	import flash.display.Stage;
-	
-	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
-	
 	import MapEditor.LevelCreation.ObstacleData;
 
 	public class SquareTool extends Tool
@@ -27,7 +23,6 @@ package MapEditor.ToolKit.Tools
 			{
 				removeChild(attachedTool);
 			}
-			toolInHand = false;
 			var toolData:ObstacleData = new ObstacleData();
 			toolData.type = "Square";
 			toolData.x = x-toolWidth/2;

@@ -53,6 +53,7 @@ package MapEditor.ToolKit
 		
 		protected function mouseClicked(event:MouseEvent):void
 		{
+			
 			/*
 			if(contains(border))
 			{
@@ -61,7 +62,7 @@ package MapEditor.ToolKit
 			*/
 			if(squareTool.toolInHand)
 			{
-				
+				squareTool.dropTool(mainStage);
 				gameBoard.addObstacleToBoard(squareTool.placeTool(event.stageX,event.stageY));
 			}
 			
