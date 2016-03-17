@@ -280,6 +280,8 @@ package Construct
 		
 		private function clearBoard():void
 		{
+			camera.x = 0;
+			camera.y = 0;
 			gravityBallsSpawned = 0;
 			totalSpawns = 0;
 			levelScore = 1000;
