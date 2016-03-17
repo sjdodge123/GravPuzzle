@@ -6,7 +6,6 @@ package GameObjects.Mobile
 	import Events.LevelStateEvent;
 	
 	import GameObjects.HitRegions.HitBox;
-	import Events.LevelEditEvent;
 
 	public class BallBasket extends MobileObject
 	{
@@ -90,24 +89,6 @@ package GameObjects.Mobile
 			}			
 		}
 		
-		public override function editObject(event:MouseEvent):void
-		{
-			if(editCenterBall.hitTestPoint(event.stageX,event.stageY))
-			{
-				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_CENTER,this));
-			}
-			if(editBallX.hitTestPoint(event.stageX,event.stageY))
-			{
-				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_X,this));
-			}
-			/*
-			if(editCenterBall.hitTestPoint(event.stageX,event.stageY))
-			{
-				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_Y,this));
-			}
-			*/
-			
-		}
 		protected override function drawBorder():void
 		{
 			border = new Sprite();
@@ -130,15 +111,15 @@ package GameObjects.Mobile
 			editBallX.graphics.beginFill(0x72BCD4);
 			editBallX.graphics.drawCircle(-25,boxHeight/2,5);
 			editBallX.graphics.endFill();
-
-				
-			editBalls.push(editCenterBall);
-			editBalls.push(editBallX);
 			
-			for(var i:int=0;i<editBalls.length;i++)
-			{
-				addChild(editBalls[i]);
-			}
+			exitBall = new Sprite();
+			exitBall.graphics.beginFill(0xFF4C4C);
+			exitBall.graphics.drawCircle(border.width-5,-(border.height/4),5);
+			exitBall.graphics.endFill();
+
+			addChild(exitBall);
+			addChild(editCenterBall);
+			addChild(editBallX);
 		}
 	}
 }

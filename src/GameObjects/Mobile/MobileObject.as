@@ -4,6 +4,8 @@ package GameObjects.Mobile
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	
+	import Events.LevelEditEvent;
 
 	public class MobileObject extends Sprite
 	{
@@ -18,20 +20,25 @@ package GameObjects.Mobile
 		protected var dirX:Number =0;
 		protected var dirY:Number=0;
 		protected const gravConstant:Number = 10;
-		protected var border:Sprite;
-		protected var editLine:Sprite;
+		
 		protected var editXLine:Sprite;
 		protected var editYLine:Sprite;
 		
+		protected var border:Sprite;
 		protected var editBallX:Sprite;
 		protected var editBallY:Sprite;
 		protected var editCenterBall:Sprite;
-		
-		protected var editBalls:Vector.<Sprite>;
+		protected var exitBall:Sprite;
 		
 		public function MobileObject()
 		{
-			editBalls = new Vector.<Sprite>;
+			border = new Sprite();
+			editBallX = new Sprite();
+			editBallY = new Sprite();
+			editCenterBall = new Sprite();
+			exitBall = new Sprite();
+			editXLine = new Sprite();
+			editYLine = new Sprite();
 		}
 		
 		public function draw():void {}
@@ -62,11 +69,30 @@ package GameObjects.Mobile
 		
 		protected function drawBorder():void {}
 		
-		public function editObject(event:MouseEvent):void{}
+		public function editObject(event:MouseEvent):void
+		{
+			if(editCenterBall.hitTestPoint(event.stageX,event.stageY))
+			{
+				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_CENTER,this));
+			}
+			if(editBallX.hitTestPoint(event.stageX,event.stageY))
+			{
+				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_X,this));
+			}
+			
+			if(exitBall.hitTestPoint(event.stageX,event.stageY))
+			{
+				endEdit(null);
+			}
+			
+			if(editBallY.hitTestPoint(event.stageX,event.stageY))
+			{
+				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_Y,this));
+			}
+		}
 		
 		public function edit(event:Event):void
 		{
-			trace('edit');
 			this.drawBorder();
 			this.removeEventListener(MouseEvent.CLICK,edit);
 			this.addEventListener(MouseEvent.CLICK,editObject);
@@ -74,17 +100,13 @@ package GameObjects.Mobile
 		
 		public function endEdit(event:Event):void
 		{
-			//this.removeBorder();
-			//this.addEventListener(MouseEvent.CLICK,edit);
-			//this.removeEventListener(MouseEvent.CLICK,editObject);
+			this.removeBorder();
+			this.addEventListener(MouseEvent.CLICK,edit);
 		}
 		
 		protected function removeBorder():void {
 			if(contains(border)){
 				removeChild(border);
-			}
-			if(contains(editLine)){
-				removeChild(editLine);
 			}
 			if(contains(editXLine)){
 				removeChild(editXLine);
@@ -92,13 +114,19 @@ package GameObjects.Mobile
 			if(contains(editYLine)){
 				removeChild(editYLine);
 			}
-			for(var i:int=0;i<editBalls;i++)
-			{
-				if(contains(editBalls[i])){
-					removeChild(editBalls[i]);
-				}
+			if(contains(exitBall)){
+				removeChild(exitBall);
 			}
+			if(contains(editBallX)){
+				removeChild(editBallX);
+			}
+			if(contains(editBallY)){
+				removeChild(editBallY);
+			}
+			if(contains(editCenterBall)){
+				removeChild(editCenterBall);
+			}
+			
 		}
-		
 	}
 }
