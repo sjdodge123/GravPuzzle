@@ -7,8 +7,9 @@ package MapEditor.ToolKit
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.NativeWindowBoundsEvent;
-	
+	import flash.events.MouseEvent;
 	import Construct.GameBoard;
+	import MapEditor.LevelCreation.LevelWrite.LevelWriter;
 
 	public class ToolKitWindow extends EventDispatcher
 	{
@@ -17,10 +18,14 @@ package MapEditor.ToolKit
 		public var active:Boolean = false;
 		private var toolBelt:ToolBelt;
 		private var gameBoard:GameBoard;
+		private var levelWriter:LevelWriter;
+		
 		
 		public function ToolKitWindow(gameBoard:GameBoard)
 		{
 			options = new NativeWindowInitOptions();
+			levelWriter = new LevelWriter();
+			
 			this.gameBoard = gameBoard;
 		}
 		
@@ -54,6 +59,12 @@ package MapEditor.ToolKit
 			window.stage.scaleMode = StageScaleMode.NO_SCALE;
 			window.stage.align = StageAlign.TOP_LEFT;
 			toolBelt = new ToolBelt(window.stage,mainWindow.stage,gameBoard);
+			toolBelt.addEventListener(MouseEvent.CLICK,saveLevel);
+		}
+		
+		protected function saveLevel(event:Event):void
+		{
+			levelWriter.createLevel(gameBoard.getCurrentLevel());
 		}
 		public function close():void
 		{

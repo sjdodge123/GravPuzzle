@@ -1,7 +1,7 @@
 package MapEditor.ToolKit.Tools
 {
 	import GameObjects.Mobile.Obstacles.Square;
-	import MapEditor.LevelCreation.ObstacleData;
+	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
 	public class SquareTool extends Tool
 	{

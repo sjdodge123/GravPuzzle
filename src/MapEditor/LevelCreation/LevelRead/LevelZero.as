@@ -1,4 +1,4 @@
-package MapEditor.LevelCreation
+package MapEditor.LevelCreation.LevelRead
 {
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;

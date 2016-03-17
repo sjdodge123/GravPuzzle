@@ -1,4 +1,4 @@
-package MapEditor.LevelCreation
+package MapEditor.LevelCreation.LevelRead
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -8,9 +8,9 @@ package MapEditor.LevelCreation
 		private var loader:XMLLoader;
 		private var xml:XML;
 		private var dataList:Vector.<LevelData>;
-		public function LevelLoader()
+		public function LevelLoader(url:String)
 		{
-			loader = new XMLLoader("MapEditor/LevelCreation/levels.xml");
+			loader = new XMLLoader(url);
 			loader.addEventListener(Event.COMPLETE,getLevelData);
 		}
 		
@@ -72,6 +72,9 @@ package MapEditor.LevelCreation
 		public function getLevelList():Vector.<LevelData>
 		{
 			return dataList;
+		}
+		public function getXML():XML{
+			return xml;
 		}
 	}
 }

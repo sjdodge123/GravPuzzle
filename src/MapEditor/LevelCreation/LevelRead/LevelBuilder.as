@@ -1,11 +1,10 @@
-package MapEditor.LevelCreation
+package MapEditor.LevelCreation.LevelRead
 {
 	import Construct.ObjectBuilder;
 	
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.Obstacles.Obstacle;
-	import GameObjects.Mobile.Obstacles.Square;
 	
 	
 	public class LevelBuilder extends Level

@@ -2,6 +2,7 @@ package Construct
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filesystem.File;
 	
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
@@ -14,19 +15,20 @@ package Construct
 	import GameObjects.Mobile.MobileObject;
 	import GameObjects.Mobile.Obstacles.HitBox;
 	import GameObjects.Mobile.Obstacles.Obstacle;
-	import GameObjects.Mobile.Obstacles.Square;
 	
 	import Handlers.CollisionHandler;
 	
-	import MapEditor.LevelCreation.Level;
-	import MapEditor.LevelCreation.LevelBuilder;
-	import MapEditor.LevelCreation.LevelData;
-	import MapEditor.LevelCreation.LevelLoader;
-	import MapEditor.LevelCreation.ObstacleData;
+	import MapEditor.LevelCreation.LevelRead.Level;
+	import MapEditor.LevelCreation.LevelRead.LevelBuilder;
+	import MapEditor.LevelCreation.LevelRead.LevelData;
+	import MapEditor.LevelCreation.LevelRead.LevelLoader;
+	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 	
 
 	public class GameBoard extends Sprite
 	{
+		
+		
 		private var objectBuilder:ObjectBuilder;
 		private var friendBall:FriendBall;
 		private var basket:BallBasket;
@@ -48,29 +50,30 @@ package Construct
 		
 		
 		private var levelTimer:LevelTimer;
-		
+		private var levelPath:String = "MapEditor/LevelCreation/levels.xml";
 		private var collisionHandler:CollisionHandler;
 		private var levels:Vector.<Level>;
 		private var levelList:Vector.<LevelData>;
 		private var levelScore:Number;
 		private var levelBuilder:LevelBuilder;
+		private var levelLoader:LevelLoader;
 		private var totalSpawns:int = 0;
 		private var hitBox:HitBox;
 		private var gravityBallsSpawned:int;
 		private var time:Number;
-		private var levelLoader:LevelLoader;
+		
 		private var gameScore:int = 0;
 		private var loaded:Boolean = false;
 		
 		public function GameBoard(stageWidth:int,stageHeight:int,camera:Camera)
-		{
+		{			
 			objectBuilder = new ObjectBuilder();
 			objectBuilder.addEventListener(ChildEvent.ADD_CHILD,addElement);
 			objectBuilder.addEventListener(ChildEvent.REMOVE_CHILD,removeElement);
 			gravityObjects = new Vector.<GravBall>;
 			obstacles = new Vector.<Obstacle>;
 			levelTimer = new LevelTimer();
-			levelLoader = new LevelLoader();
+			levelLoader = new LevelLoader(levelPath);
 			levelLoader.addEventListener(Event.COMPLETE,populateLevels);
 			collisionHandler = new CollisionHandler();
 			this.camera = camera;
@@ -348,7 +351,8 @@ package Construct
 		
 		public function addObstacleToBoard(object:ObstacleData):void
 		{
-			obstacles.push(objectBuilder.buildObstacle(object));
+			var newObstacle:Obstacle = objectBuilder.buildObstacle(object);
+			obstacles.push(newObstacle);
 			displayObstacles();
 		}
 		
@@ -388,6 +392,16 @@ package Construct
 		public function getCameraY():Number
 		{
 			return camera.y;
+		}
+		
+		public function getCurrentLevel():LevelData
+		{
+			levelList[levelNum-1].obstacles = new Vector.<ObstacleData>;
+			for(var i:int=0;i<obstacles.length;i++)
+			{
+				levelList[levelNum-1].obstacles.push(objectBuilder.packObstacle(obstacles[i]));
+			}
+			return levelList[levelNum-1];
 		}
 	}
 }

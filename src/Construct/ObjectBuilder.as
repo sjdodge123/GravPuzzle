@@ -8,7 +8,7 @@ package Construct
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
 	
-	import MapEditor.LevelCreation.ObstacleData;
+	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
 	public class ObjectBuilder extends EventDispatcher
 	{
@@ -65,6 +65,20 @@ package Construct
 			}
 			
 			return null;
+		}
+		
+		public function packObstacle(obstacle:Obstacle):ObstacleData
+		{
+			var data:ObstacleData = new ObstacleData();
+			if(obstacle as Square)
+			{
+				data.type = "Square";
+				data.x = obstacle.x;
+				data.y = obstacle.y;
+				data.width = obstacle.width;
+				data.height = obstacle.height;
+			}
+			return data;
 		}
 		
 		private function spawnGravBall(gravityObjects:Vector.<GravBall>):Vector.<GravBall>

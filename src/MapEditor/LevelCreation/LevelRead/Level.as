@@ -1,4 +1,4 @@
-package MapEditor.LevelCreation
+package MapEditor.LevelCreation.LevelRead
 {
 	import flash.events.EventDispatcher;
 	
