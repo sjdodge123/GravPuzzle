@@ -107,10 +107,23 @@ package GameObjects.Mobile
 			editXLine.graphics.lineTo(-25,boxHeight/2);
 			addChild(editXLine);
 			
+			
+			editYLine = new Sprite();
+			editYLine.graphics.lineStyle(2,0x72BCD4);
+			editYLine.graphics.moveTo(boxWidth/2,-5);
+			editYLine.graphics.lineTo(boxWidth/2,-25);
+			addChild(editYLine);
+			
 			editBallX = new Sprite();
 			editBallX.graphics.beginFill(0x72BCD4);
 			editBallX.graphics.drawCircle(-25,boxHeight/2,5);
 			editBallX.graphics.endFill();
+			
+			editBallY = new Sprite();
+			editBallY.graphics.beginFill(0x72BCD4);
+			editBallY.graphics.drawCircle(boxWidth/2,-25,5);
+			editBallY.graphics.endFill();
+			addChild(editBallY);
 			
 			exitBall = new Sprite();
 			exitBall.graphics.beginFill(0xFF4C4C);

@@ -35,6 +35,7 @@ package MapEditor.ToolKit
 					editArray[i].addEventListener(MouseEvent.CLICK,editArray[i].edit);
 					editArray[i].addEventListener(LevelEditEvent.GRAB_CENTER,centerObjectToMouse);
 					editArray[i].addEventListener(LevelEditEvent.GRAB_X,manipulateX);
+					editArray[i].addEventListener(LevelEditEvent.GRAB_Y,manipulateY);
 				}
 				if(!editArray[i].hasEventListener(MouseEvent.MOUSE_OUT))
 				{
@@ -44,6 +45,18 @@ package MapEditor.ToolKit
 				
 			}
 			
+		}
+		
+		protected function manipulateY(event:LevelEditEvent):void
+		{
+			editingObject = MobileObject(event.params);
+			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,moveHeightWithMouse);
+		}
+		
+		protected function moveHeightWithMouse(event:MouseEvent):void
+		{
+			editingObject.height = event.stageY-editingObject.height/2+20;
+			mainWindow.addEventListener(MouseEvent.CLICK,endEdit);
 		}
 		
 		protected function manipulateX(event:LevelEditEvent):void
@@ -68,15 +81,16 @@ package MapEditor.ToolKit
 		{
 			editingObject.x = event.stageX-editingObject.width/2+20;
 			editingObject.y = event.stageY-editingObject.height/2;
-			editingObject.addEventListener(MouseEvent.CLICK,endEdit);
+			mainWindow.addEventListener(MouseEvent.CLICK,endEdit);
 		}
 		
 		protected function endEdit(event:MouseEvent):void
 		{
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,movePointWithMouse);
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,moveWidthWithMouse);
+			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,moveHeightWithMouse);
 			mainWindow.removeEventListener(MouseEvent.CLICK,endEdit);
-			editingObject.removeEventListener(MouseEvent.CLICK,endEdit);
+			mainWindow.removeEventListener(MouseEvent.CLICK,endEdit);
 		}
 		
 	}
