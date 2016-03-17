@@ -28,6 +28,11 @@ package MapEditor.ToolKit
 			toolList.push(new SquareTool());
 			toolList.push(new CircleTool());
 			toolList.push(new SquareTool());
+			toolList.push(new SquareTool());
+			toolList.push(new SquareTool());
+			toolList.push(new SquareTool());
+			toolList.push(new SquareTool());
+			toolList.push(new SquareTool());
 			
 			addToolsToStage();
 			
@@ -49,13 +54,13 @@ package MapEditor.ToolKit
 			{
 				if(i % 3 == 0)
 				{
-					rows++;
-					columns = 0;
-				} else {
 					columns++;
+					rows = 1;
+				} else {
+					rows++;
 				}
-				//toolList[i].y = (rows*60)*+ 2;
-				toolList[i].x = (i*60) + 2;
+				toolList[i].y = ((columns-1)*60)+ 2;
+				toolList[i].x = ((rows-1)*60) + 2;
 				toolStage.addChild(toolList[i]);
 			}
 		}
