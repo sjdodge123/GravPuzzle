@@ -4,7 +4,7 @@ package GameObjects.Mobile
 	
 	import Events.LevelStateEvent;
 	
-	import GameObjects.Mobile.Obstacles.HitBox;
+	import GameObjects.HitRegions.HitBox;
 
 	public class BallBasket extends MobileObject
 	{

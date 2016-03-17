@@ -48,9 +48,9 @@ package MapEditor.ToolKit.Tools
 			addChild(attachedTool);
 		}
 		
-		public override function buildTool(mouseX:Number, mouseY:Number):void
+		public override function buildTool(stageX:Number, stageY:Number):void
 		{
-			attachedTool = new Square(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
+			attachedTool = new Square(stageX-toolWidth/2,stageY-toolHeight/2,toolWidth,toolHeight);
 		}
 		
 	}

@@ -7,6 +7,7 @@ package MapEditor.LevelCreation.LevelRead
 		public var y:int;
 		public var width:int;
 		public var height:int;
+		public var radius:int;
 		
 		public function ObstacleData()
 		{

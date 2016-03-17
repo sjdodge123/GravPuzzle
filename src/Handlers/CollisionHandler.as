@@ -18,7 +18,6 @@ package Handlers
 				obstacles[i].checkBounds(object,dt);
 			}
 			basket.checkBounds(object,dt);
-			
 		}
 	}
 }

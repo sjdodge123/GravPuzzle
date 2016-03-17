@@ -4,8 +4,8 @@ package GameObjects.Mobile
 
 	public class MobileObject extends Sprite
 	{
-		public const radius:int = 10;
-		public var accel:Number=0;
+		public var radius:int = 10;
+		public var accel:Number= 0;
 		public var newX:Number = 0;
 		public var newY:Number = 0;
 		public var velX:Number = 0;
@@ -22,7 +22,7 @@ package GameObjects.Mobile
 		public function calcChange(dt:Number):void
 		{
 			newX = this.x + velX* dt;
-			newY = this.y +  velY* dt;
+			newY = this.y + velY* dt;
 		}
 		public function updatePos():void
 		{

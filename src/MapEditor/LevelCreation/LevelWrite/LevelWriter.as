@@ -6,19 +6,19 @@ package MapEditor.LevelCreation.LevelWrite
 	import flash.filesystem.FileStream;
 	
 	import MapEditor.LevelCreation.LevelRead.LevelData;
-	import MapEditor.LevelCreation.LevelRead.LevelLoader;
+	import MapEditor.LevelCreation.LevelRead.LevelReader;
 
 	public class LevelWriter
 	{
 		private var fileLocation:String = "MapEditor/LevelCreation/levels.xml";
-		private var levelLoader:LevelLoader;
+		private var levelLoader:LevelReader;
 		private var loaded:Boolean = false;
 		private var xml:XML;
 		private var file:File;
 		
 		public function LevelWriter()
 		{
-			levelLoader = new LevelLoader(fileLocation);
+			levelLoader = new LevelReader(fileLocation);
 			levelLoader.addEventListener(Event.COMPLETE,levelsLoaded);
 		}
 		
@@ -61,8 +61,16 @@ package MapEditor.LevelCreation.LevelWrite
 				object.appendChild(new XML(<type>{levelData.obstacles[i].type}</type>));
 				object.appendChild(new XML(<x>{levelData.obstacles[i].x}</x>));
 				object.appendChild(new XML(<y>{levelData.obstacles[i].y}</y>));
-				object.appendChild(new XML(<width>{levelData.obstacles[i].width}</width>));
-				object.appendChild(new XML(<height>{levelData.obstacles[i].height}</height>));
+				if(levelData.obstacles[i].type == 'Square')
+				{
+					object.appendChild(new XML(<width>{levelData.obstacles[i].width}</width>));
+					object.appendChild(new XML(<height>{levelData.obstacles[i].height}</height>));
+				}
+				if(levelData.obstacles[i].type == 'Circle')
+				{
+					object.appendChild(new XML(<radius>{levelData.obstacles[i].radius}</radius>));
+				}
+				
 				obstacles.appendChild(object);
 			}
 			newLevel.appendChild(obstacles);

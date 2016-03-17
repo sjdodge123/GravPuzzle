@@ -1,4 +1,4 @@
-package MapEditor.ToolKit
+package MapEditor.ToolKit.ControlPanel
 {
 	import flash.display.Sprite;
 	import flash.text.TextField;
@@ -8,7 +8,7 @@ package MapEditor.ToolKit
 	{
 		private var textBox:TextField;
 		private var buttonBox:Sprite;
-		public function SaveButton(x:int,y:int)
+		public function SaveButton(x:int,y:int,width:int,height:int)
 		{
 			this.x = x;
 			this.y = y;
@@ -16,7 +16,7 @@ package MapEditor.ToolKit
 			buttonBox = new Sprite();
 			
 			buttonBox.graphics.beginFill(0x89E894);
-			buttonBox.graphics.drawRect(0,0,100,25);
+			buttonBox.graphics.drawRect(0,0,width,height);
 			buttonBox.graphics.endFill();
 			buttonBox.buttonMode = true;
 			addChild(buttonBox);

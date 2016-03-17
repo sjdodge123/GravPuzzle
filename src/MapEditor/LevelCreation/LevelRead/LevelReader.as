@@ -3,12 +3,12 @@ package MapEditor.LevelCreation.LevelRead
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 
-	public class LevelLoader extends EventDispatcher
+	public class LevelReader extends EventDispatcher
 	{
 		private var loader:XMLLoader;
 		private var xml:XML;
 		private var dataList:Vector.<LevelData>;
-		public function LevelLoader(url:String)
+		public function LevelReader(url:String)
 		{
 			loader = new XMLLoader(url);
 			loader.addEventListener(Event.COMPLETE,getLevelData);
@@ -63,6 +63,13 @@ package MapEditor.LevelCreation.LevelRead
 					data.y = objectData.child("y");
 					data.width = objectData.child("width");
 					data.height = objectData.child("height");
+				}
+				if(type == "Circle")
+				{
+					data.type = type;
+					data.x = objectData.child("x");
+					data.y = objectData.child("y");
+					data.radius = objectData.child("radius");
 				}
 				count++;
 				levelData.obstacles.push(data);

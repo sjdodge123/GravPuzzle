@@ -7,6 +7,7 @@ package Construct
 	import GameObjects.Mobile.GravBall;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
+	import GameObjects.Mobile.Obstacles.Circle;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
@@ -63,6 +64,10 @@ package Construct
 			{
 				return new Square(data.x,data.y,data.width,data.height);
 			}
+			if(data.type == "Circle")
+			{
+				return new Circle(data.x,data.y,data.radius);
+			}
 			
 			return null;
 		}
@@ -77,6 +82,13 @@ package Construct
 				data.y = obstacle.y;
 				data.width = obstacle.width;
 				data.height = obstacle.height;
+			}
+			if(obstacle as Circle)
+			{
+				data.type = "Circle";
+				data.x = obstacle.x;
+				data.y = obstacle.y;
+				data.radius = obstacle.radius;
 			}
 			return data;
 		}

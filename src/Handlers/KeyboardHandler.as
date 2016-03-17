@@ -14,19 +14,7 @@ package Handlers
 			gameStage.addEventListener(KeyboardEvent.KEY_DOWN, keyboardInput);
 			gameStage.addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, rightClick);
 			gameStage.addEventListener(MouseEvent.MIDDLE_CLICK, middleClick);
-//			gameStage.addEventListener(MouseEvent.MIDDLE_MOUSE_UP, middleUp);
-//			gameStage.addEventListener(MouseEvent.MIDDLE_MOUSE_DOWN, middleDown);
 		}
-//		
-//		protected function middleDown(event:MouseEvent):void
-//		{
-//			dispatchEvent(new KeyEvent(KeyEvent.MOUSE_WHEEL_DOWN,null));
-//		}
-//		
-//		protected function middleUp(event:MouseEvent):void
-//		{
-//			dispatchEvent(new KeyEvent(KeyEvent.MOUSE_WHEEL_UP,null));
-//		}
 		
 		protected function middleClick(event:MouseEvent):void
 		{

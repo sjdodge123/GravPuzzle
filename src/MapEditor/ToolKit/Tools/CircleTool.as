@@ -1,17 +1,18 @@
 package MapEditor.ToolKit.Tools
 {
-	import GameObjects.Mobile.Obstacles.Square;
+	import GameObjects.Mobile.Obstacles.Circle;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
-	public class SquareTool extends Tool
+	public class CircleTool extends Tool
 	{
-		
-		public function SquareTool()
+		private var radius:int;
+		public function CircleTool()
 		{
 			toolWidth = 50;
 			toolHeight = 50;
-			tool = new Square(toolOffsetX,toolOffsetY,toolWidth,toolHeight);
+			radius = 25;
+			tool = new Circle(toolOffsetX+radius,toolOffsetY+radius,radius);
 			this.addChild(tool);
 		}
 		
@@ -23,18 +24,17 @@ package MapEditor.ToolKit.Tools
 				removeChild(attachedTool);
 			}
 			var toolData:ObstacleData = new ObstacleData();
-			toolData.type = "Square";
-			toolData.x = x-toolWidth/2;
-			toolData.y = y-toolHeight/2;
-			toolData.width = toolWidth;
-			toolData.height = toolHeight;
+			toolData.type = "Circle";
+			toolData.x = x;
+			toolData.y = y;
+			toolData.radius = radius;
 			return toolData;
 		}
 		
 		protected override function pickUpTool(mouseX:int,mouseY:int):void
 		{
 			toolInHand = true;
-			attachedTool = new Square(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
+			attachedTool = new Circle(mouseX,mouseY,radius);
 			addChild(attachedTool);
 		}
 		
@@ -44,14 +44,13 @@ package MapEditor.ToolKit.Tools
 			{
 				removeChild(attachedTool);
 			}
-			attachedTool = new Square(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
+			attachedTool = new Circle(mouseX,mouseY,radius);
 			addChild(attachedTool);
 		}
 		
 		public override function buildTool(mouseX:Number, mouseY:Number):void
 		{
-			attachedTool = new Square(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
+			attachedTool = new Circle(mouseX,mouseY,radius);
 		}
-		
 	}
 }

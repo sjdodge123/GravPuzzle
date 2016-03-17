@@ -23,6 +23,8 @@ package MapEditor.ToolKit.Tools
 		
 		protected var toolOffsetX:int = 5;
 		protected var toolOffsetY:int = 5;
+		public var imageX:int = 0;
+		public var imageY:int = 0;
 		
 		public var attachedTool:Obstacle = new Square(1,1,1,1);;
 		
@@ -30,12 +32,17 @@ package MapEditor.ToolKit.Tools
 		{
 			border = new Sprite();
 			border.graphics.lineStyle(1,0,0);
-			border.graphics.drawRect(toolOffsetX,toolOffsetY,50,50);
+			border.graphics.drawRect(imageX + toolOffsetX,imageY+toolOffsetY,50,50);
 			this.addChild(border);
 			this.addEventListener(MouseEvent.MOUSE_OVER,mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT,mouseOut);
 			this.addEventListener(MouseEvent.CLICK,mouseClicked);
 			this.addEventListener(MouseEvent.RIGHT_CLICK,rightClick);
+		}
+		
+		public function spawn():void
+		{
+			//Implemented in tool
 		}
 		
 		
@@ -140,7 +147,7 @@ package MapEditor.ToolKit.Tools
 		}
 		
 		
-		public function buildTool(stageX:Number, stageY:Number):void
+		public function buildTool(mouseX:Number, mouseX:Number):void
 		{
 			//Implmented in tools themselves
 		}

@@ -6,10 +6,14 @@ package MapEditor.ToolKit
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.NativeWindowBoundsEvent;
 	import flash.events.MouseEvent;
+	import flash.events.NativeWindowBoundsEvent;
+	
+	import Events.PanelEvent;
 	import Construct.GameBoard;
+	
 	import MapEditor.LevelCreation.LevelWrite.LevelWriter;
+	import MapEditor.ToolKit.ControlPanel.Panel;
 
 	public class ToolKitWindow extends EventDispatcher
 	{
@@ -19,6 +23,7 @@ package MapEditor.ToolKit
 		private var toolBelt:ToolBelt;
 		private var gameBoard:GameBoard;
 		private var levelWriter:LevelWriter;
+		private var controlPanel:Panel;
 		
 		
 		public function ToolKitWindow(gameBoard:GameBoard)
@@ -59,10 +64,25 @@ package MapEditor.ToolKit
 			window.stage.scaleMode = StageScaleMode.NO_SCALE;
 			window.stage.align = StageAlign.TOP_LEFT;
 			toolBelt = new ToolBelt(window.stage,mainWindow.stage,gameBoard);
-			toolBelt.addEventListener(MouseEvent.CLICK,saveLevel);
+			controlPanel = new Panel(0,window.stage.stageHeight-100,200,100,gameBoard.getCurrentLevelNumber(),gameBoard.getLevelCount());
+			controlPanel.addEventListener(PanelEvent.CREATE_LEVEL,createLevel);
+			controlPanel.addEventListener(PanelEvent.DOWN_LEVEL,previousLevel);
+			controlPanel.addEventListener(PanelEvent.UP_LEVEL,nextLevel);
+			window.stage.addChild(controlPanel);
 		}
 		
-		protected function saveLevel(event:Event):void
+		protected function nextLevel(event:Event):void
+		{
+			gameBoard.nextLevel(null);
+		}
+		
+		protected function previousLevel(event:Event):void
+		{
+			gameBoard.previousLevel(null);
+			
+		}
+		
+		protected function createLevel(event:Event):void
 		{
 			levelWriter.createLevel(gameBoard.getCurrentLevel());
 		}

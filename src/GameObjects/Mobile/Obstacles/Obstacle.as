@@ -1,28 +1,26 @@
 package GameObjects.Mobile.Obstacles
 {
 	import GameObjects.Mobile.MobileObject;
+	import GameObjects.HitRegions.HitRegion;
 
 	public class Obstacle extends MobileObject
 	{
-		public var hitBoxes:Vector.<HitBox> = new Vector.<HitBox>;
+		protected var hitRegion:Vector.<HitRegion> = new Vector.<HitRegion>;
 		
 		public function Obstacle()
 		{
 		}
 		
-		// !TODO! Add collision for a wall obstacle here !TODO!
-		
-		
 		public function checkBounds(object:MobileObject,dt:Number):void
 		{
-			for(var i:int=0;i<hitBoxes.length;i++)
+			for(var i:int=0;i<hitRegion.length;i++)
 			{
-				hitBoxes[i].checkBounds(object,dt);
+				hitRegion[i].checkBounds(object,dt);	
 			}
 		}
-		public function getHitBoxes():Vector.<HitBox>
+		public function getHitRegion():Vector.<HitRegion>
 		{
-			return hitBoxes;
+			return hitRegion;
 		}
 	}
 }

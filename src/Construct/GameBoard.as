@@ -2,18 +2,18 @@ package Construct
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.filesystem.File;
 	
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
 	
+	import GameObjects.HitRegions.HitBox;
+	import GameObjects.HitRegions.HitRegion;
 	import GameObjects.Immobile.LevelTimer;
 	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.Camera;
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.GravBall;
 	import GameObjects.Mobile.MobileObject;
-	import GameObjects.Mobile.Obstacles.HitBox;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	
 	import Handlers.CollisionHandler;
@@ -21,7 +21,7 @@ package Construct
 	import MapEditor.LevelCreation.LevelRead.Level;
 	import MapEditor.LevelCreation.LevelRead.LevelBuilder;
 	import MapEditor.LevelCreation.LevelRead.LevelData;
-	import MapEditor.LevelCreation.LevelRead.LevelLoader;
+	import MapEditor.LevelCreation.LevelRead.LevelReader;
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 	
 
@@ -56,7 +56,7 @@ package Construct
 		private var levelList:Vector.<LevelData>;
 		private var levelScore:Number;
 		private var levelBuilder:LevelBuilder;
-		private var levelLoader:LevelLoader;
+		private var levelLoader:LevelReader;
 		private var totalSpawns:int = 0;
 		private var hitBox:HitBox;
 		private var gravityBallsSpawned:int;
@@ -73,7 +73,7 @@ package Construct
 			gravityObjects = new Vector.<GravBall>;
 			obstacles = new Vector.<Obstacle>;
 			levelTimer = new LevelTimer();
-			levelLoader = new LevelLoader(levelPath);
+			levelLoader = new LevelReader(levelPath);
 			levelLoader.addEventListener(Event.COMPLETE,populateLevels);
 			collisionHandler = new CollisionHandler();
 			this.camera = camera;
@@ -81,6 +81,7 @@ package Construct
 		
 		private function populateLevels(evt:Event):void
 		{
+			levelLoader.removeEventListener(Event.COMPLETE,populateLevels);
 			loaded = true;
 			levels = new Vector.<Level>;
 			levelList = levelLoader.getLevelList();
@@ -137,7 +138,7 @@ package Construct
 			friendBall.calcChange(1);
 		}
 		
-		protected function nextLevel(event:Event):void
+		public function nextLevel(event:Event):void
 		{
 			if(checkScore())
 			{
@@ -154,6 +155,25 @@ package Construct
 				trace("You Win! Game over");
 				gameScore = 0;
 				levelNum = 1;
+				buildNextLevel();
+			}
+		}
+		
+		public function previousLevel(event:Event):void
+		{
+			if(checkScore())
+			{
+				levelNum--;
+			}
+			clearBoard();
+			if(levelNum > 0)
+			{
+				buildNextLevel();
+			}
+			else
+			{
+				gameScore = 0;
+				levelNum = levels.length-1;
 				buildNextLevel();
 			}
 		}
@@ -264,6 +284,7 @@ package Construct
 			totalSpawns = 0;
 			levelScore = 1000;
 			var count:int = numChildren;
+			levelTimer.reset();
 			while(numChildren)
 			{
 				count--;
@@ -338,12 +359,14 @@ package Construct
 		
 		public function displayObstacles():void
 		{
+			
 			for(var i:int=0;i<obstacles.length;i++)
 			{
 				addChild(obstacles[i]);
-				for(var j:int=0;j<obstacles[i].getHitBoxes().length;j++) //run through and add all hitboxes of each obstacle
+				var hitRegions:Vector.<HitRegion> = obstacles[i].getHitRegion();
+				for(var j:int=0;j<hitRegions.length;j++) //run through and add all hitboxes of each obstacle
 				{
-					addChild(obstacles[i].hitBoxes[j]);
+					addChild(hitRegions[j]);
 				}
 			}
 			
@@ -402,6 +425,17 @@ package Construct
 				levelList[levelNum-1].obstacles.push(objectBuilder.packObstacle(obstacles[i]));
 			}
 			return levelList[levelNum-1];
+		}
+		
+		public function getCurrentLevelNumber():int
+		{
+			return levelNum;
+		}
+		
+		
+		public function getLevelCount():int
+		{
+			return levels.length-1;
 		}
 	}
 }
