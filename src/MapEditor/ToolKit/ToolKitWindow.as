@@ -9,8 +9,9 @@ package MapEditor.ToolKit
 	import flash.events.MouseEvent;
 	import flash.events.NativeWindowBoundsEvent;
 	
-	import Events.PanelEvent;
 	import Construct.GameBoard;
+	
+	import Events.PanelEvent;
 	
 	import MapEditor.LevelCreation.LevelWrite.LevelWriter;
 	import MapEditor.ToolKit.ControlPanel.Panel;
@@ -24,6 +25,7 @@ package MapEditor.ToolKit
 		private var gameBoard:GameBoard;
 		private var levelWriter:LevelWriter;
 		private var controlPanel:Panel;
+		private var editor:Editor;
 		
 		
 		public function ToolKitWindow(gameBoard:GameBoard)
@@ -64,6 +66,7 @@ package MapEditor.ToolKit
 			window.stage.scaleMode = StageScaleMode.NO_SCALE;
 			window.stage.align = StageAlign.TOP_LEFT;
 			toolBelt = new ToolBelt(window.stage,mainWindow.stage,gameBoard);
+			editor = new Editor(mainWindow.stage,gameBoard);
 			controlPanel = new Panel(0,window.stage.stageHeight-100,200,100,gameBoard.getCurrentLevelNumber(),gameBoard.getLevelCount());
 			controlPanel.addEventListener(PanelEvent.CREATE_LEVEL,createLevel);
 			controlPanel.addEventListener(PanelEvent.DOWN_LEVEL,previousLevel);

@@ -1,7 +1,10 @@
 package GameObjects.Mobile.Obstacles
 {
-	import GameObjects.Mobile.MobileObject;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	
 	import GameObjects.HitRegions.HitRegion;
+	import GameObjects.Mobile.MobileObject;
 
 	public class Obstacle extends MobileObject
 	{
@@ -22,5 +25,6 @@ package GameObjects.Mobile.Obstacles
 		{
 			return hitRegion;
 		}
+		
 	}
 }

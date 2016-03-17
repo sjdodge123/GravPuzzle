@@ -1,6 +1,9 @@
 package GameObjects.Mobile.Obstacles
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	
 	import GameObjects.HitRegions.HitBox;
 	import GameObjects.HitRegions.HitRegion;
 	
@@ -24,6 +27,26 @@ package GameObjects.Mobile.Obstacles
 			hitRegion.push(hitBox);
 		
 			
+		}
+		
+		public override function edit(event:Event):void
+		{
+			trace('edit');
+			this.drawBorder();
+			this.removeEventListener(MouseEvent.CLICK,edit);
+			this.addEventListener(MouseEvent.CLICK,editObject);
+		}
+		
+		public override function editObject(event:MouseEvent):void
+		{
+			trace('make edits');
+		}
+		protected override function drawBorder():void
+		{
+			border = new Sprite();
+			border.graphics.lineStyle(2,0x72BCD4);
+			border.graphics.drawCircle(0,0,50);
+			addChild(border);
 		}
 	}
 }

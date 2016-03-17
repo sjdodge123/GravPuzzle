@@ -2,6 +2,7 @@ package Construct
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
@@ -438,6 +439,22 @@ package Construct
 		public function getLevelCount():int
 		{
 			return levels.length-1;
+		}
+		
+		public function getMobileObjectsUnderPoint(mousePoint:Point):Vector.<MobileObject>
+		{
+			var objectsInScope:Vector.<MobileObject> = new Vector.<MobileObject>;
+			for(var i:int=0;i<this.numChildren;i++)
+			{
+				if(getChildAt(i) as MobileObject){
+					var object:MobileObject = MobileObject(getChildAt(i));
+					if(getChildAt(i).hitTestPoint(mousePoint.x,mousePoint.y))
+					{
+						objectsInScope.push(getChildAt(i));
+					}
+				}
+			}
+			return objectsInScope;
 		}
 	}
 }

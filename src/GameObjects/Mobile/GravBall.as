@@ -18,5 +18,14 @@ package GameObjects.Mobile
 			shape.useHandCursor = false;
 			addChild(shape);
 		}
+		
+		protected override function drawBorder():void
+		{
+			
+		}
+		protected override function removeBorder():void
+		{
+			
+		}
 	}
 }
