@@ -2,20 +2,18 @@ package GameObjects.Mobile
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
 	import Events.LevelEditEvent;
 
 	public class MobileObject extends Sprite
 	{
-		public var radius:int = 10;
+		protected var radius:int = 10;
 		public var accel:Number= 0;
 		public var newX:Number = 0;
 		public var newY:Number = 0;
 		public var velX:Number = 0;
 		public var velY:Number =0;
-		public var shape:Sprite;
 		protected var velocity:Number;
 		protected var dirX:Number =0;
 		protected var dirY:Number=0;
@@ -93,6 +91,7 @@ package GameObjects.Mobile
 		
 		public function edit(event:Event):void
 		{
+			trace('edit');
 			this.drawBorder();
 			this.removeEventListener(MouseEvent.CLICK,edit);
 			this.addEventListener(MouseEvent.CLICK,editObject);
@@ -127,6 +126,11 @@ package GameObjects.Mobile
 				removeChild(editCenterBall);
 			}
 			
+		}
+		
+		public function getRadius():int
+		{
+			return radius;
 		}
 	}
 }

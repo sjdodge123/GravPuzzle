@@ -2,7 +2,6 @@ package MapEditor.ToolKit
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
@@ -11,7 +10,6 @@ package MapEditor.ToolKit
 	import Events.LevelEditEvent;
 	
 	import GameObjects.Mobile.MobileObject;
-	import GameObjects.Mobile.Obstacles.Square;
 
 	public class Editor extends Sprite
 	{
@@ -19,16 +17,56 @@ package MapEditor.ToolKit
 		private var editingObject:MobileObject;
 		private var mainWindow:Stage;
 		private var toolBelt:ToolBelt;
+		private var scaleX:Number;
+		private var scaleY:Number;
 		public function Editor(toolWindow:Stage, mainWindow:Stage,gameBoard:GameBoard)
 		{
 			this.gameBoard = gameBoard;
 			this.mainWindow = mainWindow;
 			
 			toolBelt = new ToolBelt(toolWindow.stage,mainWindow.stage,gameBoard);
-			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,mouseMove);
+			
+			//Used to look for objects that the mouse is currently touching
+			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,scanForObjects);
+			
+			
+			mainWindow.addEventListener(MouseEvent.MOUSE_WHEEL,zoomOut);
+			mainWindow.addEventListener(MouseEvent.MIDDLE_MOUSE_DOWN,mapPanOn);
+			mainWindow.addEventListener(MouseEvent.MIDDLE_MOUSE_UP,mapPanOff);
 		}
 		
-		protected function mouseMove(event:MouseEvent):void
+		protected function mapPanOn(event:MouseEvent):void
+		{
+			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,pan);
+		}
+		
+		protected function pan(event:MouseEvent):void
+		{
+			var mouse:Point = new Point(event.stageX,event.stageY);
+			var grabPoint:Point = gameBoard.globalToLocal(mouse);
+			grabPoint.x -= mouse.x*scaleX;
+			grabPoint.y -= mouse.y*scaleY;
+			gameBoard.x += grabPoint.x;
+			gameBoard.y += grabPoint.y;
+		}
+		
+		protected function mapPanOff(event:MouseEvent):void
+		{
+			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,pan);
+		}
+		
+		protected function zoomOut(event:MouseEvent):void
+		{
+			
+			gameBoard.scaleX += event.delta * .1;
+			gameBoard.scaleY += event.delta * .1;
+			scaleX = gameBoard.scaleX;
+			scaleY = gameBoard.scaleY;
+			gameBoard.x = mainWindow.stage.stageWidth/2 - gameBoard.width/2;
+			gameBoard.y = mainWindow.stage.stageHeight/2-gameBoard.height/2;
+		}
+		
+		protected function scanForObjects(event:MouseEvent):void
 		{
 			var editArray:Vector.<MobileObject> = gameBoard.getMobileObjectsUnderPoint(new Point(event.stageX-gameBoard.getCameraX(),event.stageY-gameBoard.getCameraY()));
 			for(var i:int=0;i<editArray.length;i++)
@@ -40,11 +78,6 @@ package MapEditor.ToolKit
 					editArray[i].addEventListener(LevelEditEvent.GRAB_X,manipulateX);
 					editArray[i].addEventListener(LevelEditEvent.GRAB_Y,manipulateY);
 				}
-				if(!editArray[i].hasEventListener(MouseEvent.MOUSE_OUT))
-				{
-					//editArray[i].addEventListener(MouseEvent.MOUSE_OUT, editArray[i].endEdit);
-				}
-				
 				
 			}
 			

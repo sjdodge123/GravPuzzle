@@ -1,13 +1,13 @@
 package GameObjects.Mobile
 {
 	import flash.display.Sprite;
-	import GameObjects.Mobile.MobileObject;
 
 	public class GravBall extends MobileObject
 	{
 		private var shape:Sprite;
 		public function GravBall(x:int,y:int)
 		{
+			super();
 			this.x = x;
 			this.y = y;
 			shape = new Sprite();
@@ -21,11 +21,11 @@ package GameObjects.Mobile
 		
 		protected override function drawBorder():void
 		{
-			
+			trace('drawing grav ball border');
 		}
 		protected override function removeBorder():void
 		{
-			
+			trace('removing grav ball border');
 		}
 	}
 }

@@ -11,6 +11,7 @@ package GameObjects.Mobile.Obstacles
 		
 		public function Circle(x:int,y:int,radius:int)
 		{
+			
 			this.x = x;
 			this.y = y;
 			this.radius = radius;
@@ -23,6 +24,7 @@ package GameObjects.Mobile.Obstacles
 			hitCircle = new HitCircle(x,y,radius,0);
 			hitRegion = new Vector.<HitRegion>;
 			hitRegion.push(hitCircle);
+			super();
 		}
 	}
 }

@@ -1,8 +1,6 @@
 package GameObjects.Mobile
 {
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	
 	import Events.LevelStateEvent;
 	
 	import GameObjects.HitRegions.HitBox;
@@ -82,7 +80,7 @@ package GameObjects.Mobile
 				hitBoxes[i].checkBounds(object,dt);
 			}
 			//win condition
-			if (goal.hitTestPoint(object.x+object.radius,object.y+object.radius))
+			if (goal.hitTestPoint(object.x+object.getRadius(),object.y+object.getRadius()))
 			{
 				trace("Victory! On to next level!");
 				dispatchEvent(new LevelStateEvent(LevelStateEvent.WIN_LEVEL,null));

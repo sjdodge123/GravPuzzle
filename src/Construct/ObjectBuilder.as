@@ -6,10 +6,10 @@ package Construct
 	
 	import GameObjects.Mobile.GravBall;
 	import GameObjects.Mobile.Obstacles.Circle;
-	import GameObjects.Mobile.Obstacles.Zones.DeadZone;
-	import GameObjects.Mobile.Obstacles.Zones.BlackZone;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
+	import GameObjects.Mobile.Obstacles.Zones.BlackZone;
+	import GameObjects.Mobile.Obstacles.Zones.DeadZone;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
@@ -38,7 +38,8 @@ package Construct
 				var dx:Number = gravityObjects[i].x - stageX;
 				var dy:Number = gravityObjects[i].y - stageY;
 				var distance:Number = Math.sqrt(dx*dx + dy*dy);
-				if(distance > gravityObjects[i].radius*3)
+				var radius:Number = gravityObjects[i].getRadius()*3;
+				if(distance > radius)
 				{
 					spawnClear = true;
 					
@@ -99,7 +100,7 @@ package Construct
 				data.type = "Circle";
 				data.x = obstacle.x;
 				data.y = obstacle.y;
-				data.radius = obstacle.radius;
+				data.radius = obstacle.getRadius();
 			}
 			if(obstacle as DeadZone)
 			{
@@ -122,8 +123,9 @@ package Construct
 		
 		private function spawnGravBall(gravityObjects:Vector.<GravBall>):Vector.<GravBall>
 		{
-			gravityObjects.push(new GravBall(spawnLocX,spawnLocY));
-			dispatchEvent(new ChildEvent(ChildEvent.ADD_CHILD,gravityObjects[gravityObjects.length-1]));
+			var gravBall:GravBall = new GravBall(spawnLocX,spawnLocY);
+			gravityObjects.push(gravBall);
+			dispatchEvent(new ChildEvent(ChildEvent.ADD_CHILD,gravBall));
 			return gravityObjects;
 		}
 		

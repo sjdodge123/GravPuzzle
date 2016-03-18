@@ -16,6 +16,7 @@ package GameObjects.Mobile.Obstacles.Zones
 		
 		public function BlackZone(x:int,y:int,width:int, height:int)
 		{
+			
 			this.x = x;
 			this.y = y;
 			image = new Sprite();
@@ -29,14 +30,8 @@ package GameObjects.Mobile.Obstacles.Zones
 			hitBox.addEventListener(ObstacleEvent.BLACKZONE,forwardEvent);
 			hitRegion = new Vector.<HitRegion>;
 			hitRegion.push(hitBox);
-		}
-		
-		public override function edit(event:Event):void
-		{
-			trace('edit');
-			this.drawBorder();
-			this.removeEventListener(MouseEvent.CLICK,edit);
-			this.addEventListener(MouseEvent.CLICK,editObject);
+			super();
+			
 		}
 		
 		public override function editObject(event:MouseEvent):void

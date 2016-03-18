@@ -1,14 +1,14 @@
 package GameObjects.Mobile
 {
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	public class FriendBall extends MobileObject
 	{
-		
+		private var shape:Sprite;
 		public function FriendBall(x:int, y:int)
 		{
+			super();
 			this.x = x;
 			this.y = y;
 			shape = new Sprite();
@@ -18,15 +18,6 @@ package GameObjects.Mobile
 			shape.graphics.drawCircle(0,0, radius);
 			shape.useHandCursor = false;
 			addChild(shape);
-		}
-		
-		public override function editObject(event:MouseEvent):void
-		{
-			
-		}
-		protected override function drawBorder():void
-		{
-			
 		}
 	}
 }

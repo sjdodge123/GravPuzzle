@@ -29,14 +29,8 @@ package GameObjects.Mobile.Obstacles.Zones
 			hitBox.addEventListener(ObstacleEvent.DEADZONE,forwardEvent);
 			hitRegion = new Vector.<HitRegion>;
 			hitRegion.push(hitBox);
-		}
-		
-		public override function edit(event:Event):void
-		{
-			trace('edit');
-			this.drawBorder();
-			this.removeEventListener(MouseEvent.CLICK,edit);
-			this.addEventListener(MouseEvent.CLICK,editObject);
+			super();
+			
 		}
 		
 		public override function editObject(event:MouseEvent):void

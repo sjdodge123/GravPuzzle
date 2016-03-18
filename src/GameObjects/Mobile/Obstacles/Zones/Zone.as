@@ -10,7 +10,7 @@ package GameObjects.Mobile.Obstacles.Zones
 	{
 		public function Zone()
 		{
-			
+			super();
 		}
 		
 		protected function forwardEvent(event:ObstacleEvent):void

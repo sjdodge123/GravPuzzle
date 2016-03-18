@@ -45,7 +45,7 @@ package Construct
 		private var camera:Camera;
 		
 		//Game testing variables
-		private var startingLevel:int = 1;
+		private var startingLevel:int = 2;
 		private var levelNum:int = 0;
 		private var penaltyValue:int = 5;
 		private var masteryValue:int = 25;
@@ -347,12 +347,13 @@ package Construct
 		}
 		protected function addElement(event:ChildEvent):void
 		{
-			addChild(event.params as Sprite);
+			trace(MobileObject(event.params));
+			addChild(MobileObject(event.params));
 		}	
 		
 		protected function removeElement(event:ChildEvent):void
 		{
-			removeChild(event.params as Sprite);
+			removeChild(MobileObject(event.params));
 		}
 		
 		//The Camera will expand to fit these objects onto the screen
@@ -500,6 +501,15 @@ package Construct
 			{
 				obstacles[i].endEdit(null);
 			}
+		}
+		
+		public function setCameraX(x:Number):void
+		{
+			camera.x = x;
+		}
+		public function setCameraY(x:Number):void
+		{
+			camera.y = y;
 		}
 	}
 }

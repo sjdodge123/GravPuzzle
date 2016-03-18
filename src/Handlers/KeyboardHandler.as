@@ -13,7 +13,7 @@ package Handlers
 		{
 			gameStage.addEventListener(KeyboardEvent.KEY_DOWN, keyboardInput);
 			gameStage.addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, rightClick);
-			gameStage.addEventListener(MouseEvent.MIDDLE_CLICK, middleClick);
+			//gameStage.addEventListener(MouseEvent.MIDDLE_CLICK, middleClick);
 		}
 		
 		protected function middleClick(event:MouseEvent):void

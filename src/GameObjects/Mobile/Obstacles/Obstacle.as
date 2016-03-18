@@ -9,6 +9,7 @@ package GameObjects.Mobile.Obstacles
 		
 		public function Obstacle()
 		{
+			super();
 		}
 		
 		public function checkBounds(object:MobileObject,dt:Number):void

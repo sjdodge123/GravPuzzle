@@ -20,19 +20,19 @@ package GameObjects.HitRegions
 		}
 		public override function checkBounds(object:MobileObject,dt:Number):void
 		{
-			if((object.newX+object.radius>this.x) && (object.x+object.radius<this.x) && (object.y - object.radius<this.y+box.height) && (object.y + object.radius>this.y)) //outerLeft
+			if((object.newX+object.getRadius()>this.x) && (object.x+object.getRadius()<this.x) && (object.y - object.getRadius()<this.y+box.height) && (object.y + object.getRadius()>this.y)) //outerLeft
 			{
 				object.velX = -object.velX * .65;
 			}
-			if((object.newX-object.radius<this.x+box.width) && (object.x-object.radius>this.x+box.width) && (object.y - object.radius<this.y+box.height) && (object.y + object.radius>this.y)) //outerRight
+			if((object.newX-object.getRadius()<this.x+box.width) && (object.x-object.getRadius()>this.x+box.width) && (object.y - object.getRadius()<this.y+box.height) && (object.y + object.getRadius()>this.y)) //outerRight
 			{
 				object.velX = -object.velX * .65;
 			}
-			if((object.newY+object.radius > this.y) && (object.y+object.radius < this.y) && (object.x > this.x) && (object.x < this.x+box.width)) //outerTop
+			if((object.newY+object.getRadius() > this.y) && (object.y+object.getRadius() < this.y) && (object.x > this.x) && (object.x < this.x+box.width)) //outerTop
 			{
 				object.velY = -object.velY * .65;
 			}
-			if((object.newY-object.radius < this.y+box.height) && (object.y-object.radius > this.y+box.height) && (object.x + object.radius> this.x) && (object.x - object.radius< this.x+box.width)) //outerBottom
+			if((object.newY-object.getRadius() < this.y+box.height) && (object.y-object.getRadius() > this.y+box.height) && (object.x + object.getRadius()> this.x) && (object.x - object.getRadius()< this.x+box.width)) //outerBottom
 			{
 				object.velY = -object.velY * .65;
 			}
