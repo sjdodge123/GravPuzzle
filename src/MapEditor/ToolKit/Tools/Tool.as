@@ -81,10 +81,7 @@ package MapEditor.ToolKit.Tools
 			{
 				this.removeChild(border);
 			}
-				
 		}
-		
-		
 		public function dropTool(stage:Stage=null):Boolean
 		{
 			if(stage == null && toolInHand){

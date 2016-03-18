@@ -13,12 +13,10 @@ package MapEditor.ToolKit.Tools
 		
 		public function DeadZoneTool()
 		{
-			super();
 			toolWidth = 50;
 			toolHeight = 50;
 			tool = new DeadZone(toolOffsetX,toolOffsetY,toolWidth,toolHeight);
 			this.addChild(tool);
-			
 		}
 		
 		public override function placeTool(x:int,y:int):ObstacleData

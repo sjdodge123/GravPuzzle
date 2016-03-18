@@ -1,7 +1,6 @@
 package GameObjects.Mobile
 {
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import Events.LevelEditEvent;
@@ -80,7 +79,8 @@ package GameObjects.Mobile
 			
 			if(exitBall.hitTestPoint(event.stageX,event.stageY))
 			{
-				endEdit(null);
+				endEdit();
+				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.EXIT,this));
 			}
 			
 			if(editBallY.hitTestPoint(event.stageX,event.stageY))
@@ -89,18 +89,16 @@ package GameObjects.Mobile
 			}
 		}
 		
-		public function edit(event:Event):void
+		public function edit():void
 		{
 			trace('edit');
 			this.drawBorder();
-			this.removeEventListener(MouseEvent.CLICK,edit);
 			this.addEventListener(MouseEvent.CLICK,editObject);
 		}
 		
-		public function endEdit(event:Event):void
+		public function endEdit():void
 		{
 			this.removeBorder();
-			this.removeEventListener(MouseEvent.CLICK,edit);
 			this.removeEventListener(MouseEvent.CLICK,editObject);
 		}
 		

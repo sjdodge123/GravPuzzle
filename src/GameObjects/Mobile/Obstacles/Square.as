@@ -13,7 +13,7 @@ package GameObjects.Mobile.Obstacles
 		
 		public function Square(x:int,y:int,width:int, height:int)
 		{
-			
+			super();
 			this.x = x;
 			this.y = y;
 			image = new Sprite();
@@ -25,7 +25,7 @@ package GameObjects.Mobile.Obstacles
 			hitBox = new HitBox(x,y,width,height,0);
 			hitRegion = new Vector.<HitRegion>;
 			hitRegion.push(hitBox);
-			super();
+			
 			
 		}
 		

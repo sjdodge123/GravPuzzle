@@ -31,8 +31,6 @@ package GameObjects.Mobile
 			draw();
 		}
 		
-		
-		
 		public override function draw():void
 		{
 			rectangle = new Sprite();

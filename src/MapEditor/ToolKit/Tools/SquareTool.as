@@ -11,7 +11,6 @@ package MapEditor.ToolKit.Tools
 		
 		public function SquareTool()
 		{
-			super();
 			toolWidth = 50;
 			toolHeight = 50;
 			tool = new Square(toolOffsetX,toolOffsetY,toolWidth,toolHeight);

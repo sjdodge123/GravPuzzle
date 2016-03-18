@@ -494,11 +494,11 @@ package Construct
 		
 		public function stopAllEdits():void
 		{
-			basket.endEdit(null);
-			friendBall.endEdit(null);
+			basket.endEdit();
+			friendBall.endEdit();
 			for(var i:int=0;i<obstacles.length;i++)
 			{
-				obstacles[i].endEdit(null);
+				obstacles[i].endEdit();
 			}
 		}
 		

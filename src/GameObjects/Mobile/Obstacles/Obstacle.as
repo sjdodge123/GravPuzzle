@@ -5,7 +5,7 @@ package GameObjects.Mobile.Obstacles
 
 	public class Obstacle extends MobileObject
 	{
-		protected var hitRegion:Vector.<HitRegion>;
+		public var hitRegion:Vector.<HitRegion>;
 		
 		public function Obstacle()
 		{

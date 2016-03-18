@@ -20,6 +20,7 @@ package MapEditor.ToolKit
 		private var toolBelt:ToolBelt;
 		private var scaleX:Number;
 		private var scaleY:Number;
+		private var onlyOnce:Boolean = true;
 		public function Editor(toolWindow:Stage, mainWindow:Stage,gameBoard:GameBoard)
 		{
 			this.gameBoard = gameBoard;
@@ -28,9 +29,9 @@ package MapEditor.ToolKit
 			toolBelt = new ToolBelt(toolWindow.stage,mainWindow.stage,gameBoard);
 			
 			//Used to look for objects that the mouse is currently touching
-			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,scanForObjects);
+			mainWindow.addEventListener(MouseEvent.CLICK,scanForObjects);
 			
-			
+			//Edit Camera Control
 			mainWindow.addEventListener(MouseEvent.MOUSE_WHEEL,zoomOut);
 			mainWindow.addEventListener(MouseEvent.MIDDLE_MOUSE_DOWN,mapPanOn);
 			mainWindow.addEventListener(MouseEvent.MIDDLE_MOUSE_UP,mapPanOff);
@@ -72,62 +73,78 @@ package MapEditor.ToolKit
 			var editArray:Vector.<MobileObject> = gameBoard.getMobileObjectsUnderPoint(new Point(event.stageX-gameBoard.getCameraX(),event.stageY-gameBoard.getCameraY()));
 			for(var i:int=0;i<editArray.length;i++)
 			{
-				if(!editArray[i].hasEventListener(MouseEvent.CLICK))
-				{
-					editArray[i].addEventListener(MouseEvent.CLICK,editArray[i].edit);
-					editArray[i].addEventListener(LevelEditEvent.GRAB_CENTER,centerObjectToMouse);
-					editArray[i].addEventListener(LevelEditEvent.GRAB_X,manipulateX);
-					editArray[i].addEventListener(LevelEditEvent.GRAB_Y,manipulateY);
-				}
-				
+				mainWindow.removeEventListener(MouseEvent.CLICK,scanForObjects);
+				editArray[i].edit();
+				editArray[i].addEventListener(LevelEditEvent.GRAB_CENTER,centerObjectToMouse);
+				editArray[i].addEventListener(LevelEditEvent.GRAB_X,manipulateX);
+				editArray[i].addEventListener(LevelEditEvent.GRAB_Y,manipulateY);
+				editArray[i].addEventListener(LevelEditEvent.EXIT,endEdit);
+				return;
 			}
 			
 		}
 		
+		// After clicking object's center
+		protected function centerObjectToMouse(event:LevelEditEvent):void
+		{
+			editingObject = MobileObject(event.params);
+			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,movePointWithMouse);	
+		}
+		// After clicking object's y axis
 		protected function manipulateY(event:LevelEditEvent):void
 		{
 			editingObject = MobileObject(event.params);
 			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,moveHeightWithMouse);
 		}
 		
-		protected function moveHeightWithMouse(event:MouseEvent):void
-		{
-			editingObject.height = event.stageY-editingObject.height/2+20;
-			mainWindow.addEventListener(MouseEvent.CLICK,endEdit);
-		}
-		
+		// After clicking object's x axis
 		protected function manipulateX(event:LevelEditEvent):void
 		{
 			editingObject = MobileObject(event.params);
 			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,moveWidthWithMouse);
 		}
 		
+		//Mechanics to actually edit the object
+		protected function moveHeightWithMouse(event:MouseEvent):void
+		{
+			editingObject.height = event.stageY-editingObject.height/2+20;
+			addEndListener();
+		}
+		//Mechanics to actually edit the object
 		protected function moveWidthWithMouse(event:MouseEvent):void
 		{
 			editingObject.width = event.stageX-editingObject.width/2+20;
-			mainWindow.addEventListener(MouseEvent.CLICK,endEdit);
+			addEndListener();
 		}
-		
-		protected function centerObjectToMouse(event:LevelEditEvent):void
-		{
-			editingObject = MobileObject(event.params);
-			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,movePointWithMouse);	
-		}
-		
+		//Mechanics to actually edit the object
 		protected function movePointWithMouse(event:MouseEvent):void
 		{
 			editingObject.x = event.stageX-editingObject.width/2+20;
 			editingObject.y = event.stageY-editingObject.height/2;
-			mainWindow.addEventListener(MouseEvent.CLICK,endEdit);
+			addEndListener();
 		}
 		
-		protected function endEdit(event:MouseEvent):void
+		private function addEndListener():void
 		{
+			if(onlyOnce){
+				onlyOnce = false;
+				mainWindow.addEventListener(MouseEvent.CLICK,endCurrentAction);
+			}
+		}
+		
+		//Stop edit mechanic
+		protected function endCurrentAction(event:MouseEvent):void
+		{
+			onlyOnce = true;
+			mainWindow.removeEventListener(MouseEvent.CLICK,endCurrentAction);
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,movePointWithMouse);
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,moveWidthWithMouse);
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,moveHeightWithMouse);
-			mainWindow.removeEventListener(MouseEvent.CLICK,endEdit);
-			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,scanForObjects);
+		}
+		
+		protected function endEdit(event:LevelEditEvent):void
+		{
+			mainWindow.addEventListener(MouseEvent.CLICK,scanForObjects);
 		}
 		
 		public function stopAllEdits(event:Event):void

@@ -1,9 +1,6 @@
 package MapEditor.ToolKit.Tools
 {
-	import flash.events.MouseEvent;
-	
 	import GameObjects.Mobile.Obstacles.Zones.BlackZone;
-	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 	
 	public class BlackZoneTool extends Tool
@@ -12,7 +9,6 @@ package MapEditor.ToolKit.Tools
 		
 		public function BlackZoneTool()
 		{
-			super();
 			toolWidth = 50;
 			toolHeight = 50;
 			tool = new BlackZone(toolOffsetX,toolOffsetY,toolWidth,toolHeight);

@@ -11,7 +11,6 @@ package MapEditor.ToolKit.Tools
 		private var radius:int;
 		public function CircleTool()
 		{
-			super();
 			toolWidth = 50;
 			toolHeight = 50;
 			radius = 25;

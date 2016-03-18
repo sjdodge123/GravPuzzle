@@ -2,8 +2,6 @@ package GameObjects.Mobile
 {
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	
-	import Construct.GameBoard;
 
 	public class Camera extends Sprite
 	{

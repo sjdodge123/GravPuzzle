@@ -23,9 +23,5 @@ package GameObjects.Mobile
 		{
 			trace('drawing grav ball border');
 		}
-		protected override function removeBorder():void
-		{
-			trace('removing grav ball border');
-		}
 	}
 }

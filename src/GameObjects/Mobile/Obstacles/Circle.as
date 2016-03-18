@@ -26,5 +26,13 @@ package GameObjects.Mobile.Obstacles
 			hitRegion.push(hitCircle);
 			super();
 		}
+		
+		protected override function drawBorder():void
+		{
+			border = new Sprite();
+			border.graphics.lineStyle(2,0x72BCD4);
+			border.graphics.drawCircle(0,0,50);
+			addChild(border);
+		}
 	}
 }
