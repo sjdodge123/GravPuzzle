@@ -5,6 +5,7 @@ package Events
 	public class ObstacleEvent extends Event
 	{
 		public static const DEADZONE:String = "DEADZONE";
+		public static const BLACKZONE:String = "BLACKZONE";
 	
 		public var params:Object;
 		public function ObstacleEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 

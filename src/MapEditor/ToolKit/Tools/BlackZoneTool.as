@@ -1,19 +1,17 @@
 package MapEditor.ToolKit.Tools
 {
-	import GameObjects.Mobile.Obstacles.Zones.DeadZone;
-	import GameObjects.Mobile.Obstacles.Square;
-	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
-
-	public class DeadZoneTool extends Tool
+	import GameObjects.Mobile.Obstacles.Zones.BlackZone;
+	
+	public class BlackZoneTool extends Tool
 	{
-		private var name:String = "DeadZone";
+		private var name:String = "BlackZone";
 		
-		public function DeadZoneTool()
+		public function BlackZoneTool()
 		{
 			toolWidth = 50;
 			toolHeight = 50;
-			tool = new DeadZone(toolOffsetX,toolOffsetY,toolWidth,toolHeight);
+			tool = new BlackZone(toolOffsetX,toolOffsetY,toolWidth,toolHeight);
 			this.addChild(tool);
 		}
 		
@@ -36,7 +34,7 @@ package MapEditor.ToolKit.Tools
 		protected override function pickUpTool(mouseX:int,mouseY:int):void
 		{
 			toolInHand = true;
-			attachedTool = new DeadZone(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
+			attachedTool = new BlackZone(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
 			addChild(attachedTool);
 		}
 		
@@ -46,13 +44,14 @@ package MapEditor.ToolKit.Tools
 			{
 				removeChild(attachedTool);
 			}
-			attachedTool = new DeadZone(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
+			attachedTool = new BlackZone(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
 			addChild(attachedTool);
 		}
 		
 		public override function buildTool(mouseX:Number, mouseY:Number):void
 		{
-			attachedTool = new DeadZone(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
+			attachedTool = new BlackZone(mouseX-toolWidth/2,mouseY-toolHeight/2,toolWidth,toolHeight);
 		}
 	}
 }
+

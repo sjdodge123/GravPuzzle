@@ -10,10 +10,12 @@ package GameObjects.HitRegions
 	{
 		private var box:Sprite;
 		private var firstTimeOnly:Boolean = true;
-		public function HollowHitBox(spawnX:int,spawnY:int,width:int,height:int,alpha:Number)
+		private var event:String;
+		public function HollowHitBox(spawnX:int,spawnY:int,width:int,height:int,alpha:Number,event:String)
 		{
 			this.x = spawnX;
 			this.y = spawnY;
+			this.event = event;
 			box = new Sprite();
 			box.graphics.clear();
 			box.graphics.beginFill(0x000000,alpha);
@@ -28,7 +30,7 @@ package GameObjects.HitRegions
 				if(firstTimeOnly)
 				{
 					firstTimeOnly = false;
-					this.dispatchEvent(new ObstacleEvent(ObstacleEvent.DEADZONE,object));
+					this.dispatchEvent(new ObstacleEvent(event,object));
 				}
 				
 			}

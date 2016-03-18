@@ -72,6 +72,14 @@ package MapEditor.LevelCreation.LevelRead
 					data.width = objectData.child("width");
 					data.height = objectData.child("height");
 				}
+				if(type == "BlackZone")
+				{
+					data.type = type;
+					data.x = objectData.child("x");
+					data.y = objectData.child("y");
+					data.width = objectData.child("width");
+					data.height = objectData.child("height");
+				}
 				if(type == "Circle")
 				{
 					data.type = type;

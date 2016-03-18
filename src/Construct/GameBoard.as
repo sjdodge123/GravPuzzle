@@ -8,6 +8,8 @@ package Construct
 	import Events.LevelStateEvent;
 	import Events.ObstacleEvent;
 	
+	import GameLogic.ZoneLogic;
+	
 	import GameObjects.HitRegions.HitBox;
 	import GameObjects.HitRegions.HitRegion;
 	import GameObjects.Immobile.LevelTimer;
@@ -16,8 +18,8 @@ package Construct
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.GravBall;
 	import GameObjects.Mobile.MobileObject;
-	import GameObjects.Mobile.Obstacles.DeadZone;
 	import GameObjects.Mobile.Obstacles.Obstacle;
+	import GameObjects.Mobile.Obstacles.Zones.Zone;
 	
 	import Handlers.CollisionHandler;
 	
@@ -67,6 +69,7 @@ package Construct
 		
 		private var gameScore:int = 0;
 		private var loaded:Boolean = false;
+		private var zoneLogic:ZoneLogic;
 		
 		public function GameBoard(stageWidth:int,stageHeight:int,camera:Camera)
 		{			
@@ -79,6 +82,7 @@ package Construct
 			levelLoader = new LevelReader(levelPath);
 			levelLoader.addEventListener(Event.COMPLETE,populateLevels);
 			collisionHandler = new CollisionHandler();
+			zoneLogic = new ZoneLogic(this);
 			this.camera = camera;
 		}
 		
@@ -247,19 +251,15 @@ package Construct
 		}
 		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
-			
 			var array:Vector.<MobileObject> = this.getMobileObjectsUnderPoint(new Point(stageX,stageY));
-			for(var i:int = 0;i<array.length;i++)
+			
+			if(zoneLogic.checkForDeadZone(array))
 			{
-				if(array[i] as DeadZone)
-				{
-					return;
-				}
+				return;
 			}
 			gravityBallsSpawned++;
 			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
 			friendBall.accel = 0;
-			
 		}
 		
 		
@@ -385,7 +385,17 @@ package Construct
 		
 		private function addObstacleListeners(object:Obstacle):void
 		{
-			object.addEventListener(ObstacleEvent.DEADZONE,reOrderObjects);
+			if(object as Zone)
+			{
+				object.addEventListener(ObstacleEvent.DEADZONE,reOrderObjects);
+				object.addEventListener(ObstacleEvent.BLACKZONE,enterBlackZone);
+			}
+		}
+		
+		private function enterBlackZone(event:ObstacleEvent):void
+		{
+			reOrderObjects(event);
+			zoneLogic.checkForBlackZone();
 		}
 		
 		protected function reOrderObjects(event:ObstacleEvent):void

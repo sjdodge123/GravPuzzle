@@ -4,10 +4,10 @@ package Construct
 	
 	import Events.ChildEvent;
 	
-	import GameObjects.Mobile.BallBasket;
 	import GameObjects.Mobile.GravBall;
 	import GameObjects.Mobile.Obstacles.Circle;
-	import GameObjects.Mobile.Obstacles.DeadZone;
+	import GameObjects.Mobile.Obstacles.Zones.DeadZone;
+	import GameObjects.Mobile.Obstacles.Zones.BlackZone;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
 	
@@ -75,6 +75,10 @@ package Construct
 			{
 				return new DeadZone(data.x,data.y,data.width,data.height);
 			}
+			if(data.type == "BlackZone")
+			{
+				return new BlackZone(data.x,data.y,data.width,data.height);
+			}
 			
 			return null;
 		}
@@ -100,6 +104,14 @@ package Construct
 			if(obstacle as DeadZone)
 			{
 				data.type = "DeadZone";
+				data.x = obstacle.x;
+				data.y = obstacle.y;
+				data.width = obstacle.width;
+				data.height = obstacle.height;
+			}
+			if(obstacle as BlackZone)
+			{
+				data.type = "BlackZone";
 				data.x = obstacle.x;
 				data.y = obstacle.y;
 				data.width = obstacle.width;

@@ -10,6 +10,7 @@ package MapEditor.ToolKit
 	import MapEditor.ToolKit.Tools.Tool;
 	import MapEditor.ToolKit.Tools.CircleTool;
 	import MapEditor.ToolKit.Tools.DeadZoneTool;
+	import MapEditor.ToolKit.Tools.BlackZoneTool;
 
 	public class ToolBelt extends EventDispatcher
 	{
@@ -28,6 +29,7 @@ package MapEditor.ToolKit
 			toolList.push(new SquareTool());
 			toolList.push(new CircleTool());
 			toolList.push(new DeadZoneTool());
+			toolList.push(new BlackZoneTool());
 			toolList.push(new SquareTool());
 			toolList.push(new SquareTool());
 			toolList.push(new SquareTool());
