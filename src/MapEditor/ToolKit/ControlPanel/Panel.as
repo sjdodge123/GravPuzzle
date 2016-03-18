@@ -42,7 +42,7 @@ package MapEditor.ToolKit.ControlPanel
 			levelCounter.text = currentLevel.toString();
 			levelCounter.selectable = false;
 			addChild(levelCounter);
-			saveButton = new SaveButton(0,height-25,width/2,25);
+			saveButton = new SaveButton(0,height-25,width,25);
 			saveButton.addEventListener(MouseEvent.CLICK,saveClicked);
 			addChild(saveButton);
 		}

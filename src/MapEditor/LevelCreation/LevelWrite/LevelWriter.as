@@ -70,6 +70,11 @@ package MapEditor.LevelCreation.LevelWrite
 				{
 					object.appendChild(new XML(<radius>{levelData.obstacles[i].radius}</radius>));
 				}
+				if(levelData.obstacles[i].type == 'DeadZone')
+				{
+					object.appendChild(new XML(<width>{levelData.obstacles[i].width}</width>));
+					object.appendChild(new XML(<height>{levelData.obstacles[i].height}</height>));
+				}
 				
 				obstacles.appendChild(object);
 			}
