@@ -32,7 +32,7 @@ package Construct.Engine.Game
 		private var gameBoard:GameBoard;
 		private var camera:Camera;
 		private var levelTimer:LevelTimer;
-		
+		private var editing:Boolean;
 		private var hud:HUD;
 		private var timerDisplay:TextField;
 		private var goalDisplay:TextField;
@@ -51,8 +51,6 @@ package Construct.Engine.Game
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClick);
 			keyboardHandler.addEventListener(KeyEvent.SPACE_PRESSED,reset);
 			keyboardHandler.addEventListener(KeyEvent.F12_PRESSED,mainWindow.levelEdit);
-			keyboardHandler.addEventListener(KeyEvent.MOUSE_WHEEL_UP,levelUp);
-			keyboardHandler.addEventListener(KeyEvent.MOUSE_WHEEL_DOWN,levelDOWN);
 			clickCooldown = new Timer(500,1);
 			clickCooldown.addEventListener(TimerEvent.TIMER,resetCooldown);
 			deleteCooldown = new Timer(50,1);
@@ -70,18 +68,9 @@ package Construct.Engine.Game
 			
 		}
 		
-		protected function levelDOWN(event:Event):void
-		{
-			gameBoard.levelDown();			
-		}
-		
-		protected function levelUp(event:Event):void
-		{
-			gameBoard.levelUp();
-		}
-		
 		protected function pauseUpdates(event:Event):void
 		{
+			editing = true;
 			gameBoard.pause();
 			mainStage.removeEventListener(Event.ENTER_FRAME,update);
 			mainStage.removeEventListener(MouseEvent.CLICK,mouseClick);
@@ -89,6 +78,7 @@ package Construct.Engine.Game
 		
 		protected function resumeUpdates(event:Event):void
 		{
+			editing = false;
 			gameBoard.resume();
 			mainStage.addEventListener(Event.ENTER_FRAME,update);
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClick);
@@ -104,12 +94,14 @@ package Construct.Engine.Game
 		
 		protected function reset(event:Event):void
 		{
-			trace('restarting in 2 seconds');
-			resetTimer.reset();
-			resetTimer.start();
-			mainStage.removeEventListener(Event.ENTER_FRAME,update);
-			mainStage.removeEventListener(MouseEvent.CLICK,mouseClick);
-			keyboardHandler.removeEventListener(KeyEvent.SPACE_PRESSED,reset);
+			if(!editing){
+				trace('restarting in 2 seconds');
+				resetTimer.reset();
+				resetTimer.start();
+				mainStage.removeEventListener(Event.ENTER_FRAME,update);
+				mainStage.removeEventListener(MouseEvent.CLICK,mouseClick);
+				keyboardHandler.removeEventListener(KeyEvent.SPACE_PRESSED,reset);
+			}
 		}
 		
 		protected function resetDeleteCooldown(event:TimerEvent):void
