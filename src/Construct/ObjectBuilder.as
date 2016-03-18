@@ -5,9 +5,10 @@ package Construct
 	import Events.ChildEvent;
 	
 	import GameObjects.Mobile.GravBall;
+	import GameObjects.Mobile.Obstacles.Circle;
+	import GameObjects.Mobile.Obstacles.DeadZone;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	import GameObjects.Mobile.Obstacles.Square;
-	import GameObjects.Mobile.Obstacles.Circle;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
@@ -16,6 +17,7 @@ package Construct
 		private var spawnLocX:int = 0;
 		private var spawnLocY:int = 0;
 		private var spawnClear:Boolean;
+		
 		public function ObjectBuilder()
 		{
 			
@@ -68,6 +70,10 @@ package Construct
 			{
 				return new Circle(data.x,data.y,data.radius);
 			}
+			if(data.type == "DeadZone")
+			{
+				return new DeadZone(data.x,data.y,data.width,data.height);
+			}
 			
 			return null;
 		}
@@ -89,6 +95,14 @@ package Construct
 				data.x = obstacle.x;
 				data.y = obstacle.y;
 				data.radius = obstacle.radius;
+			}
+			if(obstacle as DeadZone)
+			{
+				data.type = "DeadZone";
+				data.x = obstacle.x;
+				data.y = obstacle.y;
+				data.width = obstacle.width;
+				data.height = obstacle.height;
 			}
 			return data;
 		}

@@ -1,8 +1,5 @@
 package GameObjects.Mobile.Obstacles
 {
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	
 	import GameObjects.HitRegions.HitRegion;
 	import GameObjects.Mobile.MobileObject;
 

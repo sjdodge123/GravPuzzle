@@ -3,6 +3,7 @@ package GameObjects.HitRegions
 	import flash.display.Sprite;
 	
 	import GameObjects.Mobile.MobileObject;
+	import GameObjects.Mobile.Obstacles.Square;
 
 	public class HitBox extends HitRegion
 	{

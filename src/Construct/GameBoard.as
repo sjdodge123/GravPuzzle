@@ -6,6 +6,7 @@ package Construct
 	
 	import Events.ChildEvent;
 	import Events.LevelStateEvent;
+	import Events.ObstacleEvent;
 	
 	import GameObjects.HitRegions.HitBox;
 	import GameObjects.HitRegions.HitRegion;
@@ -15,6 +16,7 @@ package Construct
 	import GameObjects.Mobile.FriendBall;
 	import GameObjects.Mobile.GravBall;
 	import GameObjects.Mobile.MobileObject;
+	import GameObjects.Mobile.Obstacles.DeadZone;
 	import GameObjects.Mobile.Obstacles.Obstacle;
 	
 	import Handlers.CollisionHandler;
@@ -245,13 +247,18 @@ package Construct
 		}
 		public function spawnGravBall(stageX:Number, stageY:Number):void
 		{
+			
+			var array:Vector.<MobileObject> = this.getMobileObjectsUnderPoint(new Point(stageX,stageY));
+			for(var i:int = 0;i<array.length;i++)
+			{
+				if(array[i] as DeadZone)
+				{
+					return;
+				}
+			}
 			gravityBallsSpawned++;
-			//if(totalSpawns < currentLevelData.getGravBallCount())
-			//{
-			//	totalSpawns += 1;
 			gravityObjects = objectBuilder.buildGravBall(stageX,stageY,gravityObjects,currentLevelData.getGravBallCount());
 			friendBall.accel = 0;
-			//}
 			
 		}
 		
@@ -366,6 +373,7 @@ package Construct
 			for(var i:int=0;i<obstacles.length;i++)
 			{
 				addChild(obstacles[i]);
+				addObstacleListeners(obstacles[i]);
 				var hitRegions:Vector.<HitRegion> = obstacles[i].getHitRegion();
 				for(var j:int=0;j<hitRegions.length;j++) //run through and add all hitboxes of each obstacle
 				{
@@ -373,6 +381,18 @@ package Construct
 				}
 			}
 			
+		}
+		
+		private function addObstacleListeners(object:Obstacle):void
+		{
+			object.addEventListener(ObstacleEvent.DEADZONE,reOrderObjects);
+		}
+		
+		protected function reOrderObjects(event:ObstacleEvent):void
+		{
+			var sendVector:Vector.<MobileObject> = Vector.<MobileObject>(event.params);
+			removeChild(sendVector[1]);
+			addChild(sendVector[1]);
 		}
 		
 		public function addObstacleToBoard(object:ObstacleData):void

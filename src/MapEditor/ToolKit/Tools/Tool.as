@@ -40,11 +40,7 @@ package MapEditor.ToolKit.Tools
 			this.addEventListener(MouseEvent.RIGHT_CLICK,rightClick);
 		}
 		
-		public function spawn():void
-		{
-			//Implemented in tool
-		}
-		
+		protected function createTool():void {}
 		
 		
 		protected function mouseClicked(event:MouseEvent):void
