@@ -18,10 +18,13 @@ package MapEditor.ToolKit
 		private var gameBoard:GameBoard;
 		private var editingObject:MobileObject;
 		private var mainWindow:Stage;
-		public function Editor(mainWindow:Stage,gameBoard:GameBoard)
+		private var toolBelt:ToolBelt;
+		public function Editor(toolWindow:Stage, mainWindow:Stage,gameBoard:GameBoard)
 		{
 			this.gameBoard = gameBoard;
 			this.mainWindow = mainWindow;
+			
+			toolBelt = new ToolBelt(toolWindow.stage,mainWindow.stage,gameBoard);
 			mainWindow.addEventListener(MouseEvent.MOUSE_MOVE,mouseMove);
 		}
 		
@@ -93,5 +96,9 @@ package MapEditor.ToolKit
 			mainWindow.removeEventListener(MouseEvent.CLICK,endEdit);
 		}
 		
+		public function stopAllEdits():void
+		{
+			gameBoard.stopAllEdits();	
+		}
 	}
 }

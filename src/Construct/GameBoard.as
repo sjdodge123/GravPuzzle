@@ -443,7 +443,6 @@ package Construct
 		public function getCurrentLevel():LevelData
 		{
 			levelList[levelNum-1].obstacles = new Vector.<ObstacleData>;
-			
 			levelList[levelNum-1].basketX = basket.x;
 			levelList[levelNum-1].basketY = basket.y;
 			levelList[levelNum-1].basketHeight = basket.height;
@@ -481,6 +480,16 @@ package Construct
 				}
 			}
 			return objectsInScope;
+		}
+		
+		public function stopAllEdits():void
+		{
+			basket.endEdit(null);
+			friendBall.endEdit(null);
+			for(var i:int=0;i<obstacles.length;i++)
+			{
+				obstacles[i].endEdit(null);
+			}
 		}
 	}
 }

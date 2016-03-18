@@ -38,12 +38,7 @@ package MapEditor.ToolKit
 			
 			mainStage.addEventListener(MouseEvent.MOUSE_MOVE,mainMouseMove);
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClicked);
-			toolStage.addEventListener(MouseEvent.MOUSE_MOVE,toolMouseMove);
-			
-			
-			
-			
-			
+			toolStage.addEventListener(MouseEvent.MOUSE_MOVE,toolMouseMove);	
 		}
 		
 		private function addToolsToStage():void
