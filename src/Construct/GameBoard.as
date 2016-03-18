@@ -443,6 +443,12 @@ package Construct
 		public function getCurrentLevel():LevelData
 		{
 			levelList[levelNum-1].obstacles = new Vector.<ObstacleData>;
+			
+			levelList[levelNum-1].basketX = basket.x;
+			levelList[levelNum-1].basketY = basket.y;
+			levelList[levelNum-1].basketHeight = basket.height;
+			levelList[levelNum-1].basketWidth = basket.width;
+			
 			for(var i:int=0;i<obstacles.length;i++)
 			{
 				levelList[levelNum-1].obstacles.push(objectBuilder.packObstacle(obstacles[i]));
