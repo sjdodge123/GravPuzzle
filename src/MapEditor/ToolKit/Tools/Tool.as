@@ -37,7 +37,6 @@ package MapEditor.ToolKit.Tools
 			this.addEventListener(MouseEvent.MOUSE_OVER,mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT,mouseOut);
 			this.addEventListener(MouseEvent.CLICK,mouseClicked);
-			this.addEventListener(MouseEvent.RIGHT_CLICK,rightClick);
 		}
 		
 		protected function createTool():void {}
@@ -57,7 +56,6 @@ package MapEditor.ToolKit.Tools
 			{
 				pickUpTool(event.stageX,event.stageY);
 			}
-			
 		}
 		
 		public function placeTool(x:int,y:int):ObstacleData
@@ -86,13 +84,6 @@ package MapEditor.ToolKit.Tools
 				
 		}
 		
-		protected function rightClick(evt:MouseEvent):void
-		{
-			if(!dropTool(this.stage))
-			{
-				resizeTool();
-			}
-		}
 		
 		public function dropTool(stage:Stage=null):Boolean
 		{
@@ -119,14 +110,6 @@ package MapEditor.ToolKit.Tools
 			}
 			return false;
 		}
-		
-		private function resizeTool():void
-		{
-			//Find which obstacle the mouse is currently highlighting
-			//Show the border of that tool
-			//Allow user to click a border line and expand that dimension
-		}
-		
 		protected function  pickUpTool(mouseX:int,mouseY:int):void
 		{
 			//Implmented in tools themselves

@@ -1,5 +1,7 @@
 package MapEditor.ToolKit.Tools
 {
+	import flash.events.MouseEvent;
+	
 	import GameObjects.Mobile.Obstacles.Square;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
@@ -9,6 +11,7 @@ package MapEditor.ToolKit.Tools
 		
 		public function SquareTool()
 		{
+			super();
 			toolWidth = 50;
 			toolHeight = 50;
 			tool = new Square(toolOffsetX,toolOffsetY,toolWidth,toolHeight);
@@ -28,6 +31,7 @@ package MapEditor.ToolKit.Tools
 			toolData.y = y-toolHeight/2;
 			toolData.width = toolWidth;
 			toolData.height = toolHeight;
+			
 			return toolData;
 		}
 		

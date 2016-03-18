@@ -1,7 +1,9 @@
 package MapEditor.ToolKit.Tools
 {
-	import GameObjects.Mobile.Obstacles.Zones.DeadZone;
+	import flash.events.MouseEvent;
+	
 	import GameObjects.Mobile.Obstacles.Square;
+	import GameObjects.Mobile.Obstacles.Zones.DeadZone;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
@@ -11,10 +13,12 @@ package MapEditor.ToolKit.Tools
 		
 		public function DeadZoneTool()
 		{
+			super();
 			toolWidth = 50;
 			toolHeight = 50;
 			tool = new DeadZone(toolOffsetX,toolOffsetY,toolWidth,toolHeight);
 			this.addChild(tool);
+			
 		}
 		
 		public override function placeTool(x:int,y:int):ObstacleData

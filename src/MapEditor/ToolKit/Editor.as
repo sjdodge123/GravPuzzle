@@ -2,6 +2,7 @@ package MapEditor.ToolKit
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
@@ -126,12 +127,18 @@ package MapEditor.ToolKit
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,moveWidthWithMouse);
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,moveHeightWithMouse);
 			mainWindow.removeEventListener(MouseEvent.CLICK,endEdit);
-			mainWindow.removeEventListener(MouseEvent.CLICK,endEdit);
+			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,scanForObjects);
 		}
 		
-		public function stopAllEdits():void
+		public function stopAllEdits(event:Event):void
 		{
+			endEdit(null);
 			gameBoard.stopAllEdits();	
+		}
+		
+		public function dropAllTools():void
+		{
+			toolBelt.dropAllTools(null);
 		}
 	}
 }

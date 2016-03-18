@@ -1,16 +1,18 @@
 package MapEditor.ToolKit
 {
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
 	import Construct.GameBoard;
 	
-	import MapEditor.ToolKit.Tools.SquareTool;
-	import MapEditor.ToolKit.Tools.Tool;
+	import MapEditor.ToolKit.Tools.BlackZoneTool;
 	import MapEditor.ToolKit.Tools.CircleTool;
 	import MapEditor.ToolKit.Tools.DeadZoneTool;
-	import MapEditor.ToolKit.Tools.BlackZoneTool;
+	import MapEditor.ToolKit.Tools.SquareTool;
+	import MapEditor.ToolKit.Tools.Tool;
 
 	public class ToolBelt extends EventDispatcher
 	{
@@ -40,6 +42,8 @@ package MapEditor.ToolKit
 			
 			mainStage.addEventListener(MouseEvent.MOUSE_MOVE,mainMouseMove);
 			mainStage.addEventListener(MouseEvent.CLICK,mouseClicked);
+			mainStage.addEventListener(MouseEvent.RIGHT_CLICK,dropAllTools);
+			toolStage.addEventListener(MouseEvent.RIGHT_CLICK,dropAllTools);
 			toolStage.addEventListener(MouseEvent.MOUSE_MOVE,toolMouseMove);	
 		}
 		
@@ -81,7 +85,6 @@ package MapEditor.ToolKit
 			
 		}
 		
-		
 		protected function toolMouseMove(event:MouseEvent):void
 		{
 			for each (var tool:Tool in toolList)
@@ -92,7 +95,6 @@ package MapEditor.ToolKit
 					tool.drawToolInHand(event.stageX,event.stageY);
 				}
 			}
-			
 		}
 		
 		
@@ -120,6 +122,15 @@ package MapEditor.ToolKit
 				{
 					tool.removeChild(tool.attachedTool);
 				}
+			}
+		}
+		
+		public function dropAllTools(event:Event):void
+		{
+			for each ( var tool:Tool in toolList)
+			{
+				tool.toolInHand = false;
+				removeDeadContainerObjects();
 			}
 		}
 		

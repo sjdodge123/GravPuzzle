@@ -100,7 +100,8 @@ package GameObjects.Mobile
 		public function endEdit(event:Event):void
 		{
 			this.removeBorder();
-			this.addEventListener(MouseEvent.CLICK,edit);
+			this.removeEventListener(MouseEvent.CLICK,edit);
+			this.removeEventListener(MouseEvent.CLICK,editObject);
 		}
 		
 		protected function removeBorder():void {

@@ -2,10 +2,12 @@ package MapEditor.ToolKit
 {
 	import flash.display.NativeWindow;
 	import flash.display.NativeWindowInitOptions;
+	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.KeyboardEvent;
 	import flash.events.NativeWindowBoundsEvent;
 	
 	import Construct.GameBoard;
@@ -24,7 +26,7 @@ package MapEditor.ToolKit
 		private var levelWriter:LevelWriter;
 		private var controlPanel:Panel;
 		private var editor:Editor;
-		
+		private var mainStage:Stage;
 		
 		public function ToolKitWindow(gameBoard:GameBoard)
 		{
@@ -52,6 +54,8 @@ package MapEditor.ToolKit
 		
 		public function activate(mainWindow:NativeWindow):void
 		{
+			this.mainStage = mainWindow.stage;
+			
 			window = new NativeWindow(options);
 			window.title = "ToolKit";
 			active = true;
@@ -70,7 +74,10 @@ package MapEditor.ToolKit
 			controlPanel.addEventListener(PanelEvent.DOWN_LEVEL,previousLevel);
 			controlPanel.addEventListener(PanelEvent.UP_LEVEL,nextLevel);
 			window.stage.addChild(controlPanel);
+			addKeyListeners();
 		}
+		
+		
 		
 		protected function nextLevel(event:Event):void
 		{
@@ -85,8 +92,34 @@ package MapEditor.ToolKit
 		
 		protected function createLevel(event:Event):void
 		{
-			editor.stopAllEdits();
+			editor.stopAllEdits(null);
 			levelWriter.createLevel(gameBoard.getCurrentLevel());
+		}
+		
+		private function addKeyListeners():void
+		{
+			mainStage.addEventListener(KeyboardEvent.KEY_DOWN,keyPressed);
+			
+		}
+		
+		private function removeKeyListeners():void
+		{
+			mainStage.removeEventListener(KeyboardEvent.KEY_DOWN,keyPressed);
+		}
+		
+		protected function keyPressed(event:KeyboardEvent):void
+		{
+			if(event.keyCode == 27)
+			{
+				stopEdits();
+			}
+			
+		}
+		
+		private function stopEdits():void
+		{
+			editor.dropAllTools();
+			editor.stopAllEdits(null);
 		}
 		public function close():void
 		{
@@ -95,6 +128,8 @@ package MapEditor.ToolKit
 				active = false;
 				window.visible = false;
 				window.close();
+				stopEdits();
+				removeKeyListeners();
 			}
 		}
 	}

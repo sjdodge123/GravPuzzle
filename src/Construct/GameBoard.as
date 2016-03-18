@@ -239,7 +239,7 @@ package Construct
 				var dx:Number = gravityObjects[i].x - stageX;
 				var dy:Number = gravityObjects[i].y - stageY;
 				var distance:Number = Math.sqrt(dx*dx + dy*dy);	
-				if(distance <= gravityObjects[i].radius)
+				if(distance <= gravityObjects[i].getRadius())
 				{
 					removeChild(gravityObjects[i]);
 					gravityObjects[i] = null;
@@ -347,7 +347,6 @@ package Construct
 		}
 		protected function addElement(event:ChildEvent):void
 		{
-			trace(MobileObject(event.params));
 			addChild(MobileObject(event.params));
 		}	
 		

@@ -1,5 +1,7 @@
 package MapEditor.ToolKit.Tools
 {
+	import flash.events.MouseEvent;
+	
 	import GameObjects.Mobile.Obstacles.Circle;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
@@ -9,6 +11,7 @@ package MapEditor.ToolKit.Tools
 		private var radius:int;
 		public function CircleTool()
 		{
+			super();
 			toolWidth = 50;
 			toolHeight = 50;
 			radius = 25;

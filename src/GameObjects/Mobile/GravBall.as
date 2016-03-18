@@ -7,7 +7,7 @@ package GameObjects.Mobile
 		private var shape:Sprite;
 		public function GravBall(x:int,y:int)
 		{
-			super();
+			//super();
 			this.x = x;
 			this.y = y;
 			shape = new Sprite();
