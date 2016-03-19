@@ -1,9 +1,6 @@
 package MapEditor.ToolKit.Tools
 {
-	import flash.events.MouseEvent;
-	
 	import GameObjects.Mobile.Obstacles.Circle;
-	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
 	public class CircleTool extends Tool

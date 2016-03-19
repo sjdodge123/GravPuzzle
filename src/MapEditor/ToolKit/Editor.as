@@ -27,6 +27,9 @@ package MapEditor.ToolKit
 			this.mainWindow = mainWindow;
 			
 			toolBelt = new ToolBelt(toolWindow.stage,mainWindow.stage,gameBoard);
+
+			toolBelt.addEventListener(LevelEditEvent.ALLOW_EDIT,allowEdit);
+			toolBelt.addEventListener(LevelEditEvent.PREVENT_EDIT,preventEdit);
 			
 			//Used to look for objects that the mouse is currently touching
 			mainWindow.addEventListener(MouseEvent.CLICK,scanForObjects);
@@ -35,6 +38,16 @@ package MapEditor.ToolKit
 			mainWindow.addEventListener(MouseEvent.MOUSE_WHEEL,zoomOut);
 			mainWindow.addEventListener(MouseEvent.MIDDLE_MOUSE_DOWN,mapPanOn);
 			mainWindow.addEventListener(MouseEvent.MIDDLE_MOUSE_UP,mapPanOff);
+		}
+		
+		protected function preventEdit(event:Event):void
+		{
+			mainWindow.removeEventListener(MouseEvent.CLICK,scanForObjects);
+		}
+		
+		protected function allowEdit(event:Event):void
+		{
+			mainWindow.addEventListener(MouseEvent.CLICK,scanForObjects);
 		}
 		
 		protected function mapPanOn(event:MouseEvent):void
@@ -70,7 +83,7 @@ package MapEditor.ToolKit
 		
 		protected function scanForObjects(event:MouseEvent):void
 		{
-			var editArray:Vector.<MobileObject> = gameBoard.getMobileObjectsUnderPoint(new Point(event.stageX-gameBoard.getCameraX(),event.stageY-gameBoard.getCameraY()));
+			var editArray:Vector.<MobileObject> = gameBoard.getMobileObjectsUnderPoint(gameBoard.localToGlobal(new Point(event.stageX-gameBoard.getCameraX(),event.stageY-gameBoard.getCameraY())));
 			for(var i:int=0;i<editArray.length;i++)
 			{
 				mainWindow.removeEventListener(MouseEvent.CLICK,scanForObjects);
@@ -119,8 +132,8 @@ package MapEditor.ToolKit
 		//Mechanics to actually edit the object
 		protected function movePointWithMouse(event:MouseEvent):void
 		{
-			editingObject.x = event.stageX-editingObject.width/2+20;
-			editingObject.y = event.stageY-editingObject.height/2;
+			editingObject.x = event.stageX-gameBoard.getCameraX();
+			editingObject.y = event.stageY-gameBoard.getCameraY();
 			addEndListener();
 		}
 		

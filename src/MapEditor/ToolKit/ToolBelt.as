@@ -3,11 +3,11 @@ package MapEditor.ToolKit
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
 	import Construct.GameBoard;
 	
+	import Events.LevelEditEvent;
 	import MapEditor.ToolKit.Tools.BlackZoneTool;
 	import MapEditor.ToolKit.Tools.CircleTool;
 	import MapEditor.ToolKit.Tools.DeadZoneTool;
@@ -20,6 +20,7 @@ package MapEditor.ToolKit
 		private var mainStage:Stage;
 		private var gameBoard:GameBoard;
 		private var toolList:Vector.<Tool>;
+		private var oneTime:Boolean = true;
 		public function ToolBelt(toolStage:Stage,mainStage:Stage,gameBoard:GameBoard)
 		{
 			this.toolStage = toolStage;
@@ -80,6 +81,7 @@ package MapEditor.ToolKit
 					removeDeadContainerObjects();
 					tool.buildTool(event.stageX,event.stageY);
 					mainStage.addChild(tool.attachedTool);
+					preventEdit();
 				}
 			}
 			
@@ -106,6 +108,7 @@ package MapEditor.ToolKit
 				{
 					tool.dropTool(mainStage);
 					gameBoard.addObstacleToBoard(tool.placeTool(event.stageX-gameBoard.getCameraX(),event.stageY-gameBoard.getCameraY()));
+					allowEdit();
 				}
 			}
 		}
@@ -130,8 +133,22 @@ package MapEditor.ToolKit
 			for each ( var tool:Tool in toolList)
 			{
 				tool.toolInHand = false;
+				allowEdit();
 				removeDeadContainerObjects();
 			}
+		}
+		
+		private function preventEdit():void
+		{
+			if(oneTime){
+				oneTime = false;
+				dispatchEvent(new LevelEditEvent(LevelEditEvent.PREVENT_EDIT,null));
+			}
+		}
+		private function allowEdit():void
+		{
+			oneTime = true;
+			dispatchEvent(new LevelEditEvent(LevelEditEvent.ALLOW_EDIT,null));
 		}
 		
 	}

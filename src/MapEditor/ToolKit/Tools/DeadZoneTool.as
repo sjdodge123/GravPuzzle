@@ -1,10 +1,6 @@
 package MapEditor.ToolKit.Tools
 {
-	import flash.events.MouseEvent;
-	
-	import GameObjects.Mobile.Obstacles.Square;
 	import GameObjects.Mobile.Obstacles.Zones.DeadZone;
-	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;
 
 	public class DeadZoneTool extends Tool

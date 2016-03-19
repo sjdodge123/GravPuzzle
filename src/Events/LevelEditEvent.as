@@ -8,8 +8,11 @@ package Events
 		public static const GRAB_X:String = "GRAB_X";
 		public static const GRAB_Y:String = "GRAB_Y";
 		public static const GRAB_RADIUS:String = "GRAB_RADIUS";
+		public static const PREVENT_EDIT:String = "PREVENT_EDIT";
+		public static const ALLOW_EDIT:String = "ALLOW_EDIT";
 		public static const EXIT:String = "EXIT";
 		public var params:Object;
+		
 		
 		public function LevelEditEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 
 		{

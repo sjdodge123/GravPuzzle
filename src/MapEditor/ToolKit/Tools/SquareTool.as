@@ -1,7 +1,5 @@
 package MapEditor.ToolKit.Tools
 {
-	import flash.events.MouseEvent;
-	
 	import GameObjects.Mobile.Obstacles.Square;
 	
 	import MapEditor.LevelCreation.LevelRead.ObstacleData;

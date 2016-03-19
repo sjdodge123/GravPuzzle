@@ -26,7 +26,7 @@ package GameObjects.Mobile
 		protected var editBallY:Sprite;
 		protected var editCenterBall:Sprite;
 		protected var exitBall:Sprite;
-		
+		private var justPlaced:Boolean = false;;
 		public function MobileObject()
 		{
 			border = new Sprite();
@@ -80,7 +80,6 @@ package GameObjects.Mobile
 			if(exitBall.hitTestPoint(event.stageX,event.stageY))
 			{
 				endEdit();
-				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.EXIT,this));
 			}
 			
 			if(editBallY.hitTestPoint(event.stageX,event.stageY))
@@ -91,13 +90,17 @@ package GameObjects.Mobile
 		
 		public function edit():void
 		{
-			trace('edit');
-			this.drawBorder();
-			this.addEventListener(MouseEvent.CLICK,editObject);
+				trace('edit');
+				this.drawBorder();
+				this.addEventListener(MouseEvent.CLICK,editObject);
+				if(this as FriendBall){
+					endEdit();
+				}
 		}
 		
 		public function endEdit():void
 		{
+			this.dispatchEvent(new LevelEditEvent(LevelEditEvent.EXIT,this));
 			this.removeBorder();
 			this.removeEventListener(MouseEvent.CLICK,editObject);
 		}
