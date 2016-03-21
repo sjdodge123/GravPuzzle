@@ -121,12 +121,6 @@ package GameObjects.Mobile
 			editBallY.graphics.endFill();
 			addChild(editBallY);
 			
-			exitBall = new Sprite();
-			exitBall.graphics.beginFill(0xFF4C4C);
-			exitBall.graphics.drawCircle(border.width-5,-(border.height/4),5);
-			exitBall.graphics.endFill();
-
-			addChild(exitBall);
 			addChild(editCenterBall);
 			addChild(editBallX);
 		}

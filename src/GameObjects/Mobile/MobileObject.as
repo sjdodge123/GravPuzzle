@@ -25,7 +25,6 @@ package GameObjects.Mobile
 		protected var editBallX:Sprite;
 		protected var editBallY:Sprite;
 		protected var editCenterBall:Sprite;
-		protected var exitBall:Sprite;
 		private var justPlaced:Boolean = false;;
 		public function MobileObject()
 		{
@@ -33,7 +32,6 @@ package GameObjects.Mobile
 			editBallX = new Sprite();
 			editBallY = new Sprite();
 			editCenterBall = new Sprite();
-			exitBall = new Sprite();
 			editXLine = new Sprite();
 			editYLine = new Sprite();
 		}
@@ -76,12 +74,6 @@ package GameObjects.Mobile
 			{
 				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_X,this));
 			}
-			
-			if(exitBall.hitTestPoint(event.stageX,event.stageY))
-			{
-				endEdit();
-			}
-			
 			if(editBallY.hitTestPoint(event.stageX,event.stageY))
 			{
 				this.dispatchEvent(new LevelEditEvent(LevelEditEvent.GRAB_Y,this));
@@ -100,7 +92,7 @@ package GameObjects.Mobile
 		
 		public function endEdit():void
 		{
-			this.dispatchEvent(new LevelEditEvent(LevelEditEvent.EXIT,this));
+			trace('end edit');
 			this.removeBorder();
 			this.removeEventListener(MouseEvent.CLICK,editObject);
 		}
@@ -114,9 +106,6 @@ package GameObjects.Mobile
 			}
 			if(contains(editYLine)){
 				removeChild(editYLine);
-			}
-			if(contains(exitBall)){
-				removeChild(exitBall);
 			}
 			if(contains(editBallX)){
 				removeChild(editBallX);

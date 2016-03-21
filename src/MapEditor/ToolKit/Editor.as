@@ -91,7 +91,6 @@ package MapEditor.ToolKit
 				editArray[i].addEventListener(LevelEditEvent.GRAB_CENTER,centerObjectToMouse);
 				editArray[i].addEventListener(LevelEditEvent.GRAB_X,manipulateX);
 				editArray[i].addEventListener(LevelEditEvent.GRAB_Y,manipulateY);
-				editArray[i].addEventListener(LevelEditEvent.EXIT,endEdit);
 				return;
 			}
 			
@@ -164,6 +163,12 @@ package MapEditor.ToolKit
 		{
 			endEdit(null);
 			gameBoard.stopAllEdits();	
+		}
+		
+		public function disableEditor():void
+		{
+			mainWindow.removeEventListener(MouseEvent.CLICK,scanForObjects);
+			gameBoard.stopAllEdits();
 		}
 		
 		public function dropAllTools():void

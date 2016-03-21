@@ -128,7 +128,7 @@ package MapEditor.ToolKit
 				active = false;
 				window.visible = false;
 				window.close();
-				stopEdits();
+				editor.disableEditor();
 				removeKeyListeners();
 			}
 		}
