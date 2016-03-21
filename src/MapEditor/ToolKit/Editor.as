@@ -154,21 +154,21 @@ package MapEditor.ToolKit
 			mainWindow.removeEventListener(MouseEvent.MOUSE_MOVE,moveHeightWithMouse);
 		}
 		
-		protected function endEdit(event:LevelEditEvent):void
+		protected function startEditorSearch(event:LevelEditEvent):void
 		{
 			mainWindow.addEventListener(MouseEvent.CLICK,scanForObjects);
 		}
 		
-		public function stopAllEdits(event:Event):void
+		public function stopAllEdits():void
 		{
-			endEdit(null);
-			gameBoard.stopAllEdits();	
+			endCurrentAction(null);
+			gameBoard.stopAllEdits();
 		}
 		
 		public function disableEditor():void
 		{
 			mainWindow.removeEventListener(MouseEvent.CLICK,scanForObjects);
-			gameBoard.stopAllEdits();
+			stopAllEdits();
 		}
 		
 		public function dropAllTools():void

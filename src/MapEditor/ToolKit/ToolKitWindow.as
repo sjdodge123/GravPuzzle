@@ -92,7 +92,7 @@ package MapEditor.ToolKit
 		
 		protected function createLevel(event:Event):void
 		{
-			editor.stopAllEdits(null);
+			editor.stopAllEdits();
 			levelWriter.createLevel(gameBoard.getCurrentLevel());
 		}
 		
@@ -119,7 +119,7 @@ package MapEditor.ToolKit
 		private function stopEdits():void
 		{
 			editor.dropAllTools();
-			editor.stopAllEdits(null);
+			editor.stopAllEdits();
 		}
 		public function close():void
 		{
