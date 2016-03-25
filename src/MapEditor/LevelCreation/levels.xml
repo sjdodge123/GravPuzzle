@@ -304,48 +304,25 @@
     </targets>
     <obstacles>
       <object>
-        <type>BlackZone</type>
-        <x>76</x>
-        <y>-3</y>
-        <width>50</width>
+        <type>Square</type>
+        <x>209</x>
+        <y>169</y>
+        <width>177</width>
+        <height>150</height>
+      </object>
+      <object>
+        <type>Circle</type>
+        <x>334</x>
+        <y>128</y>
+        <radius>10</radius>
+      </object>
+      <object>
+        <type>DeadZone</type>
+        <x>198</x>
+        <y>320</y>
+        <width>192</width>
         <height>50</height>
       </object>
     </obstacles>
   </level7>
-  <level8>
-    <name>Center Mass</name>
-    <gravBallCount>3</gravBallCount>
-    <friendBall>
-      <x>50</x>
-      <y>350</y>
-      <velX>0</velX>
-      <velY>-2.5</velY>
-    </friendBall>
-    <basket>
-      <x>400</x>
-      <y>175</y>
-      <width>47</width>
-      <height>22</height>
-    </basket>
-    <targets>
-      <gold>93</gold>
-      <silver>80</silver>
-      <bronze>65</bronze>
-    </targets>
-    <obstacles>
-      <object>
-        <type>Square</type>
-        <x>200</x>
-        <y>150</y>
-        <width>50</width>
-        <height>50</height>
-      </object>
-      <object>
-        <type>Circle</type>
-        <x>225</x>
-        <y>151</y>
-        <radius>25</radius>
-      </object>
-    </obstacles>
-  </level8>
 </levels>

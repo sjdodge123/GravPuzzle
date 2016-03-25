@@ -1,5 +1,6 @@
 package GameObjects.Mobile.Obstacles
 {
+	import GameObjects.EditRegions.EditRect;
 	import GameObjects.HitRegions.HitRegion;
 	import GameObjects.Mobile.MobileObject;
 

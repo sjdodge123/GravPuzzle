@@ -18,10 +18,5 @@ package GameObjects.Mobile
 			shape.useHandCursor = false;
 			addChild(shape);
 		}
-		
-		protected override function drawBorder():void
-		{
-			trace('drawing grav ball border');
-		}
 	}
 }

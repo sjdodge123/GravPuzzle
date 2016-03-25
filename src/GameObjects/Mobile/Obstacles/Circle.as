@@ -1,6 +1,8 @@
 package GameObjects.Mobile.Obstacles
 {
 	import flash.display.Sprite;
+	
+	import GameObjects.EditRegions.EditRect;
 	import GameObjects.HitRegions.HitCircle;
 	import GameObjects.HitRegions.HitRegion;
 
@@ -24,15 +26,9 @@ package GameObjects.Mobile.Obstacles
 			hitCircle = new HitCircle(x,y,radius,0);
 			hitRegion = new Vector.<HitRegion>;
 			hitRegion.push(hitCircle);
+			editRegion = new EditRect(radius,radius);
+			addChild(editRegion);
 			super();
-		}
-		
-		protected override function drawBorder():void
-		{
-			border = new Sprite();
-			border.graphics.lineStyle(2,0x72BCD4);
-			border.graphics.drawCircle(0,0,50);
-			addChild(border);
 		}
 	}
 }

@@ -45,7 +45,7 @@ package Construct
 		private var camera:Camera;
 		
 		//Game testing variables
-		private var startingLevel:int = 2;
+		private var startingLevel:int = 1;
 		private var levelNum:int = 0;
 		private var penaltyValue:int = 5;
 		private var masteryValue:int = 25;

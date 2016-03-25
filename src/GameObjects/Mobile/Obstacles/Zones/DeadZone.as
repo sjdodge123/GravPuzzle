@@ -6,6 +6,7 @@ package GameObjects.Mobile.Obstacles.Zones
 	
 	import Events.ObstacleEvent;
 	
+	import GameObjects.EditRegions.EditRect;
 	import GameObjects.HitRegions.HitRegion;
 	import GameObjects.HitRegions.HollowHitBox;
 
@@ -29,20 +30,8 @@ package GameObjects.Mobile.Obstacles.Zones
 			hitBox.addEventListener(ObstacleEvent.DEADZONE,forwardEvent);
 			hitRegion = new Vector.<HitRegion>;
 			hitRegion.push(hitBox);
-			super();
-			
-		}
-		
-		public override function editObject(event:MouseEvent):void
-		{
-			trace('make edits');
-		}
-		protected override function drawBorder():void
-		{
-			border = new Sprite();
-			border.graphics.lineStyle(2,0x72BCD4);
-			border.graphics.drawCircle(0,0,50);
-			addChild(border);
+			editRegion = new EditRect(width,height);
+			addChild(editRegion);
 		}
 	}
 }
